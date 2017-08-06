@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Animated Avatar Test</title>
+</head>
+<body>
+<div>
+<object id="Viewer" name="Viewer"  width="480" height="640"
+    classid="CLSID:30e01cfe-8b88-4d64-a362-2d11a2cd9873"
+    codebase="file:///temp/AvatarAX.CAB#version=1,0,0,0"
+     >
+    <param name="ContentFile" value="c:/projects/vixen/data/magicmirror/ui/simplestage.vix" />
+</object>
+</div>
+<script type="text/javascript" >
+    function Viewer_OnSetScene(scenename)
+    {
+        alert("OnSetScene "  + scenename);
+     }
+    Viewer.OnSetScene = Viewer_OnSetScene;
+</script>
+
+
+
+</body>
+</html>

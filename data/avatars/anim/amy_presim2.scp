@@ -1,0 +1,3 @@
+load anim\amy\stepleft.hkt amyroot.skeleton -s -pingpong -t amyskin.amyroot.skeleton
+load anim\amy\spinright.hkt amyroot.skeleton -s -pingpong -t amyskin.amyroot.skeleton
+load anim\amy\idle_impatient.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton

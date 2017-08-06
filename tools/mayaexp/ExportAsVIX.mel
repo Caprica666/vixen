@@ -1,0 +1,50 @@
+//
+// Maya script to open all of the Maya Binary files in the given directory and
+// export them as Vixen binary with the given export options
+//
+global proc int ExportAsVIX(string $indir, string $opts, string $outdir)
+{
+    string $infile;
+    string $outfile;
+    string $files[];
+    string $s;
+    int $succeed = 1;
+
+    if ($opts == "")
+	$opts = "textures=1;width=256;height=256;preview=0;";
+    if ($indir == "")
+	$indir = "./";
+    setProject $indir;
+    $files=`getFileList -folder $indir -filespec "*.mb"`;
+    if ($outdir != "")
+    {
+	int $direxists = `file -query -exists $outdir`;
+	if ($direxists == 0)
+	{
+	    $s = "making directory " + $outdir + "\n";
+	    print $s;
+	    sysFile -makeDir $outdir;
+	}
+    }
+	
+    for ($infile in $files)
+    {
+        if ($outdir != "")
+	    $outfile = $outdir;
+	else
+	    $outfile = $indir;
+	$outfile = $outfile + substring($infile, 1, size($infile) - 3) + ".vix";
+        $infile = $indir + $infile;
+        $s = "opening " + $infile + "\n";
+        print $s;
+        file -open -force $infile;
+        $s = `file -exportAll -type "VIXexport" -options $opts -force $outfile`;
+	$succeed = `file -query -exists $s`;
+	if (!$succeed)
+	    $s = "ERROR: failed to export " + $outfile + "\n";
+	else
+            $s = "exported " + $s + "\n";
+        print $s;
+    }
+    return $succeed;
+}

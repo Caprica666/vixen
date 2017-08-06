@@ -1,0 +1,8 @@
+#include "vixExport.h"
+#include "meconv.h"
+#include "menode.h"
+#include "mepoly.h"
+#include "meshade.h"
+#include "metex.h"
+#include "meuvmap.h"
+#include "meanim.h"

@@ -1,0 +1,1 @@
+struct vtx { float4 position : POSITION; float4 normal : NORMAL; }; float4 ColorShader(in vtx v) : SV_Target0 { return float4(1, 0, 0, 1); }

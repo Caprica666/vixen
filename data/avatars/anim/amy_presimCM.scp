@@ -1,0 +1,7 @@
+load anim\amy\CM\stephipleft.hkt amyroot.skeleton -t amyskin.amyroot.skeleton
+load anim\amy\CM\stephipright.hkt amyroot.skeleton -t amyskin.amyroot.skeleton
+load anim\amy\CM\idlespin.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton
+load anim\amy\CM\leftshimmy.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton
+load anim\amy\CM\rightshimmy.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton
+load anim\amy\CM\idleside.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton
+load anim\amy\CM\catwalk.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton

@@ -1,0 +1,2 @@
+load anim/victoria5/cornerspin.bvh hip.skeleton -s -t angelavatar.hip.skeleton
+

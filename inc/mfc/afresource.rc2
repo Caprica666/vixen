@@ -1,0 +1,318 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+#include "afresource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDM_AFMENU MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Scene"
+    BEGIN
+        MENUITEM "&Scene Graph",                ID_VIEW_SCENEGRAPH
+        MENUITEM "&Camera Dialog",              ID_VIEW_CAMERA
+        MENUITEM "&Environment...",             ID_VIEW_ENVIRON
+        POPUP "Navigation"
+        BEGIN
+            MENUITEM "Flyer",                       ID_NAV_FLYER
+            MENUITEM "ArcBall",                     ID_NAV_ARCBALL
+            MENUITEM "Terrain Driver",              ID_NAV_DRIVER
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Framerate Counter",          ID_VIEW_FRAMERATECOUNTER
+        MENUITEM "F&ull Screen\tEsc",           ID_VIEW_FULLSCREEN
+        MENUITEM "&Zoom All\tCtrl+A",           ID_VIEW_ZOOMALL
+        MENUITEM "&Wireframe\tCtrl+W",          ID_VIEW_WIREFRAME
+        MENUITEM "&Disable Lighting",           ID_VIEW_DISABLELIGHTING
+    END
+    POPUP "A&nimation"
+    BEGIN
+        MENUITEM "&Open Animation...",          ID_SCPT_OPEN
+        MENUITEM "Record",                      ID_SCPT_RECORD
+        MENUITEM "&Play",                       ID_SCPT_RUN
+        MENUITEM "&Stop",                       ID_SCPT_STOP
+        MENUITEM "Cycle",                       ID_SCPT_REPLAY
+        MENUITEM "&Reverse",                    ID_SCPT_REVERSE
+        MENUITEM "&Faster\tCtrl+F",             ID_SCPT_FASTER
+        MENUITEM "Slower \tCtrl+S",             ID_SCPT_SLOWER
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_AFACCEL ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "A",            ID_VIEW_ZOOMALL,        VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_SCPT_FASTER,         VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_SCPT_SLOWER,         VIRTKEY, CONTROL, NOINVERT
+    "W",            ID_VIEW_WIREFRAME,      VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_CAMDIALOG DIALOG DISCARDABLE  0, 0, 281, 138
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Camera Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    RTEXT           "Yon",IDC_STATIC,19,20,35,10,SS_CENTERIMAGE
+    CONTROL         "Slider1",IDC_HITHER_S,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,103,6,171,12
+    CONTROL         "Slider1",IDC_YON_S,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,103,20,171,12
+    EDITTEXT        IDC_HITHER,59,5,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_YON,59,20,40,12,ES_AUTOHSCROLL
+    RTEXT           "View Angle",IDC_STATIC,19,35,35,10,SS_CENTERIMAGE
+    CONTROL         "Slider1",IDC_VANGLE_S,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,103,35,171,12
+    EDITTEXT        IDC_VANGLE,59,35,40,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Zoom to Scene",IDC_ZOOMTOSCENE,111,68,65,15
+    RTEXT           "Flight Speed",IDC_STATIC,13,50,41,10,SS_CENTERIMAGE
+    CONTROL         "Slider1",IDC_FSPEED_S,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,103,50,171,12
+    RTEXT           "Hither",IDC_STATIC,19,6,35,10,SS_CENTERIMAGE
+    RTEXT           "Recall Viewpoint:",IDC_STATIC,18,94,58,10,
+                    SS_CENTERIMAGE
+    LTEXT           "Save Viewpoint:",IDC_STATIC,21,107,61,10
+    PUSHBUTTON      "1",IDC_BUTTON_STORE1,97,108,20,10
+    PUSHBUTTON      "2",IDC_BUTTON_STORE2,123,108,20,10
+    PUSHBUTTON      "3",IDC_BUTTON_STORE3,147,108,20,10
+    PUSHBUTTON      "4",IDC_BUTTON_STORE4,171,108,20,10
+    PUSHBUTTON      "5",IDC_BUTTON_STORE5,197,108,20,10
+    PUSHBUTTON      "6",IDC_BUTTON_STORE6,221,108,20,10
+    EDITTEXT        IDC_FSPEED,59,49,40,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "1",IDC_BUTTON_RECALL1,97,94,20,10
+    PUSHBUTTON      "2",IDC_BUTTON_RECALL2,122,94,20,10
+    PUSHBUTTON      "3",IDC_BUTTON_RECALL3,147,94,20,10
+    PUSHBUTTON      "4",IDC_BUTTON_RECALL4,172,94,20,10
+    PUSHBUTTON      "5",IDC_BUTTON_RECALL5,197,94,20,10
+    PUSHBUTTON      "6",IDC_BUTTON_RECALL6,222,94,20,10
+    GROUPBOX        "",IDC_STATIC,12,86,250,36
+    RTEXT           "Aspect Ratio",IDC_STATIC,13,65,41,10,SS_CENTERIMAGE
+    EDITTEXT        IDC_ASPECT,59,64,40,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Cube Map Viewpoints",IDC_CUBEMAPVIEWS,183,69,73,14
+END
+
+IDD_TREEVIEW DIALOGEX 0, 0, 221, 206
+STYLE WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Scene Graph"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | WS_BORDER | WS_TABSTOP,
+                    7,7,207,177,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Zoom To Me",IDC_ZOOMTONODE,73,186,67,13,WS_DISABLED
+    CONTROL         "Enabled",IDC_ENABLED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,24,187,53,12
+    PUSHBUTTON      "Start Me",IDC_PLAYANIM,147,186,67,13,WS_DISABLED
+END
+
+IDD_KEYDIALOG DIALOG DISCARDABLE  0, 0, 129, 89
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "KeyFramer Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Keyframe points",IDC_STATIC,7,27,55,15,SS_CENTERIMAGE
+    EDITTEXT        IDC_KPOINTS,67,27,50,15,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Type",IDC_STATIC,7,7,55,15,SS_CENTERIMAGE
+    EDITTEXT        IDC_KTYPE,67,7,50,15,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "Visible",IDC_KVISIBLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,47,115,15
+    PUSHBUTTON      "Play Camera to this KeyFramer",IDC_PLAYCAM,7,67,115,15
+END
+
+IDD_ORIENT DIALOG DISCARDABLE  0, 0, 213, 58
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Orientation"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,82,36,50,14
+    CONTROL         "Slider1",IDC_PITCH,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,47,7,94,12
+    CONTROL         "Slider1",IDC_YAW,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,47,20,145,12
+    LTEXT           "Pitch -pi/2",IDC_STATIC,13,9,37,11
+    LTEXT           "Yaw -pi",IDC_STATIC,21,21,26,11
+    LTEXT           "+pi/2",IDC_STATIC,137,8,20,11
+    LTEXT           "+pi",IDC_STATIC,193,20,13,11
+END
+
+IDD_ENVIRON DIALOG DISCARDABLE  0, 0, 274, 154
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Environment Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,217,7,50,14
+    GROUPBOX        "Fog",IDC_STATIC,7,43,260,106,WS_GROUP
+    CONTROL         "Slider1",IDC_START2,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,73,52,192,12
+    RTEXT           "Start",IDC_STATIC,16,55,15,9,NOT WS_GROUP
+    EDITTEXT        IDC_START1,38,54,34,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_END2,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,74,70,191,12
+    RTEXT           "End",IDC_STATIC,16,73,15,9,NOT WS_GROUP
+    EDITTEXT        IDC_END1,38,71,34,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Set Color",IDC_FOGCOLOR,159,90,54,13
+    LTEXT           "Color:",IDC_STATIC,135,92,21,8,NOT WS_GROUP
+    PUSHBUTTON      "Set Color",IDC_BGCOLOR,104,10,54,13
+    LTEXT           "Background Color:",IDC_STATIC,41,13,59,8
+    LTEXT           "Type:",IDC_STATIC,18,92,26,9
+    CONTROL         "Linear",IDC_LINEAR,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,45,92,36,10
+    CONTROL         "Exponential",IDC_EXPONENTIAL,"Button",
+                    BS_AUTORADIOBUTTON,45,102,52,10
+    CONTROL         "Exponential**2",IDC_EXPONENTIAL2,"Button",
+                    BS_AUTORADIOBUTTON,45,112,60,10
+    LTEXT           "Density:",IDC_STATIC,19,130,28,8
+    EDITTEXT        IDC_DENSITY1,51,128,34,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_DENSITY2,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,87,127,178,12
+    LTEXT           "Ambient Light:",IDC_STATIC,55,27,46,8
+    PUSHBUTTON      "Set Color",IDC_AMBIENT,103,25,54,13
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_TREEVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 214
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+
+    IDD_KEYDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 122
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 82
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TREEIMAGES          BITMAP  DISCARDABLE     "res\\treeimag.bmp"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "#include ""afresource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_SCENEGRAPH      "Show or hide the Scene Graph\nToggle SceneGraph"
+    ID_VIEW_FULLSCREEN      "Toggle Full Screen Mode"
+    ID_VIEW_DISABLELIGHTING "Disable lighting, ignore light sources, materials and normals"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_ZOOMALL         "Zoom out to show the whole scene"
+    ID_VIEW_FRAMERATECOUNTER 
+                            "Toggle the Framerate Counter on the Status Bar\nToggle Framerate Counter"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_CAMERA       "Show the Camera Dialog"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SCPT_FASTER          "Speed up animation"
+    ID_SCPT_SLOWER          "Slow down animation"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_NAVIGATION      "Control camera navigation"
+    ID_NAV_FLYER            "Fly thru the scene"
+    ID_NAV_ARCBALL			"Orbit the object"
+    ID_NAV_DRIVER           "Driver over terrain"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

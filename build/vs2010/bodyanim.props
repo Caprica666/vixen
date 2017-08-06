@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" >
+  <OPENNI_DIR>$(VAR_ROOT)/external/OpenNI-1.5</OPENNI_DIR>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OPENNI_DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+     <LiNK>
+      <AdditionalDependencies>bodyanim$(BuildTargetSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
+     </LiNK>
+   <Lib Condition="'$(Platform)'=='x64'">
+      <AdditionalDependencies>OpenNI64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENNI_DIR)/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <Lib Condition="'$(Platform)'!='x64'">
+      <AdditionalDependencies>OpenNI.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENNI_DIR)/lib/win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <Link Condition="'$(Platform)'=='x64'">
+      <AdditionalLibraryDirectories>$(OPENNI_DIR)/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Link Condition="'$(Platform)'!='x64'">
+      <AdditionalLibraryDirectories>$(OPENNI_DIR)/lib/win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+ </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

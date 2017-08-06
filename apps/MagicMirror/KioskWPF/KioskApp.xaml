@@ -1,0 +1,6 @@
+﻿<vix:VisualApp x:Class="MagicMirror.Kiosk.KioskApp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vix="clr-namespace:Vixen;assembly=VixenCS"
+             StartupUri="MainWindow.xaml">
+ </vix:VisualApp>

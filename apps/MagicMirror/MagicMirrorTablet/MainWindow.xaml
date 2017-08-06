@@ -1,0 +1,52 @@
+﻿<Window x:Class="MagicMirror.Tablet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	    xmlns:mm="clr-namespace:MagicMirror;assembly=MagicMirror"
+        xmlns:mt="clr-namespace:MagicMirror.Tablet"
+        Title="Magic Mirror"
+        Width="600"
+        Height="800"
+		Stylus.IsPressAndHoldEnabled="False"
+        >
+    <Window.Resources>
+        <mt:PathToImageConverter x:Key="PathToImageConverter"/>
+    </Window.Resources>
+    <Grid x:Name="maingrid"
+          VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch"
+          >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />           
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ListBox Name="garmentSelector"
+                Grid.Row="0"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                IsSynchronizedWithCurrentItem="True"
+            ItemsSource="{Binding}" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True"
+                        Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image  Margin="2,2,2,2"
+                            Width="80" Height="80"
+                            Stretch="UniformToFill"
+                           Source="{Binding Converter={StaticResource PathToImageConverter}}" />
+                </DataTemplate>
+                </ListBox.ItemTemplate>
+        </ListBox>
+        <mt:TabletCanvas x:Name="avatarCanvas"
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="{Binding Path=ActualWidth, ElementName=maingrid}" 
+                Height="{Binding Path=ActualHeight, ElementName=maingrid}" 
+ 			    ConfigFile="d:\projects\vixen\data\magicmirror\amytabletconfig.json"
+                >
+        </mt:TabletCanvas>
+    </Grid>
+</Window>

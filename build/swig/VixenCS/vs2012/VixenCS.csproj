@@ -1,0 +1,590 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EF8A6E1E-C277-2012-9B24-3DB07A5F0DBC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vixen</RootNamespace>
+    <AssemblyName>VixenCS</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\bin\x64d\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\bin\x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Safe|AnyCPU'">
+    <OutputPath>..\..\..\..\bin\x64d\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\..\bin\x64d\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\..\bin\win32d\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\..\..\..\bin\x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Safe|x64'">
+    <OutputPath>..\..\..\..\bin\x64s\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\..\bin\win32d\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\..\bin\win32d\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\..\..\..\bin\win32\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Safe|x86'">
+    <OutputPath>..\..\..\..\bin\Win32s\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>VixenCS.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Canvas3D.cs">
+      <SubType>Code</SubType>
+      <Link>Sources\Canvas3D.cs</Link>
+    </Compile>
+    <Compile Include="..\Form3D.cs">
+      <SubType>UserControl</SubType>
+      <Link>Sources\Form3D.cs</Link>
+    </Compile>
+    <Compile Include="..\HandTracker.cs">
+      <Link>Sources\HandTracker.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="..\Sources\Animator.cs">
+      <Link>Sources\Animator.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Appearance.cs">
+      <Link>Sources\Appearance.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\BaseObj.cs">
+      <Link>Sources\BaseObj.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Bitmap.cs">
+      <Link>Sources\Bitmap.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\BodyTracker.cs">
+      <Link>Sources\BodyTracker.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\BoneAnimator.cs">
+      <Link>Sources\BoneAnimator.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Box2.cs">
+      <Link>Sources\Box2.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Box3.cs">
+      <Link>Sources\Box3.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Camera.cs">
+      <Link>Sources\Camera.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ClothSim.cs">
+      <Link>Sources\ClothSim.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ClothSkin.cs">
+      <Link>Sources\ClothSkin.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Col4.cs">
+      <Link>Sources\Col4.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Color.cs">
+      <Link>Sources\Color.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ColorInterp.cs">
+      <Link>Sources\ColorInterp.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ConnectEvent.cs">
+      <Link>Sources\ConnectEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\CoreFloatArray.cs">
+      <Link>Sources\CoreFloatArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\CoreIntArray.cs">
+      <Link>Sources\CoreIntArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\CoreObjArray.cs">
+      <Link>Sources\CoreObjArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\CoreTree.cs">
+      <Link>Sources\CoreTree.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Deformer.cs">
+      <Link>Sources\Deformer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\DeviceBuffer.cs">
+      <Link>Sources\DeviceBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\DirectLight.cs">
+      <Link>Sources\DirectLight.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Engine.cs">
+      <Link>Sources\Engine.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ErrorEvent.cs">
+      <Link>Sources\ErrorEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Evaluator.cs">
+      <Link>Sources\Evaluator.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Event.cs">
+      <Link>Sources\Event.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ExtModel.cs">
+      <Link>Sources\ExtModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\FloatArray.cs">
+      <Link>Sources\FloatArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\FloatInterp.cs">
+      <Link>Sources\FloatInterp.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Flyer.cs">
+      <Link>Sources\Flyer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\FrameEvent.cs">
+      <Link>Sources\FrameEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Geometry.cs">
+      <Link>Sources\Geometry.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\GeoUtil.cs">
+      <Link>Sources\GeoUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Group.cs">
+      <Link>Sources\Group.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\IntArray.cs">
+      <Link>Sources\IntArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Interpolator.cs">
+      <Link>Sources\Interpolator.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\KeyColor.cs">
+      <Link>Sources\KeyColor.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\KeyEvent.cs">
+      <Link>Sources\KeyEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\KeyFramer.cs">
+      <Link>Sources\KeyFramer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\KinectTracker.cs">
+      <Link>Sources\KinectTracker.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Light.cs">
+      <Link>Sources\Light.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\LoadEvent.cs">
+      <Link>Sources\LoadEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\LockObj.cs">
+      <Link>Sources\LockObj.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Material.cs">
+      <Link>Sources\Material.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Matrix.cs">
+      <Link>Sources\Matrix.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\MediaBase.cs">
+      <Link>Sources\MediaBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\MediaSource.cs">
+      <Link>Sources\MediaSource.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Mesh.cs">
+      <Link>Sources\Mesh.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\MeshAnimator.cs">
+      <Link>Sources\MeshAnimator.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\MeshRef.cs">
+      <Link>Sources\MeshRef.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Model.cs">
+      <Link>Sources\Model.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Morph.cs">
+      <Link>Sources\Morph.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\MouseEngine.cs">
+      <Link>Sources\MouseEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\MouseEvent.cs">
+      <Link>Sources\MouseEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\NavigateEvent.cs">
+      <Link>Sources\NavigateEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Navigator.cs">
+      <Link>Sources\Navigator.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\NavInputEvent.cs">
+      <Link>Sources\NavInputEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ObjArray.cs">
+      <Link>Sources\ObjArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\ObjRef.cs">
+      <Link>Sources\ObjRef.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\PhongMaterial.cs">
+      <Link>Sources\PhongMaterial.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Physics.cs">
+      <Link>Sources\Physics.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Picker.cs">
+      <Link>Sources\Picker.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\PickEvent.cs">
+      <Link>Sources\PickEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Pose.cs">
+      <Link>Sources\Pose.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\PoseMapper.cs">
+      <Link>Sources\PoseMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Quat.cs">
+      <Link>Sources\Quat.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\RagDoll.cs">
+      <Link>Sources\RagDoll.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Ray.cs">
+      <Link>Sources\Ray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\RayPicker.cs">
+      <Link>Sources\RayPicker.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\RefObj.cs">
+      <Link>Sources\RefObj.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\RefPtr.cs">
+      <Link>Sources\RefPtr.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Sampler.cs">
+      <Link>Sources\Sampler.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Scene.cs">
+      <Link>Sources\Scene.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SceneEvent.cs">
+      <Link>Sources\SceneEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SceneRef.cs">
+      <Link>Sources\SceneRef.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SceneStats.cs">
+      <Link>Sources\SceneStats.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Scriptor.cs">
+      <Link>Sources\Scriptor.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Sequencer.cs">
+      <Link>Sources\Sequencer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SerialID.cs">
+      <Link>Sources\SerialID.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Shader.cs">
+      <Link>Sources\Shader.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Shape.cs">
+      <Link>Sources\Shape.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SharedFloatArray.cs">
+      <Link>Sources\SharedFloatArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SharedIntArray.cs">
+      <Link>Sources\SharedIntArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SharedObj.cs">
+      <Link>Sources\SharedObj.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SharedObjArray.cs">
+      <Link>Sources\SharedObjArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SharedTree.cs">
+      <Link>Sources\SharedTree.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SharedWorld.cs">
+      <Link>Sources\SharedWorld.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Skeleton.cs">
+      <Link>Sources\Skeleton.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Skin.cs">
+      <Link>Sources\Skin.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SoundPlayer.cs">
+      <Link>Sources\SoundPlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Sphere.cs">
+      <Link>Sources\Sphere.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SpotLight.cs">
+      <Link>Sources\SpotLight.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\String.cs">
+      <Link>Sources\String.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SWIGTYPE_p_float.cs">
+      <Link>Sources\SWIGTYPE_p_float.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SWIGTYPE_p_int.cs">
+      <Link>Sources\SWIGTYPE_p_int.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\SWIGTYPE_p_void.cs">
+      <Link>Sources\SWIGTYPE_p_void.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Texture.cs">
+      <Link>Sources\Texture.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\TrackEvent.cs">
+      <Link>Sources\TrackEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Transformer.cs">
+      <Link>Sources\Transformer.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Trigger.cs">
+      <Link>Sources\Trigger.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\TriggerEvent.cs">
+      <Link>Sources\TriggerEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\TriHitEvent.cs">
+      <Link>Sources\TriHitEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\TriMesh.cs">
+      <Link>Sources\TriMesh.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Vec2.cs">
+      <Link>Sources\Vec2.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Vec3.cs">
+      <Link>Sources\Vec3.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Vec3Blender.cs">
+      <Link>Sources\Vec3Blender.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Vec4.cs">
+      <Link>Sources\Vec4.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\VertexArray.cs">
+      <Link>Sources\VertexArray.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\VertexPool.cs">
+      <Link>Sources\VertexPool.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\Viewer3D.cs">
+      <Link>Sources\Viewer3D.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\VixenLib.cs" />
+    <Compile Include="..\Sources\VixenLibPINVOKE.cs" />
+    <Compile Include="..\Sources\World.cs">
+      <Link>Sources\World.cs</Link>
+    </Compile>
+    <Compile Include="..\Sources\World3D.cs">
+      <Link>Sources\World3D.cs</Link>
+    </Compile>
+    <Compile Include="..\VisualApp.cs">
+      <Link>Sources\VisualApp.cs</Link>
+    </Compile>
+    <Compile Include="Sources\AmbientLight.cs" />
+    <Compile Include="Sources\LoadDataEvent.cs" />
+    <Compile Include="Sources\LoadSceneEvent.cs" />
+    <Compile Include="Sources\LoadTextEvent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VixenCS.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="VixenCSWrapperDX11.vcxproj">
+      <Project>{c510a0c5-6c0a-49ff-2012-e9ad50323111}</Project>
+      <Name>VixenLibDX11</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(Platform)" == x64 "$(WinDir)\Microsoft.NET\Framework64\v4.0.30319\RegAsm.exe"/codebase  $(TargetPath) /tlb:"$(TargetDir)$(TargetName).tlb" else "$(WinDir)\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"/codebase  $(TargetPath) /tlb:"$(TargetDir)$(TargetName).tlb";</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

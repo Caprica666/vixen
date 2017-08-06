@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\scape">
+      <UniqueIdentifier>{1f11691a-3735-48e5-9aea-bfe756aa0687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\body\scape\CTMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\body\scape\NRBM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\body\scape\scapeskin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\body\bodytrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\body\KinectTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\body\vxkinecttrack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\body\vxscapeskin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\CMatrix.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\CTensor.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\CTMesh.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\CVector.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\Definitions.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\NMath.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\NRBM.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\body\vxscape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\o_TMatrix.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\o_TMatrixDoubleHelper.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\o_TMatrixHelper.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\o_TVector.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\o_TVectorHelper.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\svd.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\body\scape\nr3.h">
+      <Filter>Header Files\scape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\body\vxbodytrack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\body\vxomektrack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ReadMe.txt" />
+  </ItemGroup>
+</Project>

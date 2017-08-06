@@ -1,0 +1,5 @@
+load anim\amy\CM\stepleft.vix amyroot.skeleton -s  -t amyskin.amyroot.skeleton
+load anim\amy\CM\idlespin.vix amyroot.skeleton -s  -t amyskin.amyroot.skeleton
+load anim\amy\CM\idle_impatient.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton
+load anim\amy\CM\stepright.vix amyroot.skeleton -s  -t amyskin.amyroot.skeleton
+load anim\amy\CM\overleft.vix amyroot.skeleton -s -t amyskin.amyroot.skeleton

@@ -1,0 +1,118 @@
+﻿<Window x:Class="Vixen.Viewer.ViewerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:vix="clr-namespace:Vixen;assembly=VixenCS"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vv="clr-namespace:Vixen.Viewer"
+        xmlns:wx="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xc="http://schemas.xceed.com/wpf/xaml/datagrid"
+        Title="Vixen Viewer" >
+    <Grid Width="Auto" Height="Auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Width="Auto" Height="Auto" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="25" MinHeight="20" Height="25" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition MaxHeight="25" MinHeight="20" Height="Auto" />
+                <RowDefinition MaxHeight="3" MinHeight="2" Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Menu x:Name="menubar" IsMainMenu="True" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <MenuItem x:Name="filemenu" Header="_File" MinWidth="50">
+                    <MenuItem x:Name="openSceneItem" Header="_Open Scene ..." Click="OnOpenSceneClicked"/>
+                    <MenuItem x:Name="saveSceneItem" Header="_Save Scene ..." Click="OnSaveSceneClicked"/>
+                    <MenuItem x:Name="openAnimItem" Header="Open Animation ..." Click="OnOpenAnimClicked"/>
+                </MenuItem>
+                <MenuItem x:Name="viewmenu" Header="View" VerticalAlignment="Stretch">
+                    <MenuItem x:Name="showAll" Header="Show All" Click="OnShowAllClicked" >
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="simulationmenu" Header="Simulation" VerticalAlignment="Stretch">
+                    <MenuItem x:Name="playItem" Header="Play Animation" Click="OnPlayClicked" ></MenuItem>
+                    <MenuItem x:Name="pauseItem" Header="Pause Animation" Click="OnPauseClicked" ></MenuItem>
+                </MenuItem>
+            </Menu>
+            <ScrollViewer x:Name="sceneViewScroller"
+                      Grid.Row="1"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalAlignment="Top"
+                      CanContentScroll="True"
+                      ClipToBounds="True"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Stretch"
+                      HorizontalAlignment="Stretch" >
+                <vv:SceneTreeView x:Name="sceneView"
+                                  MinWidth="200"
+                                  MinHeight="200"
+                                  Width="Auto"
+                                  Height="Auto"
+                                  VerticalContentAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  HorizontalContentAlignment="Stretch"
+                                  VerticalAlignment="Stretch">
+                </vv:SceneTreeView>
+            </ScrollViewer>
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        MinWidth="20"
+                        MinHeight="20"
+                        MaxHeight="25">
+                <Button Name="zoomButton" Content="Zoom" Margin="2,2,2,2" MinWidth="15"/>
+                <Button Name="startButton" Content="Start" Margin="2,2,2,2" MinWidth="15"/>
+                <Button Name="stopButton" Content="Stop" Margin="2,2,2,2" MinWidth="15"/>
+            </StackPanel>
+            <GridSplitter Name="gridSplitter2"
+                          Grid.Row="3"
+                          HorizontalAlignment="Stretch"
+                          Height="2"
+                          VerticalAlignment="Center"
+                          Margin="0"
+                          MinWidth="2"
+                          MinHeight="2"
+                          ResizeDirection="Rows"
+                          ShowsPreview="True"
+                          />
+            <wx:PropertyGrid x:Name="property3d"
+                             Grid.Row="4"
+                             wx:AutoGenerateProperties="true"
+                             wx:ShowSearchBox="false"
+                             wx:ShowSortOptions="false"
+                             wx:ShowSummary="false"
+                             wx:IsCategorized="false"
+                             >
+                <wx:PropertyGrid.EditorDefinitions>
+                    <wx:EditorDefinition TargetType="{x:Type vix:FloatArray}">
+							<wx:EditorDefinition.EditorTemplate>
+								<DataTemplate>
+									<vv:NumberList ItemsSource="{Binding}" MinHeight="200"/>
+								</DataTemplate>
+							</wx:EditorDefinition.EditorTemplate>
+					</wx:EditorDefinition>
+                    <wx:EditorDefinition TargetType="{x:Type sys:Int32}">
+                        <wx:EditorDefinition.EditorTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Value}" />
+                            </DataTemplate>
+                        </wx:EditorDefinition.EditorTemplate>
+                    </wx:EditorDefinition>
+                    <wx:EditorDefinition TargetType="{x:Type sys:Single}">
+                        <wx:EditorDefinition.EditorTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Value}" />
+                            </DataTemplate>
+                        </wx:EditorDefinition.EditorTemplate>
+                    </wx:EditorDefinition>
+                </wx:PropertyGrid.EditorDefinitions>
+            </wx:PropertyGrid>
+        </Grid>
+        <GridSplitter Name="gridSplitter1" VerticalAlignment="Stretch" Width="2" HorizontalAlignment="Center" Margin="0" MinWidth="2" MinHeight="2" ResizeDirection="Columns" ShowsPreview="True" Grid.Column="1" />
+		<vv:ViewerCanvas x:Name="view3D" Grid.Column="2"></vv:ViewerCanvas>
+    </Grid>
+</Window>

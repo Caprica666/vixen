@@ -1,0 +1,320 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Generator" content="Microsoft Word 97">
+   <meta name="ProgId" content="Word.Document">
+   <meta name="Originator" content="Microsoft Word 9">
+   <meta name="Template" content="C:\Program Files\Microsoft Office\Office\html.dot">
+   <meta name="GENERATOR" content="Mozilla/4.8C-SGI [en] (X11; U; IRIX64 6.5 IP30) [Netscape]">
+   <title>mayatest2</title>
+<link rel=File-List href="./mayapfb_files/filelist.xml">
+<!--   [if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Nola Donato</o:Author>
+  <o:LastAuthor>nola</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>35</o:TotalTime>
+  <o:Created>2003-05-20T03:13:00Z</o:Created>
+  <o:LastSaved>2003-05-21T21:09:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>1763</o:Words>
+  <o:Characters>10054</o:Characters>
+  <o:Company>Parallel Visions</o:Company>
+  <o:Lines>83</o:Lines>
+  <o:Paragraphs>20</o:Paragraphs>
+  <o:CharactersWithSpaces>12347</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style><!--   
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+--></style>
+</head>
+<body link="#0000FF" vlink="#800080">
+
+<div class=Section1>
+<h1>
+Testing the Performer Maya Exporter</h1>
+
+<h1>
+Nola Donato<br>
+Silicon Graphics OpenGL Performer team</h1>
+The Performer Maya exporter converts a Maya scene into Performer data structures
+and saves them in Performer binary&nbsp; .PFB or PFA files. The output
+file can be displayed with the Performer viewer or imported into a Performer
+application. A log file is also produced which describes the Maya objects
+converted and flags any errors or unsupported features.
+<p>This document describes a semi-automated procedure for testing the Maya
+exporter for Performer. It uses a combination of MEL and shell scripts.
+Testing also requires the freeware ImageMagick package for RGB to JPEG
+conversion.
+<p>The test process has three stages:
+<ul>
+<li>
+Export the Maya test content in PFB and PFA format (testmaya.sh)</li>
+
+<li>
+Render small image snapshots of each Maya test file.</li>
+
+<li>
+Make small image snapshots of the visual results of displaying each exported
+file (snapimages.sh)</li>
+
+<li>
+Make web pages containing the Maya snapshots and Performer snapshots for
+each test category.</li>
+</ul>
+
+<h1>
+Directory Structures</h1>
+The Maya test content has a two-level directory structure. Each subdirectory
+represents a category of testing. Feel free to add categories but don't
+add levels because all of the test scripts assume the current structure.
+<pre>perf/tests/maya
+&nbsp;&nbsp;&nbsp; mesh/*.mb&nbsp;&nbsp;&nbsp;&nbsp; Non-textured polygonal mesh content
+&nbsp;&nbsp;&nbsp; tex/*.mb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Textured mesh content
+&nbsp;&nbsp;&nbsp; nurbs/*.mb&nbsp;&nbsp;&nbsp; Nurbs content
+&nbsp;&nbsp;&nbsp; subd/*.mb&nbsp;&nbsp;&nbsp;&nbsp; Subdivision surface content</pre>
+The output directory where test results are stored has a three-level structure
+where each test category has several subdirectories for various export
+settings. This way, the same test can be exported in a variety of ways,
+testing all the paths thru the exporter.
+<pre>testresults/irix</pre>
+
+<pre>&nbsp;&nbsp;&nbsp; mesh/*.jpg&nbsp;&nbsp;&nbsp; JPG snapshots of Maya renderings for each test
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; snapshots.html&nbsp; web page with test results
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gapfb/*.pfb&nbsp;&nbsp;&nbsp;&nbsp; indexed triangle lists in GeoArray format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ind/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indexed polygons in GeoSet format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indtri/*.pfb&nbsp;&nbsp;&nbsp; indexed triangle lists in GeoSet format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tri/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; non-indexed triangle strips in GeoSet format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subd/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; non-indexed polygons converted to subdivision surfaces
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; tex/*.jpg&nbsp;&nbsp;&nbsp; JPG snapshots of Maya renderings for each test
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; snapshots.html&nbsp; web page with test results
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gapfb/*.pfb&nbsp;&nbsp;&nbsp;&nbsp; indexed triangle lists in GeoArray format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ind/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indexed polygons in GeoSet format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indtri/*.pfb&nbsp;&nbsp;&nbsp; indexed triangle lists in GeoSet format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tri/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; non-indexed triangle strips in GeoSet format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subd/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; non-indexed polygons converted to subdivision surfaces</pre>
+
+<pre>&nbsp;&nbsp;&nbsp; nurbs/*.jpg&nbsp;&nbsp;&nbsp; JPG snapshots of Maya renderings for each test
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; snapshots.html&nbsp; web page with test results
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pfb/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nurbs geometry in PFB format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pfa/*.pfa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nurbs geometry in PFA format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; meshpfb/*.pfb&nbsp;&nbsp;&nbsp; nurbs converted to indexed triangle lists in PFB format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; meshpfa/*.pfa&nbsp;&nbsp;&nbsp; nurbs converted to indexed triangle lists in PFA format</pre>
+
+<pre>&nbsp;&nbsp;&nbsp; subd/*.jpg&nbsp;&nbsp;&nbsp; JPG snapshots of Maya renderings for each test
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; snapshots.html&nbsp; web page with test results
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pfb/*.pfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subdivison surface geometry in PFB format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pfa/*.pfa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; subdivison surface geometry in PFA format
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; meshpfb/*.pfb&nbsp;&nbsp;&nbsp; subdivision surfaces converted to meshes in PFB format</pre>
+The lowest level directory structure is dictated by the MEL scripts which
+export the Maya content to the test directories. If you want to add more
+tests or delete them you will need to change one or more of the <i>ExportXXX.mel</i>
+scripts.
+<h1>
+<b>Setting up for Testing</b></h1>
+To set up for Maya exporter testing, you must do the following:
+<blockquote>
+<li>
+Install Maya 4.5 and ImageMagick</li>
+
+<li>
+Set up the environment variable MAYA_LOCATION to reference where you installed
+Maya.</li>
+
+<li>
+This would be <b>/usr/aw/maya4.5</b> on Irix and <b>c:/Program Files/AliasWavefront/Maya4.5</b>
+on Windows.</li>
+
+<li>
+Locate the Maya exporter test files, these should be in&nbsp; <b>perf/test/maya</b>.
+For Windows, it is best to map a network drive or copy them to your local
+machine.</li>
+
+<li>
+Set the environment variable MAYA_PLUG_IN_PATH to reference the location
+of the Maya Exporter plugins&nbsp; (this should be where the other Performer
+file converters are installed on your machine in the <b>lib/libpfdb</b>
+subdirectory)</li>
+
+<li>
+Put the Maya scripts for Performer ($PFROOT/lib/libpfdb/mayapfb/*.mel)
+in your local Maya scripts directory. On Irix, this would be /usr/people/yourname/maya/scripts.
+For Windows, it is "My Documents/maya/scripts". Alternately, you can set
+the MAYA_SCRIPT_PATH environment variable to their location in your build
+($PFROOT/perf/lib/libpfdb/mayapfb)</li>
+
+<li>
+Put the Maya test shell scripts ($PFROOT/lib/libpfdb/mayapfb/*.sh) in a
+directory on your execution path.</li>
+
+<li>
+Build the Performer snapshot application, pfbsnap, in the Maya build directory
+perf/lib/libpfdb/mayapfb. You can do this with the Windows project (which
+puts the executable in <b>$PFBUILDROOT/WIN32/Bin</b>). On Irix, use <b>make
+-f pfbsnap.mk</b>, which puts it in the current directory.This application
+must be on your search path in order to make image snapshots of the Performer
+display for each test.</li>
+</blockquote>
+
+<h1>
+<b>Test Procedure</b></h1>
+<font face="Arial">Once</font> you have done all this correctly, you should
+be able to launch <b><i>maya</i></b>, read in one of the test files and
+export it as PFB format. When you can do this, you are ready to run the
+test script. Invoke the <b><i>testmaya.sh</i></b> shell script with the
+path to your exporter test file directory and the output directory where
+it should store the Performer output files. It should look something like
+this:
+<dir><b>testmaya.sh /perf3.1/test/maya ~/mayatests/irix
+</b><i>(Irix)</i>
+<br><b>testmaya.sh c:/perf3.1/test/maya c:/build/WIN32/mayatests </b><i>(Windows)</i></dir>
+You should see Maya launch and start to load and automatically export the
+test files. If it just sits there doing nothing, the script aborted execution
+due to an error. You can bring up the script editor in Maya to get an idea
+of how it failed.
+<br>&nbsp;
+<p>The next phase of testing is to generate JPEG images from the PFB files.
+These are put into the same directory as the PFB files and give you a visual
+indication of whether Performer could read the file and display it. To
+generate the images, use the snapimage.sh shell script with the path to
+your test directory:
+<dir><b>snapimages.sh /perf3.1/test/maya ~/mayatests/irix</b></dir>
+The final stage generates HTML pages in the output directory for each test
+category. Currently, these pages are not linked to by a container summary
+page, they are just separate.
+<blockquote><b>viewall.sh /perf3.1/test/maya ~/mayatests/irix</b></blockquote>
+<b><font size=+3>Script Descriptions</font></b>
+<p>To test the Maya exporter, there are several scripts which automate
+parts of the testing process. A set of Maya binary files is exported as
+PFB and PFA with a variety of options. Snapshots are made of the resulting
+Performer files using a special Performer application which loads the file,
+displays a few frames and then saves the front buffer as an RGB file.
+<h2>
+<b><font size=+1>MEL Scripts</font></b></h2>
+
+<h3>
+<b><font face="Arial">ExportTestFiles.mel<br>
+<i>ExportTestFiles(string $testdir, string $outdir, string $categories)</i></font></b></h3>
+MEL script used by Maya to export all of the test files. It calls other
+scripts to do the actual work. <i>$testdir </i>is the directory containing
+the test content and <i>$outdir</i> is the directory where exported files
+should go. If <i>$categories</i> is an empty string, all of the test categories
+are exercised. Otherwise, it must contain the names of subdirectories of
+<i>$testdir</i>
+separated by spaces indicating which test categories you want.
+<h3>
+<b><font face="Arial">ExportAsPFB.mel<br>
+<i>ExportAsPFB(string $testdir, string $opts; string $outdir)</i></font></b></h3>
+MEL script which exports all of the Maya binary files in a given directory
+in Performer PFB format. <i>$testdir </i>is the directory containing the
+test content and <i>$outdir</i> is the directory where exported files should
+go.$baseopts gives the base export options you wish to use. These default
+to <i>"textures=1;rgb=1;width=256;height=256;preview=0;"</i>.
+<p><b><font face="Arial">ExportAsPFA.mel</font></b>
+<br><b><i><font face="Arial">ExportAsPFA(string $testdir, string $opts;
+string $outdir)</font></i></b>
+<p>MEL script which exports all of the Maya binary files in a given directory
+in Performer PFA format. <i>$testdir </i>is the directory containing the
+test content and <i>$outdir</i> is the directory where exported files should
+go.$baseopts gives the base export options you wish to use. These default
+to <i>"textures=1;rgb=1;width=256;height=256;preview=0;"</i>.
+<h3>
+<b><font face="Arial">ExportMesh.mel<br>
+<i>ExportMesh(string $testdir, string $outdir)</i></font></b></h3>
+MEL script which exports all of the polygon mesh tests (from the <b>mesh</b>
+subdirectory). <i>$testdir </i>is the directory containing the test content
+and <i>$outdir</i> is the directory where exported files should go.
+<h3>
+<b><font face="Arial">ExportTex.mel<br>
+<i>ExportTex(string $testdir, string $outdir)</i></font></b></h3>
+MEL script which exports all of the texturing tests (from the <b>tex</b>
+subdirectory). <i>$testdir </i>is the directory containing the test content
+and <i>$outdir</i> is the directory where exported files should go.
+<h3>
+<b><font face="Arial">ExportNurbs.mel<br>
+<i>ExportNurbs(string $testdir, string $outdir)</i></font></b></h3>
+MEL script which exports all of the nurbs tests (from the <b>nurbs</b>
+subdirectory). <i>$testdir </i>is the directory containing the test content
+and <i>$outdir</i> is the directory where exported files should go.
+<h3>
+<b><font face="Arial">ExportSubd.mel<br>
+<i>ExportSubd(string $testdir, string $outdir)</i></font></b></h3>
+MEL script which exports all of the nurbs tests (from the <b>subd</b> subdirectory).
+<i>$testdir
+</i>is
+the directory containing the test content and <i>$outdir</i> is the directory
+where exported files should go.
+<h2>
+Shell Scripts</h2>
+
+<h3>
+testmaya.sh &lt;testdir> &lt;outdir> &lt;categories></h3>
+Shell script that invokes Maya with a script that causes it to export all
+of the test files as PFB and/or PFA into a test directory.&nbsp; <i>&lt;testdir>
+</i>is
+the directory containing the test content and <i>&lt;outdir></i> is the
+directory where exported files should go. If <i>&lt;categories></i> is
+omitted, all of the test categories are exercised. Otherwise, it must contain
+the names of subdirectories of
+<i>&lt;testdir></i> separated by spaces
+indicating which test categories you want.
+<h3>
+snapimages.sh &lt;testdir> &lt;outdir> &lt;categories></h3>
+Shell script that uses the Performer pfbsnap application to make small
+image snapshots of each exported PFB or PFA&nbsp;file.&nbsp; <i>&lt;testdir>
+</i>is
+the directory containing the test content and <i>&lt;outdir></i> is the
+directory where exported files are. If <i>&lt;categories></i> is omitted,
+all of the test categories are exercised. Otherwise, it must contain the
+names of subdirectories of
+<i>&lt;testdir></i> separated by spaces indicating
+which test categories you want.
+<br>&nbsp;
+<h3>
+viewall.sh &lt;testdir> &lt;outdir></h3>
+Shell script generates web pages with the snapshot images from Maya and
+Performer for each test category.&nbsp; <i>&lt;testdir>
+</i>is the directory
+containing the test content and <i>&lt;outdir></i> is the directory where
+exported files are and where the web pages are saved. A page is made for
+each test category&nbsp; and it is called <b>snapshots.html.</b>
+<h3>
+<b><font face="Times New Roman,Times">snapshot.cpp</font></b></h3>
+Performer application which loads a list of files and saves the displayed
+image in RGB format.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;</div>
+
+</body>
+</html>

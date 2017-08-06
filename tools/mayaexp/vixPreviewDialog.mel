@@ -1,0 +1,176 @@
+//
+// @fn int vixExportOptions(string $parent, string $action, string $initialSettings, string $resultCallback )
+// This script posts the VIX file translator options.
+// The optionsString is of the form:
+//	varName1=value1;varName2=value2;...
+//
+// @param $parent		the elf parent layout for this options layout. It is always a scrollLayout.
+// @param $action		action to be performed by this proc. Valid options are:
+//				"query" - construct the options string and pass it to the resultCallback.
+//				"post" - post all the elf controls.
+// @param $initialSettings	current options string in effect at the time this script is invoked.
+// @param $resultCallback	proc to be called with the result string.
+//				resultCallback ( string $optionsString )
+//
+// @return 1 if successful, else 0
+//
+global proc int vixExportOptions(string $parent,
+    			   string $action,
+    			   string $initialSettings,
+    			   string $resultCallback )
+{
+	int		$bResult = 0;
+    string	$currentOptions;
+    string	$optionList[];
+    string	$optionBreakDown[];
+    int		$index;
+    int		$intVal;
+
+    if ($action == "post")
+	{
+		setParent $parent;
+		frameLayout  
+			-cll true
+				-cl false 
+				-bv true 
+				-bs "etchedIn"
+				-l "Export Options"
+				vixHierFrame;
+    			columnLayout -adj true vixExportCol;
+			radioButtonGrp
+     			-l "Export animation"
+    			-nrb 2 -cw3 175 75 75
+    			-la2 "On" "Off" vixDoAnim;
+			radioButtonGrp
+     			-l "Export skinning"
+    			-nrb 2 -cw3 175 75 75
+    			-la2 "On" "Off" vixDoSkin;
+			radioButtonGrp
+     			-l "Duplicate Vertices"
+    			-nrb 2 -cw3 175 75 75
+				-la2 "On" "Off" vixDupVerts;
+ 			radioButtonGrp
+    			-l "Visual preview"
+    			-nrb 2 -cw3 175 75 75
+    			-la2 "On" "Off" vixDoPreview;	
+			intField -l "Logging Level" 
+				-max 4 -min 1 vixLogLevel;				
+			setParent ..;		// columnLayout
+			setParent ..;		// frameLayout
+
+		frameLayout  
+			-cll true
+				-cl false 
+				-bv true 
+				-bs "etchedIn"
+				-l "Texture Options"
+				vixTexFrame;
+
+    		columnLayout -adj true vixTexCol;
+			radioButtonGrp
+    				-l "Export textures"
+    				-nrb 2 -cw3 175 75 75
+    				-la2 "On" "Off" vixDoTexture;
+			intSliderGrp -l "Width" -field true 
+				-max 10000 -fmx 4096 vixTexWidth;
+			intSliderGrp -l "Height" -field true 
+				-max 10000 -fmx 4096 vixTexHeight;
+			setParent ..;		// columnLayout
+			setParent ..;		// frameLayout
+                                				
+		// Now set to current settings.
+		$currentOptions = $initialSettings;
+		if (size($currentOptions) > 0)
+		{
+    		tokenize($currentOptions, ";", $optionList);
+    		for ($index = 0; $index < size($optionList); $index++)
+			{
+    			tokenize($optionList[$index], "=", $optionBreakDown);
+    			if ($optionBreakDown[0] == "textures")
+				{
+    				if ($optionBreakDown[1] == "0")
+    					radioButtonGrp -e -sl 2 vixDoTexture;
+    				else
+    					radioButtonGrp -e -sl 1 vixDoTexture;
+				}
+				else if ($optionBreakDown[0] == "loglevel")
+				{
+					intField -e -value $optionBreakDown[1] vixLogLevel;
+				}
+				else if ($optionBreakDown[0] == "animation")
+				{
+    				if ($optionBreakDown[1] == "0")
+						radioButtonGrp -e -sl 2 vixDoAnim;
+					else
+    					radioButtonGrp -e -sl 1 vixDoAnim;
+				}
+				else if ($optionBreakDown[0] == "skinning")
+				{
+    				if ($optionBreakDown[1] == "0")
+						radioButtonGrp -e -sl 2 vixDoSkin;
+					else
+    					radioButtonGrp -e -sl 1 vixDoSkin;
+				}
+				else if ($optionBreakDown[0] == "preview")
+				{
+    				if ($optionBreakDown[1] == "0")
+						radioButtonGrp -e -sl 2 vixDoPreview;
+					else
+    					radioButtonGrp -e -sl 1 vixDoPreview;
+				}
+				else if ($optionBreakDown[0] == "duplicateverts")
+				{
+    				if ($optionBreakDown[1] == "0")
+						radioButtonGrp -e -sl 2 vixDupVerts;
+					else
+    					radioButtonGrp -e -sl 1 vixDupVerts;
+				}
+				else if ($optionBreakDown[0] == "width" )
+				{
+					$intVal = $optionBreakDown[1];
+					intSliderGrp -e -v $intVal vixTexWidth;
+				}
+				else if ($optionBreakDown[0] == "height" )
+				{
+					$intVal = $optionBreakDown[1];
+					intSliderGrp -e -v $intVal vixTexHeight;
+				}
+ 			}
+		}
+		$bResult = 1;
+    }
+    else if ($action == "query")
+    {
+		$loglevel = `intField -q -value vixLogLevel`;
+		$currentOptions = "loglevel=" + $loglevel;
+    	if (`radioButtonGrp -q -sl vixDoTexture` == 1)
+			$currentOptions = $currentOptions + ";textures=1";
+		else
+			$currentOptions = "textures=0";
+		if (`radioButtonGrp -q -sl vixDoAnim` == 1)
+			$currentOptions = $currentOptions + ";animation=1";
+		else
+			$currentOptions = $currentOptions + ";animation=0";
+		if (`radioButtonGrp -q -sl vixDoSkin` == 1)
+			$currentOptions = $currentOptions + ";skinning=1";
+		else
+			$currentOptions = $currentOptions + ";skinning=0";
+    	if (`radioButtonGrp -q -sl vixDoPreview` == 1)
+			$currentOptions = $currentOptions + ";preview=1";
+    	else
+    	    $currentOptions = $currentOptions + ";preview=0";
+    	if (`radioButtonGrp -q -sl vixDupVerts` == 1)
+			$currentOptions = $currentOptions + ";duplicateverts=1";
+    	else
+    	    $currentOptions = $currentOptions + ";duplicateverts=0";
+		$intVal = `intSliderGrp -q -v vixTexWidth`;
+        $currentOptions = $currentOptions + ";width=" + $intVal + ";";
+        $intVal = `intSliderGrp -q -v vixTexHeight`;
+        $currentOptions = $currentOptions + ";height=" + $intVal + ";";
+
+    	eval($resultCallback + " \"" + $currentOptions + "\"");
+    	$bResult = 1;
+    }
+    return $bResult;
+}
+

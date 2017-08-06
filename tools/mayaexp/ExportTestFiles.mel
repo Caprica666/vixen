@@ -1,0 +1,72 @@
+//
+// ExportTestFiles $testdir, $outdir, $categories
+// $testdir base directory with Maya test files, must end with slash
+//          defaults to c:/mayaexp/tests/
+// $outdir  base directory for PFB, PFA output files, must end with slash
+//	    defaults to c:/mayaexp/tests/win
+// $categories which tests to run
+//	   "all" or one or more of "mesh" "nurbs" "tex" "subd"
+//
+// Maya script called on startup to export the Maya binary test files
+// below the base directory as PFB (Performer binary) format.
+// When the test script has finished, it exits Maya.
+//
+// To call this test script, open a DOS or Unix shell and type:
+//   maya -command 'ExportTestFiles("/mayaexp/tests/", "/mayaexp/tests/win/", "all")'
+// and it will start Maya and run the test script. Maya exits
+// automatically when the test script finishes or aborts in error.
+//
+// Directory structure assumed below $testdir
+//	mesh		contains polygon mesh Maya models
+//	subd		contains Maya subdivision surface models
+//	nurbs		contains Maya nurbs models
+//	tex		contains textured Maya models
+//
+// Directory structure below $outdir
+//	mesh/ind	gets PFB files exported as indexed polygons optimized for GL1
+//	mesh/indtri	gets PFB files exported as indexed tristrips optimized for GL1
+//	mesh/strip	gets PFB files exported as tristrips optimized for GL1
+//	mesh/gapfb	gets PFB files exported as indexed tristrips GeoArrays
+//	mesh/gapfa	gets PFA files exported as indexed tristrips GeoArrays
+//	mesh/subd	gets PFB files with meshes exported as subdivision surfaces
+//	mesh/nurbs	gets PFB files with meshes exported as nurbs
+//	subd/pfb	gets PFB files with sudivision surfaces preserved
+//	subd/pfa	gets PFA files with sudivision surfaces preserved
+//	subd/mesh	gets PFB files with subdivision surfaces exported as meshes
+//	subd/nurbs	gets PFB files with subdivision surfaces exported as nurbs
+//	nurbs/pfa	gets PFA files with nurbs preserved
+//	nurbs/pfb	gets PFB files with nurbs preserved
+//	nurbs/subd	gets PFB files with nurbs converted to subdivision surfaces
+//	nurbs/mesh	gets PFB files with tessellated nurbs
+//	tex/ind		gets PFB files exported as indexed polygons optimized for GL1
+//	tex/indtri	gets PFB files exported as indexed tristrips optimized for GL1
+//	tex/strip	gets PFB files exported as tristrips optimized for GL1
+//	tex/gapfb	gets PFB files exported as GeoArrays (indexed tri)
+//		
+//
+global proc ExportTestFiles(string $basedir, string $outdir, string $categories)
+{
+    string $logfile;
+    loadPlugin "pfbExport";
+    if ($basedir == "")
+	$basedir = "/mayaexp/tests/";
+    else
+	$basedir = $basedir + "/";
+    if ($outdir == "")
+	$outdir = "/mayaexp/results/win32/";
+    else
+	$outdir = $outdir + "/";
+    $logfile = $outdir + "exportlog.txt";
+    cmdFileOutput -o $logfile;
+    if (($categories == "all") || ($categories == "mesh"))
+	ExportMesh($basedir, $outdir);
+    if (($categories == "all") || ($categories == "tex"))
+	ExportTex($basedir, $outdir);
+    if (($categories == "all") || ($categories == "nurbs"))
+	ExportNurbs($basedir, $outdir);
+    if (($categories == "all") || ($categories == "subd"))
+	ExportSubd($basedir, $outdir);
+
+    cmdFileOutput -closeAll;
+    quit -force;
+}

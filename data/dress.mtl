@@ -1,0 +1,72 @@
+newmtl front1
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl front3
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl back2
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl back1
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl front3_Mirrored
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl back2_Mirrored
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl back1_Mirrored
+d 0.88
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+
+newmtl Stitches
+d 0
+Ns 1
+Ni 0
+Ka 0.0980392 0.0980392 0.0980392
+Kd 1 1 1
+Ks 0 0 0
+Km 0
+

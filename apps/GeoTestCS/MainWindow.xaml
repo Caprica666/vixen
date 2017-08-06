@@ -1,0 +1,13 @@
+﻿<Window x:Class="GeoTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:src="clr-namespace:GeoTest"
+        Title="GeoTest" Width="640" Height="480"
+		Background="transparent"
+       >
+	<src:GeoCanvas x:Name="geoCanvas1"
+ 			MediaDir="C:/projects/vixen/data/magicmirror"
+            ContentFile="ui/simplestage_meters.vix"
+>
+	</src:GeoCanvas>
+</Window>

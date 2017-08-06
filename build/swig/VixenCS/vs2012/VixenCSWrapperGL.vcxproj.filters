@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\Vixen_wrap.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\swigbuild.bat" />
+    <None Include="..\..\VCore.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VCore_csharp.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\Viewer.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\Vixen.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VString.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VString_csharp.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VString_csharp1.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VString_csharp2.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXAnim.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXAppear.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXArray.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXArray_csharp.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXBody.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXBox.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXEvent.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXGroup.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXMath.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXMedia.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXMesh.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXModel.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXObj.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXObj_csharp.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXPhysics.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXScene.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXTexture.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXUtil.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXVertexArray_csharp.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+    <None Include="..\..\VXWorld.swg">
+      <Filter>SWIGSources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="C++Sources">
+      <UniqueIdentifier>{d03e9c51-56c3-4bf0-86d2-6fe295f99f74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIGSources">
+      <UniqueIdentifier>{c54f3c97-8e9e-46d0-90d7-e07b436395aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\sharedworld.h">
+      <Filter>C++Sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

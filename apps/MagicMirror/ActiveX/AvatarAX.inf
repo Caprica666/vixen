@@ -1,0 +1,17 @@
+[version]
+signature="$CHICAGO$"
+AdvancedINF=2.0
+
+[Add.Code]
+AvatarAX.msi=AvatarAX.msi
+
+[AvatarAX.msi]
+file-win32-x86=thiscab
+clsid={30e01cfe-8b88-4d64-a362-2d11a2cd9873}
+FileVersion=1,0,0,0 
+
+[Setup Hooks]
+install=install
+
+[install]
+run=msiexec.exe /package """%EXTRACT_DIR%\AvatarAX.msi""" /qn

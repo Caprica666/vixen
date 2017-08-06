@@ -1,0 +1,22 @@
+//
+// ExportTex $testdir, $outdir
+// $testdir base directory with Maya test files, must end with slash
+// $outdir  base directory for PFB, PFA output files, must end with slash
+//
+// Exports Maya exporter texture test cases.
+//
+//	tex/ind		gets PFB files exported as indexed polygons optimized for GL1
+//	tex/indtri	gets PFB files exported as indexed tristrips optimized for GL1
+//	tex/strip	gets PFB files exported as tristrips optimized for GL1
+//	tex/gapfb	gets PFB files exported as GeoArrays (indexed tri)
+//
+global proc ExportTex(string $basedir, string $outdir)
+{
+    string $baseopts = "textures=1;rgb=1;width=256;height=256;preview=0;";
+    print "\nTEXTURING TESTS\n";
+    ExportAsPFB($basedir + "tex/", $baseopts + "indexed=1;tristrip=1;gl1=1;", $outdir + "tex/indtri/");
+    ExportAsPFB($basedir + "tex/", $baseopts + "indexed=1;gl1=1;", $outdir + "tex/ind/");
+    ExportAsPFB($basedir + "tex/", $baseopts + "indexed=0;tristrip=1;gl1=1;", $outdir + "tex/tri/");
+    ExportAsPFB($basedir + "tex/", $baseopts + "indexed=1;tristrip=1;gl1=0;", $outdir + "tex/gapfb/");
+    ExportAsPFB($basedir + "tex/", $baseopts + "indexed=0;tristrip=0;subd=1;gl1=1;", $outdir + "tex/subdpfb/");
+}

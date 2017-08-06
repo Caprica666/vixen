@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EF8A6E1E-C277-494B-9B24-3DB07A5F0DBC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vixen</RootNamespace>
+    <AssemblyName>VixenCS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\win32d\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>true</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin\win32\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Safe|AnyCPU'">
+    <OutputPath>..\..\..\bin\x64s\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <RegisterForComInterop>true</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\bin\x64d\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32d\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\..\..\bin\x64\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Safe|x64'">
+    <OutputPath>..\..\..\bin\x64s\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\bin\win32d\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32d\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\..\..\bin\win32\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Safe|x86'">
+    <OutputPath>..\..\..\bin\Win32s\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\..\bin\win32\VixenCS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>VixenCS.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Canvas3D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Form3D.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HandTracker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\AmbientLight.cs" />
+    <Compile Include="Sources\Animator.cs" />
+    <Compile Include="Sources\Appearance.cs" />
+    <Compile Include="Sources\BaseObj.cs" />
+    <Compile Include="Sources\Bitmap.cs" />
+    <Compile Include="Sources\BodyTracker.cs" />
+    <Compile Include="Sources\BoneAnimator.cs" />
+    <Compile Include="Sources\Box2.cs" />
+    <Compile Include="Sources\Box3.cs" />
+    <Compile Include="Sources\Camera.cs" />
+    <Compile Include="Sources\ClothSim.cs" />
+    <Compile Include="Sources\ClothSkin.cs" />
+    <Compile Include="Sources\Col4.cs" />
+    <Compile Include="Sources\Color.cs" />
+    <Compile Include="Sources\ColorInterp.cs" />
+    <Compile Include="Sources\ConnectEvent.cs" />
+    <Compile Include="Sources\CoreFloatArray.cs" />
+    <Compile Include="Sources\CoreIntArray.cs" />
+    <Compile Include="Sources\CoreObjArray.cs" />
+    <Compile Include="Sources\CoreTree.cs" />
+    <Compile Include="Sources\Deformer.cs" />
+    <Compile Include="Sources\DeviceBuffer.cs" />
+    <Compile Include="Sources\DirectLight.cs" />
+    <Compile Include="Sources\Engine.cs" />
+    <Compile Include="Sources\ErrorEvent.cs" />
+    <Compile Include="Sources\Evaluator.cs" />
+    <Compile Include="Sources\Event.cs" />
+    <Compile Include="Sources\ExtModel.cs" />
+    <Compile Include="Sources\FloatArray.cs" />
+    <Compile Include="Sources\FloatInterp.cs" />
+    <Compile Include="Sources\Flyer.cs" />
+    <Compile Include="Sources\FrameEvent.cs" />
+    <Compile Include="Sources\Geometry.cs" />
+    <Compile Include="Sources\GeoUtil.cs" />
+    <Compile Include="Sources\Group.cs" />
+    <Compile Include="Sources\IntArray.cs" />
+    <Compile Include="Sources\Interpolator.cs" />
+    <Compile Include="Sources\KeyColor.cs" />
+    <Compile Include="Sources\KeyEvent.cs" />
+    <Compile Include="Sources\KeyFramer.cs" />
+    <Compile Include="Sources\KinectTracker.cs" />
+    <Compile Include="Sources\Light.cs" />
+    <Compile Include="Sources\LoadEvent.cs" />
+    <Compile Include="Sources\LockObj.cs" />
+    <Compile Include="Sources\Material.cs" />
+    <Compile Include="Sources\Matrix.cs" />
+    <Compile Include="Sources\MediaBase.cs" />
+    <Compile Include="Sources\MediaSource.cs" />
+    <Compile Include="Sources\Mesh.cs" />
+    <Compile Include="Sources\MeshAnimator.cs" />
+    <Compile Include="Sources\MeshRef.cs" />
+    <Compile Include="Sources\Model.cs" />
+    <Compile Include="Sources\Morph.cs" />
+    <Compile Include="Sources\MouseEngine.cs" />
+    <Compile Include="Sources\MouseEvent.cs" />
+    <Compile Include="Sources\NavigateEvent.cs" />
+    <Compile Include="Sources\Navigator.cs" />
+    <Compile Include="Sources\NavInputEvent.cs" />
+    <Compile Include="Sources\ObjArray.cs" />
+    <Compile Include="Sources\ObjRef.cs" />
+    <Compile Include="Sources\PhongMaterial.cs" />
+    <Compile Include="Sources\Physics.cs" />
+    <Compile Include="Sources\Picker.cs" />
+    <Compile Include="Sources\PickEvent.cs" />
+    <Compile Include="Sources\Pose.cs" />
+    <Compile Include="Sources\PoseMapper.cs" />
+    <Compile Include="Sources\Quat.cs" />
+    <Compile Include="Sources\RagDoll.cs" />
+    <Compile Include="Sources\Ray.cs" />
+    <Compile Include="Sources\RayPicker.cs" />
+    <Compile Include="Sources\RefObj.cs" />
+    <Compile Include="Sources\RefPtr.cs" />
+    <Compile Include="Sources\Sampler.cs" />
+    <Compile Include="Sources\SCAPESkin.cs" />
+    <Compile Include="Sources\Scene.cs" />
+    <Compile Include="Sources\SceneEvent.cs" />
+    <Compile Include="Sources\SceneRef.cs" />
+    <Compile Include="Sources\SceneStats.cs" />
+    <Compile Include="Sources\Scriptor.cs" />
+    <Compile Include="Sources\Sequencer.cs" />
+    <Compile Include="Sources\SerialID.cs" />
+    <Compile Include="Sources\Shader.cs" />
+    <Compile Include="Sources\Shape.cs" />
+    <Compile Include="Sources\SharedFloatArray.cs" />
+    <Compile Include="Sources\SharedIntArray.cs" />
+    <Compile Include="Sources\SharedObj.cs" />
+    <Compile Include="Sources\SharedObjArray.cs" />
+    <Compile Include="Sources\SharedTree.cs" />
+    <Compile Include="Sources\SharedWorld.cs" />
+    <Compile Include="Sources\Skeleton.cs" />
+    <Compile Include="Sources\Skin.cs" />
+    <Compile Include="Sources\SoundPlayer.cs" />
+    <Compile Include="Sources\Sphere.cs" />
+    <Compile Include="Sources\SpotLight.cs" />
+    <Compile Include="Sources\String.cs" />
+    <Compile Include="Sources\SWIGTYPE_p_float.cs" />
+    <Compile Include="Sources\SWIGTYPE_p_int.cs" />
+    <Compile Include="Sources\SWIGTYPE_p_void.cs" />
+    <Compile Include="Sources\Texture.cs" />
+    <Compile Include="Sources\TrackEvent.cs" />
+    <Compile Include="Sources\Transformer.cs" />
+    <Compile Include="Sources\Trigger.cs" />
+    <Compile Include="Sources\TriggerEvent.cs" />
+    <Compile Include="Sources\TriHitEvent.cs" />
+    <Compile Include="Sources\TriMesh.cs" />
+    <Compile Include="Sources\Vec2.cs" />
+    <Compile Include="Sources\Vec3.cs" />
+    <Compile Include="Sources\Vec3Blender.cs" />
+    <Compile Include="Sources\Vec4.cs" />
+    <Compile Include="Sources\VertexArray.cs" />
+    <Compile Include="Sources\VertexPool.cs" />
+    <Compile Include="Sources\Viewer3D.cs" />
+    <Compile Include="Sources\VixenLib.cs" />
+    <Compile Include="Sources\VixenLibPINVOKE.cs" />
+    <Compile Include="Sources\World.cs" />
+    <Compile Include="Sources\World3D.cs" />
+    <Compile Include="VisualApp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VixenCS.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(Platform)" == x64 "$(WinDir)\Microsoft.NET\Framework64\v4.0.30319\RegAsm.exe"/codebase  $(TargetPath) /tlb:"$(TargetDir)$(TargetName).tlb" else "$(WinDir)\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"/codebase  $(TargetPath) /tlb:"$(TargetDir)$(TargetName).tlb";</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

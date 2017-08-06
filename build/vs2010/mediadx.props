@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>VIXEN_MEDIA_DX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link Condition="'$(Configuration)'!='Debug'">
+		<AdditionalLibraryDirectories>$(VIXEN_SDK)\dshow\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+		<AdditionalDependencies>vxmediadx$(BuildTargetSuffix).lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="'$(Configuration)'=='Debug'">
+		<AdditionalLibraryDirectories>$(VIXEN_SDK)\dshow\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+		<AdditionalDependencies>vxmediadx$(BuildTargetSuffix).lib;strmbasd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+	</ItemDefinitionGroup>
+</Project>

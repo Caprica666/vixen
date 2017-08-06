@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <HAVOK_DIR>D:\SDK\hk2013_1_0_r1</HAVOK_DIR>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(HAVOK_DIR)/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Condition="'$(Configuration)'=='Debug'">
+      <PreprocessorDefinitions>HK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>vxhavok$(BuildTargetSuffix).lib;hkBase.lib;hkInternal.lib;hkSerialize.lib;hkCompat.lib;hkSceneData.lib;hkGeometryUtilities.lib;hkaAnimation.lib;hkaRagdoll.lib;hkaInternal.lib;hclCloth.lib;hclInternal.lib;hclSetup.lib;hclAnimationBridge.lib;hclPhysicsBridge.lib;hkpDynamics.lib;hkpCollide.lib;hkcdInternal.lib;hkcdCollide.lib;hkpInternal.lib;hkpConstraint.lib;hkpConstraintSolver.lib;hkpUtilities.lib;hkpVehicle.lib;hkVisualize.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="'$(Configuration)'=='Debug'">
+      <AdditionalLibraryDirectories>$(HAVOK_DIR)/Lib/$(Platform)_vs2012/debug_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Link Condition="'$(Configuration)'=='Release'">
+      <AdditionalLibraryDirectories>$(HAVOK_DIR)/Lib/$(Platform)_vs2012/release_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Link Condition="'$(Configuration)'=='Safe'">
+      <AdditionalLibraryDirectories>$(HAVOK_DIR)/Lib/$(Platform)_vs2012/dev_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Lib Condition="'$(Configuration)'=='Debug'">
+      <AdditionalLibraryDirectories>$(HAVOK_DIR)/Lib/$(Platform)_vs2012/debug_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <Lib Condition="'$(Configuration)'=='Release'">
+      <AdditionalLibraryDirectories>$(HAVOK_DIR)/Lib/$(Platform)_vs2012/release_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <Lib Condition="'$(Configuration)'=='Safe'">
+      <AdditionalLibraryDirectories>$(HAVOK_DIR)/Lib/$(Platform)_vs2012/dev_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="HAVOK_DIR">
+      <Value>$(HAVOK_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

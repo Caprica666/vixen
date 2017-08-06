@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros" Condition="'$(Configuration)'=='Debug'">
+    <BuildTargetSuffix>$(PlatformArchitecture)d</BuildTargetSuffix>
+    <DebugSuffix>d</DebugSuffix>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(Configuration)'=='Safe'">
+    <BuildTargetSuffix>$(PlatformArchitecture)s</BuildTargetSuffix>
+    <DebugSuffix>s</DebugSuffix>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(Configuration)'=='Release'">
+    <BuildTargetSuffix>$(PlatformArchitecture)</BuildTargetSuffix>
+    <DebugSuffix>
+    </DebugSuffix>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros">
+    <VIXEN_SDK>$(VAR_ROOT)\external</VIXEN_SDK>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <IntDir>$(VIXEN_DIR)\obj\$(TargetName)\</IntDir>
+    <OutDir Condition="'$(TargetExt)'=='.lib'">$(VIXEN_DIR)\lib\</OutDir>
+    <OutDir Condition="'$(TargetExt)'!='.lib'">$(VIXEN_DIR)\bin\$(Platform)$(DebugSuffix)\</OutDir>
+    <TargetName>$(ProjectName)$(BuildTargetSuffix)</TargetName>
+    <IncludePath>$(DXSDK_DIR)\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\lib\$(PlatformShortName);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(VIXEN_DIR)\inc;$(VIXEN_SDK)\freeimage\inc;$(VIXEN_SDK)\pthread\inc;$(VAR_ROOT)\include\bucky;$(VAR_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VIXEN_BUCKY;STRICT;WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(VIXEN_DIR)\lib;$(VAR_ROOT)\lib;$(VIXEN_SDK)\freeimage\lib\$(Platform);$(VIXEN_SDK)\pthread\lib\$(Platform);$(VAR_ROOT)\external\glew-1.5.6\lib;$(ICPP_COMPILER12)\compiler\lib\intel64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vixenbky$(BuildTargetSuffix).lib;glew32.lib;Ws2_32.lib;opengl32.lib;glu32.lib;urlmon.lib;wininet.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+	</ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+	<ClCompile>
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+	</ClCompile>
+    <Link Condition="'$(Platform)'!='x64'">
+     <AssemblyDebug>true</AssemblyDebug>
+      <AdditionalDependencies>FreeImaged.lib;pthread.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="'$(Platform)'=='x64'">
+      <TargetMachine>MachineX64</TargetMachine>
+     <AssemblyDebug>true</AssemblyDebug>
+	<AdditionalDependencies>FreeImaged.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Safe'">
+    <ClCompile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <PreprocessorDefinitions>_ASSERT;_SAFE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link Condition="'$(Platform)'!='x64'">
+      <AdditionalDependencies>FreeImage.lib;pthread.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AssemblyDebug>true</AssemblyDebug>
+    </Link>
+    <Link Condition="'$(Platform)'=='x64'">
+      <AdditionalDependencies>FreeImage.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RecognizeRestrictKeyword>true</RecognizeRestrictKeyword>
+    </ClCompile>
+    <Link Condition="'$(Platform)'!='x64'">
+      <AdditionalDependencies>FreeImage.lib;pthread.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <Link Condition="'$(Platform)'=='x64'">
+      <AdditionalDependencies>FreeImage.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

@@ -1,0 +1,46 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	    xmlns:mm="clr-namespace:MagicMirror;assembly=MagicMirror"
+        xmlns:vix="clr-namespace:Vixen;assembly=VixenCS"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        Title="ViewerWindow"
+        SizeToContent="WidthAndHeight">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions/>
+
+        <StackPanel Height="300" Grid.Column="0" HorizontalAlignment="Left" Margin="12,9,0,0" Name="leftPanel" VerticalAlignment="Top" Width="160">
+            <Label Content="Animations" Height="28" Name="animLabel" HorizontalContentAlignment="Center" />
+            <ListBox Height="140" Name="animationsLoaded" Width="150" />
+			<StackPanel Grid.Column="0" Orientation="Horizontal" Name="animButtons" >
+				<Button Content="load" Height="24" Name="loadButton" Width="35" Margin="2,2"/>
+				<Button Content="play" Height="24" Name="playButton" Width="35" Margin="2,2"/>
+				<Button Content="pause" Height="24" Name="pauseButton" Width="40" Margin="2,2"/>
+			</StackPanel>
+			<StackPanel Grid.Column="0" Orientation="Horizontal" Name="saveButtons" >
+				<Button Content="save anim" Height="24" Name="saveAnimButton" Width="60" Margin="2,2"/>
+				<Button Content="save cloth" Height="24" Name="saveClothButton" Width="60" Margin="2,2"/>
+			</StackPanel>
+            <DockPanel Grid.Column="0" HorizontalAlignment="Left" Name="animChecks" >
+                <CheckBox Grid.Row="1" DockPanel.Dock="Left" Content="record" Height="24" Name="recordButton" Width="60" />
+                <CheckBox Grid.Row="1" DockPanel.Dock="Top" Content="repeat" Height="24" Name="repeatButton" Width="60" />
+                <CheckBox Grid.Row="1" Content="reverse" Height="24" Name="reverseButton" Width="60" />
+            </DockPanel>
+        </StackPanel>
+        <GridSplitter/>
+            <mm:AvatarCanvas x:Name="avatarCanvas"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    MinWidth="400"
+                    MinHeight="600"
+ 					ConfigFile="c:\projects\vixen\data\magicmirror\amyconfig.json"
+                 >
+            </mm:AvatarCanvas>
+    </Grid>
+
+</Window>

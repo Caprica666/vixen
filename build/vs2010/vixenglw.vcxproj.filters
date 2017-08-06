@@ -1,0 +1,795 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GL Sources">
+      <UniqueIdentifier>{f2741a61-5cc0-45d2-8f00-f1e13193dfbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Sources">
+      <UniqueIdentifier>{709d210d-a792-4090-976b-889b641d2410}</UniqueIdentifier>
+      <Extensions>cpp</Extensions>
+    </Filter>
+    <Filter Include="Scene Headers">
+      <UniqueIdentifier>{33462d91-4d3a-493e-a78a-d0cb5f1df5b6}</UniqueIdentifier>
+      <Extensions>h;inl;i</Extensions>
+    </Filter>
+    <Filter Include="Sim Sources">
+      <UniqueIdentifier>{f17a7c51-9810-4621-b33c-ce2db95d612a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sim Headers">
+      <UniqueIdentifier>{79cb785c-2092-4c18-9faf-9fe68ae0b71f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win32 Files">
+      <UniqueIdentifier>{45de1abe-aff2-4059-a49c-590b890ec0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win32 Files\headers">
+      <UniqueIdentifier>{652149a1-5a02-4eed-a40b-77961467a18a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util Sources">
+      <UniqueIdentifier>{ccca8a33-a827-4335-afdc-3cbe2c34441f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util Headers">
+      <UniqueIdentifier>{1cabefcd-6987-4e1e-aaf3-ca36147dc3a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base Headers">
+      <UniqueIdentifier>{559f6930-2f74-4f38-a054-106f34af73b3}</UniqueIdentifier>
+      <Extensions>*.h,*.inl</Extensions>
+    </Filter>
+    <Filter Include="Base Sources">
+      <UniqueIdentifier>{e77166e2-827c-4500-aebc-45510529df46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render Sources">
+      <UniqueIdentifier>{5d618f70-2e96-4be8-ad6e-1e9367d094a7}</UniqueIdentifier>
+      <Extensions>*.cpp</Extensions>
+    </Filter>
+    <Filter Include="Render Headers">
+      <UniqueIdentifier>{8fb0eebb-9f39-4d17-bdae-f214782854bb}</UniqueIdentifier>
+      <Extensions>*.h,*.inl</Extensions>
+    </Filter>
+    <Filter Include="vcore sources">
+      <UniqueIdentifier>{30e87319-93c4-4978-9ca6-7e8c7fb06fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vcore headers">
+      <UniqueIdentifier>{edb80f7a-102f-486b-9ba1-8192325ff026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL Headers">
+      <UniqueIdentifier>{e44969ea-76fd-4c4b-a240-fcc3a5e2ed41}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\ogl\appgl.cpp">
+      <Filter>GL Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ogl\imagegl.cpp">
+      <Filter>GL Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ogl\lightgl.cpp">
+      <Filter>GL Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ogl\meshgl.cpp">
+      <Filter>GL Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ogl\ocull.cpp">
+      <Filter>GL Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\cam.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\distscene.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\extmodel.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\light.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\model.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\octree.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\scene.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\scenethread.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\shape.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\simpleshape.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\sprite.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\world3d.cpp">
+      <Filter>Scene Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\deformer.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\engine.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\interpolator.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\keyframe.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\skin.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\trigger.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\xformer.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\imagedds.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\joystick.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\midi.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\scene-win.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\scenegl-win.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\world-win.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\win32\world3d-win.cpp">
+      <Filter>Win32 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\arcball.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\flyer.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\framestats.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\navigator.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\quadtree.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\RayPicker.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\terrain.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\terrcoll.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\Trackball.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\VCursor.cpp">
+      <Filter>Util Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\array.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\bitmap.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\box.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\bufmess.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\event.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\fileio.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\group.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\loadq.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\matrix.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\messenger.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\Obj.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\quat.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\sphere.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base\world.cpp">
+      <Filter>Base Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\appearance.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\fog.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\geodraw.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\geomesh.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\geonorm.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\geosort.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\image.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\loadfont.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\material.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\sampler.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\textgeom.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\trimesh.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\vtxaos.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\vtxcache.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\vtxpool.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\valloc-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\valloc.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vbufq.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vcore-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vdbg-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vfile-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vfile.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vlock-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vobj.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vsocket.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vstream.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vstring-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vstring.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vthread-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vthread.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vtlsdata-win.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vtree.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vixen_header.cpp" />
+    <ClCompile Include="..\..\src\vcore\vcore_header.cpp" />
+    <ClCompile Include="..\..\src\sim\skeleton.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\pose.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\shader.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\posemapper.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\devbuf.cpp">
+      <Filter>Render Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\bvhloader.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\animator.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\boneanim.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\parser.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\scriptor.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\sequencer.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\meshanim.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sim\morph.cpp">
+      <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ogl\rendergl.cpp">
+      <Filter>GL Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\scene\vxcam.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxdistscene.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxdualscene.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxextmodel.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxlight.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxmodel.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxoctree.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxscene.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxscenethread.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxshape.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxsimpleshape.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxsprite.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxtypes.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\vxworld3d.h">
+      <Filter>Scene Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxdeformer.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxengine.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxinterpolator.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxkeyframe.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxsequencer.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxskin.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxtransformer.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxtrigger.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\win32\ddglue.h">
+      <Filter>Win32 Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\win32\dds.h">
+      <Filter>Win32 Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\win32\vxjoystick.h">
+      <Filter>Win32 Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\win32\vxmidi.h">
+      <Filter>Win32 Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\win32\vxwinworld.h">
+      <Filter>Win32 Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxarcball.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxcursor.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxdistapp.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxflyer.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxframestats.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxnavigator.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxquadtree.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxraypicker.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxskydome.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxterrain.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxterrcoll.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxtrackball.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\util\vxviewerapp.h">
+      <Filter>Util Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\basetypes.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxarray.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxbase.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxbitmap.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxbox.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxcol.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxdict.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxevent.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxfile.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxgroup.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxload.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxmath.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxmatrix.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxmess.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxobj.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxsphere.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxsysevents.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\base\vxworld.h">
+      <Filter>Base Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\dib-glue.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\texfont.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxappear.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxfog.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxgeosort.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vximage.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vximageswitch.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxmaterial.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxmesh.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxsampler.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxtextgeom.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxvtxaos.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxvtxcache.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxvtxpool.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\pcport.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\stream-win.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\thread-win.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\valloc.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\varray.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vbase.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vbufq.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vcast.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vcom.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vcore.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vdebug.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vdict.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vfile.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\vlock-win.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vlock.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vnotify.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vobj.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vpool.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vref.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vsocket.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vstream.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vstring.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vthread.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\vtlsdata.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vtree.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vtypes.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\winglue.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\glut.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\vixengl.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\vxgdev.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\vxlightgl.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\vxocull.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\vxscenegl.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vixen.h" />
+    <ClInclude Include="..\..\inc\vxexport.h" />
+    <ClInclude Include="..\..\inc\vxutil.h" />
+    <ClInclude Include="..\..\src\sim\computethread.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxpose.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxskeleton.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxposemapper.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\vxdevbuf.h">
+      <Filter>Render Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxanimator.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxscriptor.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\glxext.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\WGLEXT.H">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\sim\vxmorph.h">
+      <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\ogl\vxrendergl.h">
+      <Filter>GL Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\inc\scene\vxdualscene.inl">
+      <Filter>Scene Headers</Filter>
+    </None>
+    <None Include="..\..\inc\scene\vxmodel.inl">
+      <Filter>Scene Headers</Filter>
+    </None>
+    <None Include="..\..\inc\scene\vxscene.inl">
+      <Filter>Scene Headers</Filter>
+    </None>
+    <None Include="..\..\inc\sim\vxengine.inl">
+      <Filter>Sim Headers</Filter>
+    </None>
+    <None Include="..\..\inc\util\vxviewerapp.inl">
+      <Filter>Util Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxbox.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxcol.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxdict.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxevent.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxmath.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxmatrix.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxmess.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxobj.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+    <None Include="..\..\inc\render\vxappear.inl">
+      <Filter>Render Headers</Filter>
+    </None>
+    <None Include="..\..\inc\render\vximage.inl">
+      <Filter>Render Headers</Filter>
+    </None>
+    <None Include="..\..\inc\render\vxmesh.inl">
+      <Filter>Render Headers</Filter>
+    </None>
+    <None Include="..\..\inc\render\vxvtxpool.inl">
+      <Filter>Render Headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\varray.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\vdict.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\vobj.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\vref.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\vrefptr.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\win32\vtlsdata.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\vcore\vtree.inl">
+      <Filter>vcore headers</Filter>
+    </None>
+    <None Include="..\..\inc\base\vxsysevents.inl">
+      <Filter>Base Headers</Filter>
+    </None>
+  </ItemGroup>
+</Project>

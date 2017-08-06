@@ -1,0 +1,13 @@
+﻿<Window x:Class="VideoTest.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:src="clr-namespace:VideoTest"
+    xmlns:vix="crl-namespace:Vixen;assembly=VixenCS"
+	Title="Window3D" Height="640" Width="480"
+	>
+	<src:VideoCanvas x:Name="videowindow"
+		MediaDir="c:/projects/vixen/data/fapdata"
+		ContentFile="realvideo.mpg"
+		AudioFile="RealAudio.mp3">
+    </src:VideoCanvas>
+</Window>

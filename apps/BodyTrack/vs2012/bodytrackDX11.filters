@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\bodytrack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\BodyTrack.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Inspector Results\r000mi1\r000mi1.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+    <None Include="My Inspector Results\r001mi1\r001mi1.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="My Inspector Results">
+      <UniqueIdentifier>{adf17964-d68c-4baa-9443-8042ad9f6b5b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

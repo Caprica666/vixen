@@ -1,0 +1,14 @@
+load anim\amy\stepleft.hkt amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\spinright.hkt amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\idle_impatient.hkt amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\rockingwait.hkt amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\overright.vixt amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\idlespin2.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\idlespin3.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\idleside.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\fancyspin.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\catwalk1.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\stephipleft.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\stephipright.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\leftshimmy.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
+load anim\amy\CM\rightshimmy.vix amyroot.skeleton -s -t amyavatar.amyroot.skeleton
