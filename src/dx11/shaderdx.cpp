@@ -137,7 +137,7 @@ intptr		DXRenderer::Compile(const Shader* shader)
 	return (intptr) shaderobj;
 }
 
-#define SHADER_PATH "D:\\projects\\vixen\\data\\shaders\\hlsl5\\"
+#define SHADER_PATH "C:\\projects\\vixen\\data\\shaders\\hlsl5\\"
 
 /*
  * Makes and installs the default vertex and pixel shaders.

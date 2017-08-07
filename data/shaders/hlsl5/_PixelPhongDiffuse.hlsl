@@ -53,10 +53,11 @@ cbuffer ActiveLights : register(b2)
 {
 	PixelPhongDiffuse surfaceshader;
 	DirectLight	light0;
+	DirectLight	light1;
 };
 
 
-Light LightList[1];
+Light LightList[2];
 
 SurfaceShader SurfaceColor;
 
