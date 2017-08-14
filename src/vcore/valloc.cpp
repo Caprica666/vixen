@@ -1,5 +1,64 @@
 #include "vcore/vcore.h"
-#include <malloc.h>
+
+#ifdef __APPLE__
+#include <malloc/malloc.h>  // OSX
+#endif
+
+//============================================================
+// global operator new and delete
+//============================================================
+
+#ifdef _DEBUG
+namespace Vixen {
+namespace Core {
+	
+VX_IMPLEMENT_CLASS(RogueAllocator, Allocator);
+
+RogueAllocator* RogueAllocator::s_ptheBeanCounter = NULL;
+
+RogueAllocator	g_daGodFather;
+
+RogueAllocator::RogueAllocator()
+  : Allocator()
+{
+	VX_ASSERT (s_ptheBeanCounter == NULL);
+	s_ptheBeanCounter = this;
+}
+
+RogueAllocator::~RogueAllocator()
+{
+//	VX_PRINTF(("~RogueAllocator      "));
+	VX_PRINTF(("operator new/delete  "));
+	s_ptheBeanCounter = NULL;
+}
+	
+}
+}
+#endif
+
+
+void* _cdecl operator new(size_t size, Vixen::Core::Allocator* pAlloc)
+{
+	// Use allocator if present, otherwise, straight allocation
+	if (pAlloc)
+		return pAlloc->Alloc (size);
+	else
+		return Vixen::Core::GlobalAllocator::Get()->Alloc (size);
+}
+
+void _cdecl operator delete( void *p, Vixen::Core::Allocator* pAlloc)
+{
+	// Handle delete of null pointer
+	if (p)
+	{
+		// Use allocator if present, otherwise, straight delete operation
+		if (pAlloc)
+			pAlloc->Free (p);
+		else
+			Vixen::Core::GlobalAllocator::Get()->Free (p);
+	}
+}
+
 
 namespace Vixen {
 namespace Core {
@@ -18,21 +77,23 @@ VX_IMPLEMENT_CLASS(PoolAllocator, Allocator);
 Chain* Chain::Create(Allocator* pAlloc, Chain*& pHead, size_t nMax, size_t cbElement)
 {
 	VX_ASSERT(nMax > 0 && cbElement > 0);
+	VX_ASSERT(pAlloc != NULL);
 
 	// NULL allocator passed - use the one used on other elements
 	// in the chain if non-NULL, or just get the Thread allocator;
-	if (pAlloc == NULL)
-		if (pHead == NULL || (pAlloc = pHead->pAlloc) == NULL)
-			pAlloc = ThreadAllocator::Get();
+//	if (pAlloc == NULL)
+//		if (pHead == NULL || (pAlloc = pHead->pAlloc) == NULL)
+//			pAlloc = ThreadAllocator::Get();
 
-	Chain* p = (Chain*) pAlloc->Alloc (sizeof(Chain) + nMax * cbElement);
+	size_t amount = sizeof(Chain) + nMax * cbElement;
+	Chain* p = (Chain*) pAlloc->Alloc (amount);
 
 	if (p)
 	{
 		p->nLength = nMax * cbElement;
 		p->pNext = pHead;
 		p->pAlloc = pAlloc;
-		pHead = p;  // change head (adds in reverse order for simplicity)
+		pHead = p;
 	}
 	return p;
 }
@@ -95,44 +156,59 @@ bool Chain::ContainsPtr (void* ptr)
 
 	return false;
 }
+
+
+size_t Chain::TotalSize()
+{
+	size_t total = 0;
+	for (Chain* p = this; p != NULL; p = p->pNext)
+		total += p->nLength;
+	
+	return total;
+}
+	
+int Chain::NumBlocks()
+{
+	int total = 0;
+	for (Chain* p = this; p != NULL; p = p->pNext)
+		total++;
+	
+	return total;
+}
+	
 #endif
 
-TempAllocScope::TempAllocScope (FastAllocator* pAlloc)
-{
-	assert (pAlloc != NULL);
-	TLSData::Get()->FastStack.Push(pAlloc);
-}
-
-TempAllocScope::~TempAllocScope()
-{
-	TLSData::Get()->FastStack.Pop();
-}
 
 //============================================================
 // Allocator class
 //============================================================
 
-void	Allocator::FreeAll()
-{
-#ifdef _DEBUG
-	if (Allocator::Debug) PrintDebugStats();
-#endif
-	VX_ASSERT(false);
-}
-
-#ifdef _DEBUG
 Allocator::Allocator()
-	: m_totalAllocs	(0),
-	m_remainingFrees(0),
-	m_currentSize	(0),
-	m_maxSize		(0),
-	m_totalSize		(0),
-	m_Options		(ALLOC_ZeroMem),
-	m_BlockAlloc	(NULL)
+:   m_BlockAlloc	(NULL),
+    m_Options		(/*ALLOC_ZeroMem*/)
 {
+    Alignment (4);
+    ResetDebugStats();
 }
 
-void Allocator::UpdateDebugStats(intptr amount)
+void Allocator::Alignment (int align)
+{
+#ifdef _DEBUG
+    for (int i = 1; i < sizeof (int)-1; i++)
+        if ((1 << i) == align)
+            goto AllOK;
+    
+    // Alignment should be a power of 2
+    VX_ASSERT (false);
+#endif
+	// yeah.yeah.yeah all you 'purists' ... eat shit
+AllOK:
+    m_AlignmentMask = align - 1;
+}
+    
+    
+#ifdef _DEBUG
+void Allocator::UpdateDebugStats(long amount, void* ptr /* = NULL */)
 {
 	m_currentSize += amount;
 
@@ -158,72 +234,97 @@ void Allocator::ResetDebugStats()
 	m_currentSize		= 0;
 	m_maxSize			= 0;
 	m_totalSize			= 0;
+	
+	m_blockAllocs		= 0;
+	m_blockFrees		= 0;
+	m_lastWords[0]		= 0;
 }
 
 
 void Allocator::PrintDebugStats()
 {
-	VX_PRINTF(("\ttotalAllocs : %ld, remainingFrees : %ld, currentSize : %ld, maxSize : %ld, totalSize : %ld\r\n",
-			m_totalAllocs, m_remainingFrees, m_currentSize, m_maxSize, m_totalSize));
-}
-#else
-Allocator::Allocator()
-  : m_BlockAlloc	(NULL),
-	m_Options		(ALLOC_ZeroMem)
-{
+	VX_PRINTF(("\talloc:%6ld, !free:%6ld, size:%8ld, maxSize:%8ld, totalSize:%8ld%s\r\n",
+			m_totalAllocs, m_remainingFrees, m_currentSize, m_maxSize, m_totalSize, m_lastWords));
 }
 #endif
-
-
+    
+    
 //============================================================
 // GlobalAllocator class
 //============================================================
 
-GlobalAllocator*	GlobalAllocator::s_ptheOneAndOnly;
+GlobalAllocator*	GlobalAllocator::s_ptheOneAndOnly = NULL;
+	
+GlobalAllocator		g_grandpa;
 
-GlobalAllocator::GlobalAllocator(int unused)
+GlobalAllocator::GlobalAllocator()
 {
+    VX_ASSERT (s_ptheOneAndOnly == NULL);
+    s_ptheOneAndOnly = this;
 }
 
+GlobalAllocator::~GlobalAllocator()
+{
+    s_ptheOneAndOnly = NULL;
+    VX_PRINTF(("~GlobalAllocator      "));
+}
+	
+ 
 void* GlobalAllocator::Alloc (size_t amount)
 {
-#ifdef _DEBUG
-	UpdateDebugStats (amount);
-#endif
 	void* ptr;
 	if (m_Options & ALLOC_ZeroMem)
 		ptr = calloc(1, amount);
 	else
 		ptr = malloc(amount);
+
+    UpdateDebugStats (SizeOfPtr(ptr), ptr);
 	VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator::Alloc(%d) %p\n", amount, ptr));
-	return ptr;
+	
+    return ptr;
 }
 
 void GlobalAllocator::Free (void* ptr)
 {
-#if defined(_DEBUG) && defined(_WIN32)
-	intptr	amount = _msize(ptr);
-	UpdateDebugStats(-amount);
-	VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator::Free(%d) %p\n", amount, ptr));
-#else						// TODO: figure out what to do on Linux
-	VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator_Free %p\n", ptr));
-#endif
-	free (ptr);
+	UpdateDebugStats(-SizeOfPtr(ptr), ptr);
+    VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator::Free(%d) %p\n", amount, ptr));
+
+    free (ptr);
 }
 
-void* GlobalAllocator::Grow (void* ptr, size_t newsize)
+    
+size_t GlobalAllocator::SizeOfPtr(void* ptr)
 {
-	#if defined(_DEBUG) && defined(_WIN32)
-	size_t	amount = _msize(ptr);
-	UpdateDebugStats (newsize - amount);
-	VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator::Free(%d) %p\n", amount, ptr));
-#else 						// TODO: figure out what to do on Linux
-	VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator_Free %p\n", ptr));
+#ifdef _WIN32
+	size_t	amount = _msize (ptr);
+#elif defined(__APPLE__)
+	size_t  amount = malloc_size (ptr);
+#else
+	VX_ASSERT (false);
+	size_t	amount = 0;
 #endif
-	return realloc(ptr, newsize);
+	return	amount;
 }
 
+//============================================================================
+// FastContext
+//============================================================================
 
+FastContext::FastContext (size_t initial, size_t increment)
+{
+	TLSData::Get()->FastStack.Push (new FastAllocator(initial, increment));		// memory leak prone???
+}
+	
+FastContext::~FastContext()
+{
+	delete TLSData::Get()->FastStack.Pop();
+};
+
+FastContext::operator FastAllocator*() const
+{
+	return CAST_(FastAllocator, TLSData::Get()->FastStack.Top());
+}
+	
 //============================================================================
 // FastAllocator
 //============================================================================
@@ -260,15 +361,17 @@ FastAllocator::~FastAllocator()
 		m_blocks->FreeDataChain (m_keepBlock);
 	if (m_freeBlocks)
 		m_freeBlocks->FreeDataChain (NULL);
+    
+    VX_PRINTF(("~FastAllocator         "));
 }
 
-Allocator* FastAllocator::Get()
+FastAllocator* FastAllocator::Get()
 {
 	// It is OK if this method returns a ThreadAllocator (placed as default onto
 	// stack when thread is instantiated).  It is only slightly less efficient at
 	// memory management, but still gets the job done.
 	// FastAllocator* pFastAlloc = CAST_(FastAllocator, tlsState->FastStack.Top());
-	Allocator* pFastAlloc = TLSData::Get()->FastStack.Top();
+	FastAllocator* pFastAlloc = CAST_(FastAllocator, TLSData::Get()->FastStack.Top());
 	VX_ASSERT (pFastAlloc != NULL);
 	return pFastAlloc;
 }
@@ -311,7 +414,7 @@ void* FastAllocator::Alloc(size_t size)
 		else
 		{
 			size_t delta = (m_blocks ? m_incrementSize : m_initialSize);
-			newBlock = Chain::Create(m_BlockAlloc, m_blocks, 1, delta);
+			Chain::Create(m_BlockAlloc, m_blocks, 1, delta);
 		}
 		// Reset internal buffer pointers
 		m_bufUsed = 0;
@@ -324,16 +427,13 @@ void* FastAllocator::Alloc(size_t size)
 	// Get pointer to new chunk and update buffer variable
 	char*  mem = (char*) m_blocks->data() + m_bufUsed;
 	m_bufUsed += AlignMem (size);
-#ifdef _DEBUG
-	UpdateDebugStats (size);
-#endif
+	UpdateDebugStats (size, mem);
 
 	// Return pointer to memory chunk
 	return mem;
 }
 
-
-void FastAllocator::Empty()
+void FastAllocator::FreeAll()
 {
 	Chain**	reused = &m_freeBlocks;
 	Chain*	p = m_freeBlocks;
@@ -341,7 +441,7 @@ void FastAllocator::Empty()
 
 	while (p != NULL)						// find end of free block list
 	{
-		reused = &(p->pNext); 
+		reused = &(p->pNext);
 		p = p->pNext;
 	}
 	p = m_blocks;							// determine which blocks can be reused
@@ -364,25 +464,13 @@ void FastAllocator::Empty()
 	}
 	*reused = NULL;							// end reused block list
 	m_blocks = m_keepBlock;
+}
+
+void FastAllocator::Empty()
+{
+	FreeAll();
 	Init();
 }
-
-void FastAllocator::FreeAll()
-{
-	if (m_freeBlocks)
-		m_freeBlocks->FreeDataChain(NULL);
-	if (m_blocks)
-	{
-		// Free the entire memory chain at once
-		m_blocks->FreeDataChain (m_keepBlock);
-		Init();
-	}
-
-	// Make sure we are truly in a default state
-	VX_ASSERT (m_bufUsed == 0 && ((m_bufSize == 0 && m_blocks == NULL) || m_keepBlock));
-}
-
-
 
 void FastAllocator::Init()
 {
@@ -403,9 +491,6 @@ void FastAllocator::Init()
 		m_bufSize = 0;
 		m_blocks = NULL;
 	}
-#ifdef _DEBUG
-	ResetDebugStats();
-#endif
 }
 
 
@@ -451,8 +536,15 @@ FixedLenAllocator::~FixedLenAllocator()
 {
 	// Free memory if not already done
 	if (m_blocks != NULL)
+	{
+#ifdef _DEBUG
+		m_blockFrees -= m_blocks->NumBlocks();
+		sprintf (m_lastWords, "   %ld*%ld", m_blockAllocs, m_elementSize * m_blockSize + sizeof(Chain));
+#endif
 		m_blocks->FreeDataChain();
+	}
 	VX_TRACE2(Allocator::Debug, ("FixedLenAllocator::Delete(%d, %d)\n", m_elementSize, m_blockSize));
+    VX_PRINTF (("  ~FixedLenAlloc-%-4d", m_elementSize));
 }
 
 void* FixedLenAllocator::Alloc (size_t size)
@@ -469,7 +561,10 @@ void* FixedLenAllocator::Alloc (size_t size)
 		Chain* newBlock = Chain::Create (m_BlockAlloc, m_blocks, m_blockSize, m_elementSize);
 		VX_ASSERT(newBlock != NULL);
 #ifdef _DEBUG
-		UpdateDebugStats (m_blockSize * m_elementSize);
+//      this would keep track of the block allocations, not the sub-allocations (see below call
+//      to UpdateDebugStats() which registers the requested size.
+//		UpdateDebugStats (m_blockSize * m_elementSize);
+		m_blockAllocs++;
 #endif
 		// chain in reverse order to make it easier to debug
 		char*	pRaw = (char*) newBlock->data();
@@ -485,39 +580,58 @@ void* FixedLenAllocator::Alloc (size_t size)
 
 	// we must have something
 	VX_ASSERT (m_freeList != NULL);
-#ifdef _DEBUG
 	VX_ASSERT (m_freeList->nLength >= 0);
-#endif
-	// Extract next element from head of list and zero-init pointer
+
+    // Extract next element from head of list and zero-init pointer
 	Chain* pVChain = m_freeList;
 	m_freeList = m_freeList->pNext;
-#ifdef _DEBUG
+
+    UpdateDebugStats(size, pVChain);
 	VX_ASSERT ((m_freeList == NULL) || (m_freeList->nLength >= 0));
-#endif
-	pVChain->pNext = NULL;
+//	pVChain->pNext = NULL;		// should be OK, since ALLOC_ZeroMem is being phased out
 
 	// Return pointer to memory block
 	return pVChain;
 }
 
-void* FixedLenAllocator::Grow(void* ptr, size_t size)
+void FixedLenAllocator::Free(void* aPtr)
 {
-	return NULL;
+#ifdef _DEBUG
+    UpdateDebugStats(-m_elementSize, aPtr);
+        
+    // Make sure that we are freeing a pointer which actually beloings to this allocator.
+    VX_ASSERT (m_blocks && m_blocks->ContainsPtr (aPtr));
+#endif
+    if (m_Options & ALLOC_ZeroMem)
+        memset(aPtr, 0, m_elementSize);
+
+	// Chain this back into the free list.  Note the unsafe cast to VChain pointer -
+    // it is assumed that we are indeed passing a valid VChain pointer!
+    Chain*	pVChain = (Chain*)aPtr;
+    pVChain->pNext = m_freeList;
+    m_freeList = pVChain;
 }
 
 void FixedLenAllocator::FreeAll()
 {
-	if (m_blocks)
-	{
-		// Remove all the memory at once
-		m_blocks->FreeDataChain();
-		Init();
-	}
-	VX_TRACE(Allocator::Debug, ("FixedLenAllocator::FreeAll(%d, %d)\n", m_elementSize, m_blockSize));
-	// Make sure we are truly in a default state
-	VX_ASSERT (m_freeList == NULL && m_blocks == NULL);
-}
+	Chain* blockptr = m_blocks;
 
+	m_freeList = NULL;
+	while (blockptr)
+	{
+		char*	pRaw = (char*) blockptr->data();
+		pRaw += (m_blockSize - 1) * m_elementSize;
+
+		for (long ii = (long) m_blockSize - 1; ii >= 0; ii--, pRaw -= m_elementSize)
+		{
+			Chain* pVChain = (Chain*) pRaw;
+			pVChain->pNext = m_freeList;
+			m_freeList = pVChain;
+		}
+		blockptr = blockptr->pNext;
+	}
+	VX_TRACE(Allocator::Debug, ("FixedLenAllocator::FreeAll()\n"));
+}
 
 void FixedLenAllocator::Init()
 {
@@ -526,9 +640,7 @@ void FixedLenAllocator::Init()
 	m_blocks = NULL;
 
 	// Reset debugging stats
-#ifdef _DEBUG
 	ResetDebugStats();
-#endif
 }
 
 void FixedLenAllocator::SetElementAndBlockSize(size_t eSize, size_t bSize)
@@ -541,8 +653,50 @@ void FixedLenAllocator::SetElementAndBlockSize(size_t eSize, size_t bSize)
 	m_blockSize   = bSize;
 }
 
-PoolAllocator*	PoolAllocator::s_ptheOneAndOnly;
+//============================================================================
+// PoolAllocator
+//============================================================================
+    
+/*!
+ * @fn PoolAllocator::PoolAllocator(Allocator* blockalloc, int npools)
+ * @param blockalloc	Block allocator to use to allocate memory for pools.
+ * @param smallest		Size of the smallest element pool. Others pools are multiples of this base size.
+ * @param npools		Number of memory pools to use.
+ * @param options		Allocator options.
+ *
+ * A pool allocator creates several internal memory pools which
+ * are each maintained by a fixed length allocator. The block
+ * allocator supplied here is used to obtain the memory for these pools.
+ * Blocks too large for the pools are allocated directly using the block allocator.
+ *
+ * @see ThreadAllocator GlobalAllocator Allocator::SetBlockAllocator
+ */
 
+PoolAllocator::PoolAllocator(Allocator* blockalloc, size_t smallest, size_t npools, int options) : Allocator()
+{
+    if (blockalloc == NULL)
+        blockalloc = GlobalAllocator::Get();
+	SetOptions(options);
+    m_BlockAlloc = blockalloc;
+    m_NumPools = npools;
+
+    for (int i = 0; i < m_NumPools && i < ALLOC_MaxPools; ++i)
+    {
+        m_MaxSize = smallest << i;
+        m_MemPool[i] = new FixedLenAllocator (m_MaxSize, (8192 - sizeof(Chain)) / m_MaxSize);
+    }
+}
+    
+PoolAllocator::~PoolAllocator()
+{
+    for (int i = 0; i < m_NumPools; ++i)
+    {
+        VX_TRACE(Allocator::Debug, ("Free pool %d\n", m_MemPool[i]->ElementSize()));
+        delete m_MemPool[i];
+    }
+    VX_PRINTF (("    ~PoolAllocator     "));
+}
+    
 /*!
  * @fn void PoolAllocator::SetBlockAllocator(Allocator* blockalloc)
  * @param blockalloc Block allocator to use to allocate memory for pools.
@@ -594,8 +748,6 @@ void* PoolAllocator::Alloc(size_t byte_size)
 {
 	void*	ptr = NULL;
 
-	if (m_MaxSize == 0)
-		InitPools(new (m_BlockAlloc) FixedLenAllocator(m_BaseSize, m_BaseSize * 64), m_NumPools);
 	byte_size += sizeof(size_t);			// make room for size
 	if (byte_size > m_MaxSize)				// too big for pools?
 		ptr = m_BlockAlloc->Alloc(byte_size);
@@ -604,13 +756,16 @@ void* PoolAllocator::Alloc(size_t byte_size)
 		FixedLenAllocator* pool = m_MemPool[i];
 		if (byte_size <= pool->ElementSize())
 		{
+            byte_size = pool->ElementSize();
 			ptr = pool->Alloc(pool->ElementSize());	// grab some bytes
 			break;
 		}
 	}
 	if (ptr == NULL)
-		VX_ERROR(("PoolAllocator::Alloc %d ERROR out of memory\n", byte_size), NULL);
-	VX_TRACE2(Allocator::Debug || PoolAllocator::Debug, ("PoolAllocator::Alloc(%d) %p\n", byte_size, ptr));
+		VX_ERROR(("PoolAllocator::Alloc %ld ERROR out of memory\n", byte_size), NULL);
+	VX_TRACE2(Allocator::Debug, ("PoolAllocator::Alloc(%d) %p\n", byte_size, ptr));//
+    UpdateDebugStats(byte_size);			// do NOT pass pointer, should be handled
+    
 	*((size_t*) ptr) = byte_size;			// save the true size
 	return ((size_t*) ptr) + 1;				// point past the size
 }
@@ -630,154 +785,29 @@ void* PoolAllocator::Alloc(size_t byte_size)
 void PoolAllocator::Free(void* ptr)
 {
 	VX_ASSERT(ptr);
-	if (m_MaxSize == 0)
-		VX_ERROR_RETURN(("PoolAllocator::Free %p does not come from this pool\n", ptr));
-	size_t*	p = (size_t*) ptr;
+
+    size_t*	p = (size_t*) ptr;
 	size_t byte_size = *--p;			// grab byte size
 	if (byte_size > m_MaxSize)			// not in the pools?
 	{
-		VX_TRACE2(Allocator::Debug || PoolAllocator::Debug, ("PoolAllocator::Free(%d)\n", byte_size));
+		VX_TRACE2(Allocator::Debug, ("PoolAllocator::Free(%d)\n", byte_size));
 		m_BlockAlloc->Free(p);			// give it back to block allocator
 		return;
 	}
 	for (int i = 0; i < m_NumPools; ++i)
 	{
 		FixedLenAllocator* pool = m_MemPool[i];
-		VX_ASSERT(pool);
 		if (byte_size <= pool->ElementSize())
 		{
-			pool->Free(p);				// put it back in the pool it came from
-			VX_TRACE2(Allocator::Debug || PoolAllocator::Debug, ("PoolAllocator::Free(%d)\n", byte_size));
+			pool->Free(p);						// put it back in the pool it came from
+			VX_TRACE2(Allocator::Debug, ("PoolAllocator::Free(%d)\n", byte_size));
+            UpdateDebugStats (-byte_size);		// do NOT pass pointer, should be handled
 			return;
 		}
 	}
 	VX_ERROR_RETURN(("PoolAllocator::Free %p does not come from this pool", ptr));
 }
 
-/*!
- * @fn void* PoolAllocator::Grow(void* ptr, size_t amount)
- * @param ptr	Pointer to memory block to enlarge or replace.
- * @param amount New size for memory block
- *
- * If the object can still fit in place, we just return the
- * existing pointer. Otherwise, we allocate a new block and
- * copy the memory over to it.
- *
- * @see Allocator::Free
- * @see Allocator::Alloc
- */
-void* PoolAllocator::Grow(void* ptr, size_t amount)
-{
-	size_t*	p = ((size_t*) ptr) - 1;
-	size_t	byte_size = *p;					// grab previous byte size
-	FixedLenAllocator* pool;
-
-	VX_ASSERT(byte_size > 0);
-	amount += sizeof(size_t);				// include the size field
-	VX_TRACE(PoolAllocator::Debug, ("PoolAllocator_Grow(%d)\n", amount));
-	if (byte_size > m_MaxSize)				// from block allocator?
-	{
-		ptr = m_BlockAlloc->Grow(p, amount);// try to grow here
-		if (ptr)
-		{
-			p = (size_t*) ptr;
-			*p++ = amount;					// store new size
-			return p;						// point past size
-		}
-		return NULL;						// cannot grow
-	}
-	for (int i = 0; i < m_NumPools; ++i)	// find pool the object is in
-	{
-		pool = m_MemPool[i];
-		VX_ASSERT(pool);
-		if (byte_size <= pool->ElementSize())
-			if (amount <= pool->ElementSize())
-			{
-				*p++ = amount;				// save new current size
-				return p;
-			}
-			else break;
-	}
-	ptr = Alloc(amount - sizeof(size_t));	// make a new area
-	if (ptr == NULL)
-		return NULL;
-	byte_size -= sizeof(size_t);			// dont include size field
-	memcpy(ptr, p + 1, byte_size);			// copy old data, not size
-	pool->Free(p);							// free the old data area
-	return ptr;
-}
-
-/*!
- * @fn bool PoolAllocator::InitPools(FixedLenAllocator* pool, int n)
- *
- * @param pool	fixed length allocator for smallest element size
- * @param n		number of pools to create
- *
- * The object allocator keeps a set of fixed size allocators to satisfy
- * requests for a small amounts of memory. The input \b pool establishes the type
- * of allocator to use and the size of the smallest elements. The function
- * constructs the remaining \b n - 1 allocators by doubling the element
- * size each time.
- *
- * You can make the object allocator thread-safe by providing it
- * with pools that can perform locking around allocation and free.
- * The default condition is to do no locking.
- *
- * @see FixedLenAllocator PoolAllocator::SetBlockAllocator
- */
-bool PoolAllocator::InitPools(FixedLenAllocator* pool, int npools)
-{
-	BaseObj*		ptr = NULL;
-	int			i = 0;
-	size_t		blocksize;
-
-	VX_ASSERT(m_MemPool[0] == NULL);
-	VX_ASSERT(pool);
-	m_MaxSize = pool->ElementSize();
-	blocksize = pool->BlockSize();
-	m_MemPool[i] = pool;
-	if (m_MaxSize == 0)
-		m_MaxSize = 128;
-	if (blocksize == 0)
-		blocksize = 8192;
-	pool->SetElementAndBlockSize(m_MaxSize, blocksize / m_MaxSize);
-	pool->SetBlockAllocator(m_BlockAlloc);
-	pool->SetOptions(m_Options);
-	while (++i < npools)
-	{
-		m_MaxSize <<= 1;
-		pool = (FixedLenAllocator*) pool->GetClass()->CreateObject(m_BlockAlloc);
-		while (blocksize / m_MaxSize < 4)
-			blocksize *= 2;
-		pool->SetElementAndBlockSize(m_MaxSize, blocksize / m_MaxSize);
-		pool->SetBlockAllocator(m_BlockAlloc);
-		pool->SetOptions(m_Options);
-		VX_ASSERT(m_MemPool[i] == NULL);
-		m_MemPool[i] = pool;
-	}
-	m_NumPools = npools;
-	return true;
-}
-
-#ifdef _DEBUG
-void PoolAllocator::ResetDebugStats()
-{
-	for (int i = 0; i < m_NumPools; ++i)
-		m_MemPool[i]->ResetDebugStats();
-}
-
-void PoolAllocator::PrintDebugStats()
-{
-	for (int i = 0; i < m_NumPools; ++i)
-	{
-		FixedLenAllocator* pool = m_MemPool[i];
-		if (pool == NULL)
-			continue;
-		VX_PRINTF(("Pool %d\n", pool->ElementSize()));
-		pool->PrintDebugStats();
-	}
-}
-#endif
-
+    
 }	// end Core
 }	// end Vixen

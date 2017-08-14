@@ -22,10 +22,7 @@
 #pragma once
 
 // platform-specific confing, mappings, and macro covers
-#ifdef VIXEN_EMSCRIPTEN
-	#include "vcore/ems/vcore-ems.h"
-
-#elif defined(_WIN32)
+#ifdef _WIN32
 	#include "vcore/win32/vcore-win.h"
 
 #else

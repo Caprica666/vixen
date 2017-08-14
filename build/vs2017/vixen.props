@@ -25,7 +25,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(VIXEN_DIR)\inc;$(VIXEN_SDK)\freeimage\inc;$(VIXEN_SDK)\pthread\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VIXEN_DIR)\inc;$(VIXEN_SDK)\freeimage\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -37,14 +37,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <Lib>
-      <AdditionalLibraryDirectories>$(VIXEN_DIR)\lib;$(VIXEN_SDK)\freeimage\lib\$(Platform);$(VIXEN_SDK)\pthread\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VIXEN_DIR)\lib;$(VIXEN_SDK)\freeimage\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <Link>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(VIXEN_DIR)\lib;$(VIXEN_SDK)\freeimage\lib\$(Platform);$(VIXEN_SDK)\pthread\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(VIXEN_DIR)\lib;$(VIXEN_SDK)\freeimage\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>vixenw$(BuildTargetSuffix).lib;wininet.lib;urlmon.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
@@ -54,7 +54,7 @@
     <ClCompile>
       <PrecompiledHeaderFile>vixen.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(VIXEN_DIR)\inc;$(VIXEN_SDK)\freeimage\inc;$(VIXEN_SDK)\pthread\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VIXEN_DIR)\inc;$(VIXEN_SDK)\freeimage\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>STRICT;WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -75,12 +75,12 @@
     </ClCompile>
     <Link Condition="'$(Platform)'!='x64'">
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freeimaged.lib;pthread.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeimaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AssemblyDebug>true</AssemblyDebug>
    </Link>
     <Link Condition="'$(Platform)'=='x64'">
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freeimaged.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeimaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
      <AssemblyDebug>true</AssemblyDebug>
     </Link>
   </ItemDefinitionGroup>
@@ -97,13 +97,13 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link Condition="'$(Platform)'=='x64'">
-      <AdditionalDependencies>freeimage.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeimage.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <Link Condition="'$(Platform)'!='x64'">
-      <AdditionalDependencies>freeimage.lib;pthread.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeimage.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AssemblyDebug>true</AssemblyDebug>
@@ -126,14 +126,14 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link Condition="'$(Platform)'!='x64'">
-      <AdditionalDependencies>freeimage.lib;pthread.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeimage.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <SubSystem>NotSet</SubSystem>
     </Link>
     <Link Condition="'$(Platform)'=='x64'">
-      <AdditionalDependencies>freeimage.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeimage.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>

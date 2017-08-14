@@ -89,10 +89,10 @@ VertexPool::VertexPool(int style) : SharedObj()
 	m_NumTexCoords = 0;
 	m_Layout = NULL;
 	m_Style = 0;
+	m_VtxSize = 0;
 	if (style)
 		SetStyle(style);			// vertex style (which components we need)
 }
-
 
 VertexPool::VertexPool(const TCHAR* layout_desc)
 {
@@ -101,6 +101,7 @@ VertexPool::VertexPool(const TCHAR* layout_desc)
 	m_Style = 0;
 	m_NumTexCoords = 0;
 	m_Layout = NULL;
+	m_VtxSize = 0;
 	SetLayout(layout_desc);
 }
 

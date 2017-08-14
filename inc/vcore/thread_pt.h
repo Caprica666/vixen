@@ -21,6 +21,8 @@ namespace Core {
  * This declaration is compatible with the pthread callback type.
  */
 typedef void* ThreadFunc(void* arg);
+    
+#define VX_TimeOut  ((uint32)-1)
 
 #ifdef VX_NOTHREAD
 

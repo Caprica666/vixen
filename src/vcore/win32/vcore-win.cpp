@@ -32,22 +32,6 @@ void std_invalid_param(const wchar_t *expr, const wchar_t *func, const wchar_t *
  */
 bool _cdecl CoreInit()
 {
-	if (GlobalAllocator::Get())
-		return false;					// cannot call this one twice
-	GlobalAllocator* globalalloc = (GlobalAllocator*) calloc(sizeof(GlobalAllocator), 1);
-	new ((void*) globalalloc) GlobalAllocator();
-	GlobalAllocator::s_ptheOneAndOnly = globalalloc;
-
-	if (PoolAllocator::Get())
-		return false;					// cannot call this one twice
-
-//	PoolAllocator::s_ptheOneAndOnly = new (globalalloc) PoolAllocator;
-//	_vStringPool = new StringPool(GlobalAllocator::Get);
-	PoolAllocator::s_ptheOneAndOnly = _vStringPool = new (globalalloc) StringPool(GlobalAllocator::Get);
-	_vInitThreadData[0].pAlloc = _vStringPool;
-	_vThreadData = (StringData*) &_vInitThreadData[0];
-	_vEmptyStr = _vThreadData->data();
-
 #ifndef VX_NOTHREAD
 	Class* csec = CLASS_(CritSec);
 	csec->SetAllocator(TLSData::Get()->GetLockPool());
@@ -60,21 +44,6 @@ bool _cdecl CoreInit()
 void _cdecl CoreExit()
 {
 	Core::NetStream::Shutdown();			// shut down internet session
-	if (GlobalAllocator::s_ptheOneAndOnly == NULL)
-		return;
-	PoolAllocator::s_ptheOneAndOnly->FreeAll();
-	GlobalAllocator::s_ptheOneAndOnly->FreeAll();
-	_vStringPool->FreeAll();
-	delete _vStringPool;
-	if (PoolAllocator::Get() != _vStringPool)
-	{
-		delete PoolAllocator::s_ptheOneAndOnly;
-		PoolAllocator::s_ptheOneAndOnly = NULL;
-	}
-	_vStringPool = NULL;
-	GlobalAllocator::s_ptheOneAndOnly->~GlobalAllocator();
-	free(GlobalAllocator::s_ptheOneAndOnly);
-	GlobalAllocator::s_ptheOneAndOnly = NULL;
 }
 
 

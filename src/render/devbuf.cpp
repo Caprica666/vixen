@@ -16,6 +16,8 @@ DataLayout::DataLayout(const TCHAR* descriptor)
 	NumSlots = 0;
 	NormalOfs = -1;
 	NumTex = 0;
+	Size = 0;
+	DevHandle = NULL;
 	Style = 0;
 	if (descriptor)
 		SetDescriptor(descriptor);

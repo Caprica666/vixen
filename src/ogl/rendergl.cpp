@@ -208,13 +208,11 @@ void GLRenderer::Begin(int changed, int frame)
 	Vec3			c = cam->GetCenter();
 	int				opts = m_Scene->GetOptions();
 	Matrix			proj;
-	float			f = (float) (unsigned char) (m_Scene->GetTLS()->Frame & 0xFF) / 255.0f;
 
 	m_Changed = changed;
 	SelectGLContext(changed);
 	GeoSorter::Begin(changed, frame);
-//	glClearColor(bc.r, bc.g, bc.b, bc.a);
-	glClearColor(f, bc.g, bc.b, bc.a);
+	glClearColor(bc.r, bc.g, bc.b, bc.a);
 	glClear(glopts[opts & Scene::CLEARALL]);	
 	m_ViewMatrix.Copy(m_Scene->GetCamera()->GetViewTrans());
 	if (changed & SCENE_CameraChanged)

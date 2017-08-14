@@ -197,9 +197,6 @@
     <ClCompile Include="..\..\src\render\appearance.cpp">
       <Filter>Render Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\render\fog.cpp">
-      <Filter>Render Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\render\geodraw.cpp">
       <Filter>Render Sources</Filter>
     </ClCompile>
@@ -260,9 +257,6 @@
     <ClCompile Include="..\..\src\vcore\vfile.cpp">
       <Filter>vcore sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\vcore\win32\vlock-win.cpp">
-      <Filter>vcore sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\vcore\vobj.cpp">
       <Filter>vcore sources</Filter>
     </ClCompile>
@@ -276,15 +270,6 @@
       <Filter>vcore sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\vcore\vstring.cpp">
-      <Filter>vcore sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\vcore\win32\vthread-win.cpp">
-      <Filter>vcore sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\vcore\vthread.cpp">
-      <Filter>vcore sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\vcore\win32\vtlsdata-win.cpp">
       <Filter>vcore sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\vcore\vtree.cpp">
@@ -330,6 +315,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\sim\morph.cpp">
       <Filter>Sim Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\vstringpool.cpp">
+      <Filter>vcore sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\vcore\win32\vlock-win.cpp">
+      <Filter>vcore sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -666,6 +657,9 @@
     </ClInclude>
     <ClInclude Include="..\..\inc\sim\vxmorph.h">
       <Filter>Sim Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vstringpool.h">
+      <Filter>vcore headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

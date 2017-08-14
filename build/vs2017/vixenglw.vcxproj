@@ -901,7 +901,9 @@
     <ClInclude Include="..\..\inc\sim\vxskin.h" />
     <ClInclude Include="..\..\inc\sim\vxtransformer.h" />
     <ClInclude Include="..\..\inc\sim\vxtrigger.h" />
+    <ClInclude Include="..\..\inc\vcore\cast.h" />
     <ClInclude Include="..\..\inc\vcore\vobj_macros.h" />
+    <ClInclude Include="..\..\inc\vcore\vstringpool.h" />
     <ClInclude Include="..\..\inc\vcore\win32\vcore-win.h" />
     <ClInclude Include="..\..\inc\win32\ddglue.h" />
     <ClInclude Include="..\..\inc\win32\dds.h" />

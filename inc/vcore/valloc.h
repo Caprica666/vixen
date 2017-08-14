@@ -19,52 +19,41 @@ class Allocator;
 class FastAllocator;
 class GlobalAllocator;
 
-// function pointers, callbacks
-typedef Allocator* (*GetAllocatorFunc)();
-
 /*!
  * @brief Internal structure that chains together allocated memory blocks.
  * @ingroup vcore
  * @internal
  */
+//===========================================================================
 struct Chain
+//===========================================================================
 {
 	Chain*			pNext;
 	Allocator*		pAlloc;
 	size_t			nLength;
 
-	void* data();
+	void*			data();
 
 	// quasi-constructor/destructor
 	static Chain*	Create(Allocator* pAlloc, Chain*& head, size_t nMax, size_t cbElement);
 	void			FreeDataChain(Chain* skipMe = NULL);
 	void			VisitAllElements(size_t elemsize, void VisitFunc(void*));
+
 	// Debug checks ensure proper recycling during Free()
 #ifdef _DEBUG
 	bool			ContainsPtr(void* ptr);
+	size_t			TotalSize();
+	int				NumBlocks();
 #endif
 };
 
 // inline methods
 inline void*	Chain::data()	{ return this + 1; }
 
-
-/*!
- * @class TempAllocScope
- * @brief Internal exception-safe class to handle setting a fast allocation context.
- */
-class TempAllocScope
-{
-public:
-	TempAllocScope(FastAllocator* pAlloc);
-	~TempAllocScope ();
-};
-
-
 #define	ALLOC_ZeroMem	1
 #define	ALLOC_Lock		2
 #define	ALLOC_FreeLater	4
-#define	ALLOC_DefaultAlign	8L
+// #define	ALLOC_DefaultAlign	8L
 
 /*!
  * @class Allocator
@@ -91,36 +80,34 @@ public:
  * @ingroup vcore
  * @see GlobalAllocator ThreadAllocator Class::SetAllocator BaseObj::operator new
  */
+//===========================================================================
 class Allocator : public BaseObj
+//===========================================================================
 {
 	VX_DECLARE_CLASS(Allocator);
-	virtual ~Allocator()	{ }
+    virtual ~Allocator();
 
 public:
 //! Allocate \b amount bytes of memory.
-	virtual	void*	Alloc(size_t amount)	{ VX_ASSERT(false); return NULL; }
-//! Enlarge already allocated area to \b  bytes.
-	virtual	void*	Grow(void* ptr, size_t amount)	{ VX_ASSERT(false); return NULL; }
+	virtual	void*	Alloc(size_t amount)            { VX_ASSERT(false); return NULL; /* = 0 pure virtual */ }
 //! Return memory used by input object to the heap.
-	virtual void	Free(void* ptr)		{ VX_ASSERT(false); }
-//! Free all system memory used by this allocator.
-	virtual void	FreeAll();
+	virtual void	Free(void* ptr)                 { VX_ASSERT(false); /* = 0 pure virtual */ }
 //! Returns the allocator used to grab heap blocks.
-	Allocator*		GetBlockAllocator() const;
+    Allocator*		GetBlockAllocator() const       { return m_BlockAlloc; }
 //! Sets the allocator used to grab heap blocks.
 	virtual void	SetBlockAllocator (Allocator* pAlloc);
 //! Gets the allocator options.
-	int				GetOptions() const	{ return m_Options; }
+	int				GetOptions() const              { return m_Options; }
 //! Sets the allocation options.
-	virtual void	SetOptions(int o)	{ m_Options = o; }
+	virtual void	SetOptions(int o)               { m_Options = o; }
 //! Return \b true if locking is enabled for this allocator.
-	bool			IsLocking() const	{ return (m_Options & ALLOC_Lock) != 0; }
+	bool			IsLocking() const               { return (m_Options & ALLOC_Lock) != 0; }
 
-	bool	DoLock;
 #ifdef _DEBUG
 //! Print debugging statistic information
-	virtual void	PrintDebugStats();
-	virtual void	ResetDebugStats();
+	void            PrintDebugStats();
+	void            ResetDebugStats();
+	void			UpdateDebugStats(long amount, void* ptr = NULL);
 #endif
 
 protected:
@@ -128,41 +115,49 @@ protected:
 	Allocator();
 
 //! Align memory to integer boundary
-	size_t		AlignMem (size_t address);
+	size_t          AlignMem (size_t address);
+    void            Alignment (int align);
 
 // heap block allocator
-	Allocator*	m_BlockAlloc;
-	int			m_Options;
+	Allocator*      m_BlockAlloc;
+    size_t          m_AlignmentMask;
+	int             m_Options;
 
 // Debug-only metrics tracking
 #ifdef _DEBUG
-
 protected:
-	void			UpdateDebugStats(intptr amount);
-
-	size_t			m_currentSize;
-	size_t			m_totalSize;
-	size_t			m_maxSize;
-	int				m_totalAllocs;
-	int				m_remainingFrees;
+	long            m_currentSize;
+	long            m_totalSize;
+	long            m_maxSize;
+	long			m_totalAllocs;
+	long			m_remainingFrees;
+	
+	long			m_blockAllocs;
+	long			m_blockFrees;
+	char			m_lastWords[32];
 #endif
 };
 
+// Make these functions go away in non-debug build, eliminates the need for extraneous #ifdef _DEBUG in the code
+#ifndef _DEBUG
+#define PrintDebugStats()
+#define ResetDebugStats()
+#define UpdateDebugStats(x)
+#define UpdateDebugStats(x,p)
+#endif
+    
+inline Allocator::~Allocator()
+{
+    PrintDebugStats();
+}
+    
 inline void Allocator::SetBlockAllocator(Allocator* a)
 {
 	m_BlockAlloc = a;
 }
 
-inline Allocator*	Allocator::GetBlockAllocator() const
-{
-	return m_BlockAlloc;
-}
-
-
-
-
 // inline methods
-inline size_t Allocator::AlignMem (size_t address)	{ return ((address + 3L) & ~3L); }
+inline size_t Allocator::AlignMem (size_t address)	{ return ((address + m_AlignmentMask) & ~m_AlignmentMask); }
 
 
 
@@ -177,61 +172,26 @@ inline size_t Allocator::AlignMem (size_t address)	{ return ((address + 3L) & ~3
  * The global allocator is a singleton - only one may be created per application.
  * @ingroup vcore
  */
+//===========================================================================
 class GlobalAllocator : public Allocator
+//===========================================================================
 {
-	friend bool _cdecl CoreInit();
-	friend void _cdecl CoreExit();
 	VX_DECLARE_CLASS(GlobalAllocator);
 public:
-	GlobalAllocator(int unused = 0);
+	GlobalAllocator();
+    ~GlobalAllocator();
 
 	// overrides
-	virtual	void*	Alloc(size_t amount);
-	virtual void*	Grow(void* ptr, size_t amount);
-	virtual void	Free(void* ptr);
-	virtual	void	FreeAll();
-
-	static Allocator*	Get()	//!< Get the one and only global allocator
-	{ return s_ptheOneAndOnly; }
+	virtual	void*       Alloc(size_t amount);
+	virtual void        Free(void* ptr);
+	size_t				SizeOfPtr(void* ptr);
+	
+	static GlobalAllocator*	Get()	{ return s_ptheOneAndOnly; }
 
 protected:
 	static GlobalAllocator* s_ptheOneAndOnly;
 };
-
-// inline methods
-inline void GlobalAllocator::FreeAll()			{}
-
-#ifdef _WIN32
-/*!
- * @class AlignedAllocator
- *
- * @brief Global memory allocator that returns memory allocated from global heap
- * aligned to a specific power of 2 boundary.
- *
- * This is not the most efficient allocator because it locks around all
- * allocation and free operations to provide thread safety. It shares
- * the same heap as the global allocator.
- * @ingroup vcore
- */
-class AlignedAllocator : public Allocator
-{
-	friend bool _cdecl CoreInit();
-	friend void _cdecl CoreExit();
-	VX_DECLARE_CLASS(AlignedAllocator);
-
-public:
-	AlignedAllocator(int align = ALLOC_DefaultAlign);
-
-	// overrides
-	virtual	void*	Alloc(size_t amount);
-	virtual void*	Grow(void* ptr, size_t amount);
-	virtual void	Free(void* ptr);
-	virtual	void	FreeAll()	{ };
-protected:
-	size_t			m_Align;
-};
-
-
+	
 /*!
  * @class ThreadAllocator
  *
@@ -241,28 +201,28 @@ protected:
  * The thread allocator does no locking.
  * @ingroup vcore
  */
+//===========================================================================
 class ThreadAllocator : public Allocator
+//===========================================================================
 {
 	VX_DECLARE_CLASS(ThreadAllocator);
 public:
 //! Make thread heap of given size
 	ThreadAllocator (int initialSize = DEFAULT_TLS_HEAP_SIZE, intptr threadid = 0);
 //! Destroy heap resources
-	virtual ~ThreadAllocator();
+    ~ThreadAllocator();
 
 	// overrides
-	virtual	void*	Alloc(size_t amount);
-	virtual void*	Grow(void* ptr, size_t amount);
-	virtual void	Free(void* ptr);
-	virtual void	FreeAll();
-	virtual void	SetOptions(int);
+	virtual	void*       Alloc(size_t amount);
+	virtual void        Free(void* ptr);
+	virtual void        SetOptions(int);
 
 	static Allocator*	Get();	//!< Gets the thread allocator for the current thread.
 
 protected:
-	intptr		m_threadID;
-	HANDLE		m_heap;
-	DWORD		m_heapOpts;
+	intptr              m_threadID;
+	HANDLE              m_heap;
+	DWORD               m_heapOpts;
 };
 
 #ifdef _DEBUG
@@ -270,11 +230,18 @@ extern void EnableMemoryDebug();
 extern void DisableMemoryDebug();
 #endif
 
-#else
-typedef GlobalAllocator ThreadAllocator;
-#endif // _WIN32
 
-
+//===========================================================================
+class FastContext
+//===========================================================================
+{
+public:
+	FastContext (size_t initialSize = 8192, size_t incrementSize = 4096);
+	~FastContext();
+	
+	operator FastAllocator*() const;
+};
+	
 /*!
  * @class FastAllocator
  *
@@ -285,46 +252,47 @@ typedef GlobalAllocator ThreadAllocator;
  * by multiple threads.
  * @ingroup vcore
  */
+//===========================================================================
 class FastAllocator : public Allocator
+//===========================================================================
 {
 	VX_DECLARE_CLASS(FastAllocator);
 public:
 	// Constructor/destructor
 	FastAllocator (size_t initialSize = 8192, size_t incrementSize = 4096);
 	FastAllocator (void* buffer, size_t initialSize, bool deleteBlock = true, size_t incrementSize = 2048);
-	virtual ~FastAllocator();
+    ~FastAllocator();
 
 //! Reclaim storage area to be reused
-	virtual	void	Empty();
+	virtual	void        Empty();
 	// overrides
-	virtual void*	Alloc(size_t size);
-	virtual void	Free(void* ptr);
-	virtual void	FreeAll();
+	virtual void*       Alloc(size_t size);
+	virtual void        Free(void* ptr);
+	void				FreeAll();
 
 //! Returns currently active fast allocator
-	static Allocator*		Get();
+	static FastAllocator* Get();
 
 	// attributes
 //!	Returns the initial size of heap.
-	size_t					InitialSize() const;
+	size_t              InitialSize() const;
 //! Returns the amount heap will grow when exhausted.
-	size_t					IncrementSize() const;
+	size_t				IncrementSize() const;
 //! Sets the memory used for the initial heap.
-	void					SetInitialBlock (void* buffer, size_t initialSize, bool deleteBlock = true);
-
+	void				SetInitialBlock (void* buffer, size_t initialSize, bool deleteBlock = true);
 
 protected:
 	// Utility method to reset pointer/counter variables
-	void					Init();
+	void				Init();
 
 	// data members used to hold the pooled allocations
-	size_t					m_bufUsed;
-	size_t					m_bufSize;
-	size_t					m_initialSize;
-	size_t					m_incrementSize;
-	struct Chain*			m_keepBlock;
-	struct Chain*			m_blocks;
-	struct Chain*			m_freeBlocks;
+	size_t				m_bufUsed;
+	size_t				m_bufSize;
+	size_t				m_initialSize;
+	size_t				m_incrementSize;
+	struct Chain*		m_keepBlock;
+	struct Chain*		m_blocks;
+	struct Chain*		m_freeBlocks;
 };
 
 // inline methods
@@ -333,7 +301,7 @@ inline size_t FastAllocator::IncrementSize() const			{ return m_incrementSize; }
 #ifdef _DEBUG
 inline void	  FastAllocator::Free (void* ptr)				{ VX_ASSERT (m_blocks == NULL || m_blocks->ContainsPtr (ptr)); }
 #else
-inline void	  FastAllocator::Free (void* ptr)				{ /* do nothing */ }
+inline void	  FastAllocator::Free (void* ptr)				{ /* do nothing, block chain will be destroyed in ~FastAllocator() */ }
 #endif
 
 
@@ -349,36 +317,37 @@ inline void	  FastAllocator::Free (void* ptr)				{ /* do nothing */ }
  * by multiple threads.
  * @ingroup vcore
  */
+//===========================================================================
 class FixedLenAllocator : public Allocator
+//===========================================================================
 {
-	friend class TLSData;
+//	friend class TLSData;
 	VX_DECLARE_CLASS(FixedLenAllocator);
 public:
 //! Creates an allocator for fixed length elements.
 	FixedLenAllocator(size_t elementSize = 16, size_t blockSize = 16);
-	virtual ~FixedLenAllocator();
+    ~FixedLenAllocator();
 
 	// Overrides
-	virtual void*	Alloc(size_t size);
-	virtual void*	Grow(void* ptr, size_t size);
-	virtual void	Free(void* ptr);
-	virtual void	FreeAll ();
+	virtual void*       Alloc (size_t size);
+    virtual void        Free (void* ptr);
+	void				FreeAll();
 
 //! Returns size of fixed elements allocated.
-	size_t			ElementSize() const;
+	size_t              ElementSize() const;
 //! Returns size of heap blocks allocated.
-	size_t			BlockSize() const;
-	void			SetElementAndBlockSize(size_t eSize, size_t bSize);
+	size_t              BlockSize() const;
+	void                SetElementAndBlockSize (size_t eSize, size_t bSize);
 
 protected:
 	// Utility method to reset pointer/counter variables
-	void			Init();
+	void                Init();
 
 	// data members used to hold the pooled allocations
-	size_t			m_elementSize;
-	size_t			m_blockSize;
-	struct Chain*	m_blocks;
-	struct Chain*	m_freeList;
+	size_t              m_elementSize;
+	size_t              m_blockSize;
+	struct Chain*       m_blocks;
+	struct Chain*       m_freeList;
 };
 
 // inline methods
@@ -417,87 +386,59 @@ inline size_t FixedLenAllocator::ElementSize() const	{ return m_elementSize; }
  */
 #define	ALLOC_MaxPools	8
 
+//===========================================================================
 class PoolAllocator : public Allocator
+//===========================================================================
 {
-	friend bool _cdecl CoreInit();
-	friend void _cdecl CoreExit();
-	VX_DECLARE_CLASS(PoolAllocator);
+
+
+VX_DECLARE_CLASS(PoolAllocator);
 public:
-	PoolAllocator(Allocator* blockalloc = NULL, int smallest = 128, int numpools = 6);
-	~PoolAllocator()	{ FreeAll(); }
+	PoolAllocator (Allocator* blockalloc = NULL, size_t smallest = 32, size_t numpools = ALLOC_MaxPools, int options = 0);
+    ~PoolAllocator();
 
-	void*		Alloc(size_t amount);
-	void*		Grow(void* ptr, size_t size);
-	void		Free(void* p);
-	void		FreeAll();
-	void		SetBlockAllocator(Allocator* blockalloc);
-	bool		InitPools(FixedLenAllocator* firstpool, int numpools);
-
-#ifdef _DEBUG
-	void		PrintDebugStats();
-	void		ResetDebugStats();
-#endif
-
-	static Allocator*		Get()	//!< Get the one and only global allocator
-	{ return s_ptheOneAndOnly; }
+	void*               Alloc (size_t amount);
+	void                Free (void* p);
+	void                SetBlockAllocator (Allocator* blockalloc);
 
 protected:
-	static PoolAllocator* s_ptheOneAndOnly;
-	int		m_NumPools;			// number of fixed length pools
-	size_t	m_MaxSize;			// maximum size for pooled allocation
-	size_t	m_BaseSize;			// size of memory blocks in smallest pool
+	int                 m_NumPools;			// number of fixed length pools
+	size_t              m_MaxSize;			// maximum size for pooled allocation
 	FixedLenAllocator*	m_MemPool[ALLOC_MaxPools];
 };
 
-/*!
- * @fn PoolAllocator::PoolAllocator(Allocator* blockalloc, int npools)
- * @param blockalloc	Block allocator to use to allocate memory for pools.
- * @param smallest		Size of the smallest element pool. Others pools are multiples of this base size.
- * @param npools		Number of memory pools to use.
- *
- * A pool allocator creates several internal memory pools which
- * are each maintained by a fixed length allocator. The block
- * allocator supplied here is used to obtain the memory for these pools.
- * Blocks too large for the pools are allocated directly using the block allocator.
- *
- * @see ThreadAllocator GlobalAllocator Allocator::SetBlockAllocator
- */
-inline PoolAllocator::PoolAllocator(Allocator* blockalloc, int smallest, int npools) : Allocator()
-{
-	if (blockalloc == NULL)
-		blockalloc = GlobalAllocator::Get();
-	m_BlockAlloc = blockalloc;
-	m_NumPools = npools;
-	m_BaseSize = smallest;
-	m_MaxSize = 0;
-	VX_ASSERT(npools > 0);
-	VX_ASSERT(smallest > 0);
-	for (int i = 0; i < npools; ++i)
-		m_MemPool[i] = NULL;
-}
 
-/*!
- * @fn void PoolAllocator::FreeAll()
- *
- * Frees all of the memory in the memory pools. If objects in these
- * pools are still being used, the data in them may get corrupted.
- *
- * @see PoolAllocator::Free Allocator::FreeAll
- */
-inline void PoolAllocator::FreeAll()
-{
 #ifdef _DEBUG
-	PrintDebugStats();
+/*!
+ * @class RogueAllocator
+ *
+ * @brief Rogue memory allocator that returns memory allocated from override of
+ * operator new() and operator delete()
+ *
+ * It tracks alloc/free operations, and defers to the Global Allocator to do its work
+ *
+ * The rogue allocator is a singleton - only one may be created per application.
+ * @ingroup vcore
+ */
+//===========================================================================
+class RogueAllocator : public Allocator
+//===========================================================================
+{
+	VX_DECLARE_CLASS(RogueAllocator);
+public:
+	RogueAllocator();
+	~RogueAllocator();
+	
+	// overrides
+	virtual	void*       Alloc(size_t amount)	{ GlobalAllocator* og = GlobalAllocator::Get(); UpdateDebugStats(amount); return og->Alloc(amount); }
+	virtual void        Free(void* ptr)			{ GlobalAllocator* og = GlobalAllocator::Get(); int amount = og->SizeOfPtr(ptr); UpdateDebugStats(-amount); og->Free (ptr); }
+	
+	static RogueAllocator*	Get()				{ return s_ptheBeanCounter; }
+	
+protected:
+	static RogueAllocator* s_ptheBeanCounter;
+};
 #endif
-	if (m_MemPool[0] == NULL)
-		return;
-	for (int i = 0; i < m_NumPools; ++i)
-	{
-		VX_TRACE(Allocator::Debug, ("Free pool %d\n", m_MemPool[i]->ElementSize()));
-		delete m_MemPool[i];
-		m_MemPool[i] = NULL;
-	}
-	m_MaxSize = 0;
-}
+	
 
 } // end Core

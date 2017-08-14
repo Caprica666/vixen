@@ -45,9 +45,11 @@ typedef int SOCKET;
 #define INVALID_SOCKET -1
 #define closesocket close
 
+#if 0
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
+#endif
 
 
 typedef unsigned int	uint32;     /* 32 bit unsigned */
@@ -64,10 +66,11 @@ typedef unsigned long	uint64;		/* 64 bit integer */
 typedef void* volatile	vptr;		/* volatile pointer */
 typedef int volatile	vint32;		/* volatile 32 bit integer */
 typedef long long volatile vint64;	/* volatile 64 bit integer */
+typedef void*			voidptr;	/* void pointer */
 
 #ifdef _LP64
-typedef	unsigned __int64 intptr;	/* unsigned int interchangeable with pointer */
-typedef __int64			offset_t;
+typedef	unsigned long intptr;	/* unsigned int interchangeable with pointer */
+typedef long			offset_t;
 #define	FSEEK	fseeko
 #define	FTELL	ftello
 #else
@@ -159,10 +162,10 @@ typedef TCHAR*			LPTSTR;
 #define TEXT(_XXX)	_XXX
 
 inline void strupr(char* s)
-{ char c; while (c = *s) *s++ = toupper(c); }
+{ char c; while ((c = *s) != 0) *s++ = toupper(c); }
 
 inline void strlwr(char* s)
-{ char c; while(c = *s) *s++ = tolower(c); }
+{ char c; while((c = *s) != 0) *s++ = tolower(c); }
 
 typedef std::ostream DebugOut;
 

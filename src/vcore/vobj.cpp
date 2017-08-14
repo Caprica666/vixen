@@ -4,11 +4,13 @@
 namespace Vixen {
 namespace Core {
 
-#ifdef VX_NOREFCOUNT
-VX_IMPLEMENT_CLASS(LockObj, BaseObj);
-#else
-VX_IMPLEMENT_CLASS(LockObj, RefObj);
-#endif
+//#ifdef VX_NOREFCOUNT
+//VX_IMPLEMENT_CLASS(LockObj, BaseObj);
+//#else
+//VX_IMPLEMENT_CLASS(LockObj, RefObj);
+//#endif
+    
+void DebugPrintHierarchy (Class* cls);
 
 //===========================================================================
 // Class implementation
@@ -48,7 +50,7 @@ void Class::LinkClassHierarchy()
 	while (ifaceCount > 0)
 	{
 		const TCHAR*	baseName = (const TCHAR*)s_ifaceFixup[--ifaceCount];
-		VInterface*		iface = s_ifaceFixup[--ifaceCount];
+		Interface*		iface = s_ifaceFixup[--ifaceCount];
 		Class*			baseClass  = s_ifaceFixup[--ifaceCount];
 		VX_ASSERT (baseClass && iface);
 
@@ -73,6 +75,11 @@ void Class::LinkClassHierarchy()
 #endif
 	// Class hierarchy linked - don't do this again
 	s_isLinked = true;
+    
+#ifdef _DEBUG
+    DebugPrintHierarchy (&BaseObj::ClassInfo);
+    VX_PRINTF(("\n"));
+#endif
 }
 
 /*!
@@ -152,9 +159,11 @@ Class BaseObj::ClassInfo =
 	NULL, NULL					// AllocMethod, allocator
 };
 
+#ifndef VX_NOREFCOUNT
 // add this here for the correct class hierarchy
 VX_IMPLEMENT_CLASS (RefObj, BaseObj);
-
+#endif
+	
 Allocator*	BaseObj::t_lastAllocAt;
 int			BaseObj::Debug = 0;
 
@@ -261,24 +270,46 @@ Class* Class::LinkClass (Class* derivedClass, Class* baseClass)
 	return NULL;
 }
 
+#ifdef _DEBUG
+//===========================================================================
+// DebugPrintHierarchy
+//===========================================================================
+
+void DebugPrintHierarchy (Class* cls)
+{
+    for (Class* c = cls; c; c = c->GetNextClass() )
+    {
+        for (Class* k = c; k; k = k->GetBaseClass())
+            if (k->GetBaseClass())
+                VX_PRINTF (("| "));
+        VX_PRINTF (("--%s\n", c->GetName()));
+        
+        if (c->GetFirstChildClass())
+            DebugPrintHierarchy (c->GetFirstChildClass());
+    }
+}
+#endif
+    
+
+    
 #ifdef VIXEN_INTERFACE
-VInterface* Class::ComClassFactory()
+Interface* Class::ComClassFactory()
 {
 	// Iterate from this class to root over all interfaces
-	VInterfaceIter		iter (this);
+	InterfaceIter		iter (this);
 
 	// Look for overridden implementation of VIClassFactory
-	for (VInterface* check = iter.Next(); check; check = iter.Next())
+	for (Interface* check = iter.Next(); check; check = iter.Next())
 		if (check->IsComInterface() && STRCMP(check->GetName(), TEXT("VIClassFactory")) == 0)
 			return check;
 
 	return NULL;
 }
 
-VInterface* Class::NextComInterface()
+Interface* Class::NextComInterface()
 {
 	// Walk interface chain until IsComInterface returns true
-	for (VInterface* iface = this->GetNextInterface(); iface; iface = iface->GetNextInterface())
+	for (Interface* iface = this->GetNextInterface(); iface; iface = iface->GetNextInterface())
 		if (iface->IsComInterface())
 			return iface;
 
@@ -286,7 +317,7 @@ VInterface* Class::NextComInterface()
 }
 
 
-VInterface* Class::LinkInterface (VInterface* interfaceInfo, Class* baseClass, const TCHAR* baseInterfaceName)
+Interface* Class::LinkInterface (Interface* interfaceInfo, Class* baseClass, const TCHAR* baseInterfaceName)
 {
 	VX_ASSERT (interfaceInfo != NULL);
 	VX_ASSERT (baseClass != NULL);
@@ -295,7 +326,7 @@ VInterface* Class::LinkInterface (VInterface* interfaceInfo, Class* baseClass, c
 	// Save base class and interface pointer in global fixup table
 	s_ifaceFixup[s_ifaceCount++] = baseClass;
 	s_ifaceFixup[s_ifaceCount++] = interfaceInfo;
-	s_ifaceFixup[s_ifaceCount++] = (VInterface*)baseInterfaceName;
+	s_ifaceFixup[s_ifaceCount++] = (Interface*)baseInterfaceName;
 
 	// Watch for overrun, return NULL pointer - will be set later
 	VX_ASSERT (s_ifaceCount < sizeof (s_ifaceFixup)/sizeof(Class*));
@@ -304,8 +335,8 @@ VInterface* Class::LinkInterface (VInterface* interfaceInfo, Class* baseClass, c
 
 void* BaseObj::GetInterface (const TCHAR* interfaceName)	const
 {
-	VInterfaceIter	iter(this);
-	VInterface*		iface;
+	InterfaceIter	iter(this);
+	Interface*		iface;
 
 	// Check interface string representations
 	while ((iface = iter.Next()) != NULL)
@@ -313,18 +344,17 @@ void* BaseObj::GetInterface (const TCHAR* interfaceName)	const
 			return ((TCHAR*)this) + iface->GetOffset();
 
 // 	// Check for possible internal interfaces
-// 	if ((iface = (VInterface*)InternalGetInterface (interfaceName)) != NULL)
+// 	if ((iface = (Interface*)InternalGetInterface (interfaceName)) != NULL)
 // 		return iface;
 // 
 	return NULL;
 }
 
-
 //===========================================================================
-// VInterfaceIter
+// InterfaceIter
 //===========================================================================
 
-VInterfaceIter::VInterfaceIter (const BaseObj* pObj, Sequence sequence)
+InterfaceIter::InterfaceIter (const BaseObj* pObj, Sequence sequence)
   : m_sequence			(sequence),
 	m_pCurrClass (pObj->GetClass())
 {
@@ -340,7 +370,7 @@ VInterfaceIter::VInterfaceIter (const BaseObj* pObj, Sequence sequence)
 		m_pCurrInterface = m_pCurrClass->NextComInterface();
 }
 
-VInterfaceIter::VInterfaceIter (Class* pClass, Sequence sequence)
+InterfaceIter::InterfaceIter (Class* pClass, Sequence sequence)
   : m_sequence			(sequence),
 	m_pCurrClass (pClass)
 {
@@ -356,7 +386,7 @@ VInterfaceIter::VInterfaceIter (Class* pClass, Sequence sequence)
 		m_pCurrInterface = m_pCurrClass->NextComInterface();
 }
 
-VInterfaceIter::VInterfaceIter (Sequence sequence)
+InterfaceIter::InterfaceIter (Sequence sequence)
   : m_sequence			(sequence),
 	m_pCurrClass (CLASS_(BaseObj)),
 	m_pCurrInterface	(NULL)
@@ -366,7 +396,7 @@ VInterfaceIter::VInterfaceIter (Sequence sequence)
 			sequence == ITER_AllComFactories);
 }
 
-VInterface* VInterfaceIter::Next()
+Interface* InterfaceIter::Next()
 {
 	// trivial reject - attempt to call past end of iteration
 	if (m_pCurrClass == NULL)
@@ -375,7 +405,7 @@ VInterface* VInterfaceIter::Next()
 	// Iterating an interface chain?  Get next element from linked list.
 	if (m_pCurrInterface != NULL)
 	{
-		VInterface*		currInterface = m_pCurrInterface;
+		Interface*		currInterface = m_pCurrInterface;
 
 		if (currInterface != NULL)
 		{
@@ -504,7 +534,7 @@ VInterface* VInterfaceIter::Next()
 	// return above result 
 	return retVal;
 }
-#endif
+#endif  // VIXEN_INTERFACE
 
 
 }	// end Core

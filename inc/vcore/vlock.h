@@ -14,6 +14,8 @@
 
 namespace Core {
 
+extern double GetTime();
+
 class CritSec;
 
 /*!
@@ -33,11 +35,6 @@ public:
 	friend class ObjLock;
 	VX_DECLARE_CLASS(LockObj);
 
-#ifdef VX_NOREFCOUNT
-	void	Delete() { }
-	void	IncUse() { }
-#endif
-
 #ifdef VX_NOTHREAD
 	bool		MakeLock() const { return true; }
 	void		KillLock() const { }
@@ -47,6 +44,9 @@ public:
 #else
 #ifdef VX_NOREFCOUNT
 	LockObj() : BaseObj() { m_Lock = 0; }
+	void	Delete() { }
+	void	IncUse() { }
+
 #else
 	LockObj() : RefObj() { m_Lock = 0; }
 #endif

@@ -1,3 +1,5 @@
+#include "vcore/vcore.h"
+
 #pragma once
 
 /*!
@@ -26,10 +28,10 @@ class Allocator;
  */
 struct StringData
 {
-	Allocator* pAlloc;
-	vint32 nRefs;
-	size_t nDataLength;
-	size_t nAllocLength;
+	Allocator*  pAlloc;
+	vint32      nRefs;
+	short       nDataLength;
+	short       nAllocLength;
 
 	TCHAR* data() { return (TCHAR*)(this+1); }
 };
@@ -78,24 +80,24 @@ public:
 
 //! @name Numeric and case conversions
 //@{
-    String(double aNum);						//<! Converts double to string
-    String(float aNum);							//<! Converts float to string
-    String(long aNum);							//<! Converts long to string
-    String(int aNum);							//<! Converts int to string
-    String(short aNum);							//<! Converts short to string
-    String(unsigned long aNum);					//<! Converts ulong to string
-    String(unsigned int aNum);					//<! Converts uint to string
-    String(unsigned short aNum);				//<! Converts ushort to string
-    double			toDouble() const;			//<! Converts string to double.
-    float			toFloat() const;			//<! Converts string to float.
-    long			toLong() const;				//<! Converts string to long.
-    int				toInt() const;				//<! Converts string to int.
-    short			toShort() const;			//<! Converts string to short.
-    unsigned long	toULong() const;			//<! Converts string to ulong.
-    unsigned int	toUInt() const;				//<! Converts string to uint.
-    unsigned short	toUShort() const;			//<! Converts string to ushort.
-	void MakeUpper();							//<! NLS aware conversion to uppercase
-	void MakeLower();							//<! NLS aware conversion to lowercase
+    String(double aNum);						//!< Converts double to string
+    String(float aNum);							//!< Converts float to string
+    String(long aNum);							//!< Converts long to string
+    String(int aNum);							//!< Converts int to string
+    String(short aNum);							//!< Converts short to string
+    String(unsigned long aNum);					//!< Converts ulong to string
+    String(unsigned int aNum);					//!< Converts uint to string
+    String(unsigned short aNum);				//!< Converts ushort to string
+    double			toDouble() const;			//!< Converts string to double.
+    float			toFloat() const;			//!< Converts string to float.
+    long			toLong() const;				//!< Converts string to long.
+    int				toInt() const;				//!< Converts string to int.
+    short			toShort() const;			//!< Converts string to short.
+    unsigned long	toULong() const;			//!< Converts string to ulong.
+    unsigned int	toUInt() const;				//!< Converts string to uint.
+    unsigned short	toUShort() const;			//!< Converts string to ushort.
+	void MakeUpper();							//!< NLS aware conversion to uppercase
+	void MakeLower();							//!< NLS aware conversion to lowercase
 //@}
 
 //! @name Accessors
@@ -206,6 +208,9 @@ public:
 	void Format(LPCTSTR lpszFormat, ...);		//!< Printf-like formatting using passed string.
 	void FormatV(LPCTSTR lpszFormat, va_list argList);	//!< Printf-like formatting using variable arguments parameter.
 //@}
+    
+    static void CoreInit();
+    static void CoreFini();
 
 protected:
 	LPTSTR m_pchData;			//!< Pointer to ref counted string data.
@@ -231,9 +236,6 @@ protected:
 
 // Empty static string objects
 const String&		EmptyString();
-extern StringData	_vInitThreadData[];
-extern StringData*	_vThreadData;
-extern LPCTSTR		_vEmptyStr;
 
 // inline methods
 

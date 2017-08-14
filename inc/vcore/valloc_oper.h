@@ -1,5 +1,8 @@
 #pragma once
 
+#include "vcore/valloc.h"
+
+
 /*!
  * @fn void* new(size_t size, Allocator* alloc)
  * @relates Allocator
@@ -11,29 +14,21 @@
  *
  * @return Pointer to memory block allocated, NULL on error
  */
-inline void* _cdecl operator new(size_t size, Vixen::Core::Allocator* pAlloc)
-{
-	// Use allocator if present, otherwise, straight allocation
-	if (pAlloc)
-		return pAlloc->Alloc (size);
-	else
-		return calloc (1, size);
-}
 
-//-----------------------------------------------
-// Don't expect this to work!  For compiler only!.
-// ...Delete your objects this way!
-//		pObj->~Delete();
-//-----------------------------------------------
-inline void _cdecl operator delete( void *p, Vixen::Core::Allocator* pAlloc)
-{
-	// Handle delete of null pointer
-	if (p)
-	{
-		// Use allocator if present, otherwise, straight delete operation
-		if (pAlloc)
-			pAlloc->Free (p);
-		else
-			free (p);
-	}
-}
+void* _cdecl operator new(size_t size, Vixen::Core::Allocator* pAlloc);
+void  _cdecl operator delete( void *p, Vixen::Core::Allocator* pAlloc);
+
+/*
+ * In the debug version, we override the default C-style new/delete pair so as to be able to 
+ * keep track of any allocations / dealloations that are done via code that is compiled into
+ * the executable.  This information is tracked via the RogueAllocator (facade for GlobalAllocator).
+ *
+ * QUIRK: on mac, declaring this function as explicit inline avoids linker errors (hmmmmmmmm.....)
+ */
+
+#ifdef _DEBUG
+inline void* _cdecl operator new (size_t size)		{ return operator new (size, Vixen::Core::RogueAllocator::Get()); }
+inline void  _cdecl operator delete (void *p)		{ operator delete (p, Vixen::Core::RogueAllocator::Get()); }
+#endif
+
+

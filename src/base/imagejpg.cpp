@@ -1,6 +1,5 @@
 #include "vixen.h"
 #ifndef VX_FREEIMAGE
-
 #define XMD_H
 #define HAVE_PROTOTYPES
 
@@ -351,4 +350,6 @@ static bool WriteJPGFile(FILE* handle, int quality)
 #endif
 
 }	// end Vixen
+
 #endif
+

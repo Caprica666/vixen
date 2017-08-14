@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vixenglems", "vixenglems.vcxproj", "{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{06A469EE-4819-453D-A7AF-EA018C3DBDEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{A6FD291F-D648-49AB-8A27-7CEF4DEFA840}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeoTestEMS", "..\..\apps\GeoTest\vs2012\GeoTestEMS.vcxproj", "{5342E113-43A8-468D-A590-BBBBB79C89B1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B} = {9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ViewerEMS", "..\..\apps\EMSViewer\vs2012\ViewerEMS.vcxproj", "{BF0CECEA-4177-4AF6-BCB3-202DD16A8A0A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B} = {9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Emscripten = Debug|Emscripten
+		Release|Emscripten = Release|Emscripten
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}.Debug|Emscripten.ActiveCfg = Debug|Emscripten
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}.Debug|Emscripten.Build.0 = Debug|Emscripten
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}.Release|Emscripten.ActiveCfg = Release|Emscripten
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}.Release|Emscripten.Build.0 = Release|Emscripten
+		{5342E113-43A8-468D-A590-BBBBB79C89B1}.Debug|Emscripten.ActiveCfg = Debug|Emscripten
+		{5342E113-43A8-468D-A590-BBBBB79C89B1}.Debug|Emscripten.Build.0 = Debug|Emscripten
+		{5342E113-43A8-468D-A590-BBBBB79C89B1}.Release|Emscripten.ActiveCfg = Release|Emscripten
+		{5342E113-43A8-468D-A590-BBBBB79C89B1}.Release|Emscripten.Build.0 = Release|Emscripten
+		{BF0CECEA-4177-4AF6-BCB3-202DD16A8A0A}.Debug|Emscripten.ActiveCfg = Debug|Emscripten
+		{BF0CECEA-4177-4AF6-BCB3-202DD16A8A0A}.Debug|Emscripten.Build.0 = Debug|Emscripten
+		{BF0CECEA-4177-4AF6-BCB3-202DD16A8A0A}.Release|Emscripten.ActiveCfg = Release|Emscripten
+		{BF0CECEA-4177-4AF6-BCB3-202DD16A8A0A}.Release|Emscripten.Build.0 = Release|Emscripten
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B} = {06A469EE-4819-453D-A7AF-EA018C3DBDEA}
+		{5342E113-43A8-468D-A590-BBBBB79C89B1} = {A6FD291F-D648-49AB-8A27-7CEF4DEFA840}
+		{BF0CECEA-4177-4AF6-BCB3-202DD16A8A0A} = {A6FD291F-D648-49AB-8A27-7CEF4DEFA840}
+	EndGlobalSection
+EndGlobal

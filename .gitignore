@@ -1,4 +1,7 @@
 .vs
+.suo
+.db
+.db-*
 obj
 ipch
 bin

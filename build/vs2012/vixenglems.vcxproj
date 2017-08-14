@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Emscripten">
+      <Configuration>Debug</Configuration>
+      <Platform>Emscripten</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Emscripten">
+      <Configuration>Release</Configuration>
+      <Platform>Emscripten</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Emscripten'">
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'">
+    <Link />
+    <Link>
+      <OutputFile>$(OutDir)$(MSBuildProjectName)$(TargetExt)</OutputFile>
+      <RunMinify>false</RunMinify>
+      <AdditionalOptions>-s LINKABLE=1 EXPORTED_FUNCTIONS=[] %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy $(VIXEN_DIR)\data\shaders\glsl2 $(OutDir)\shaders /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>copy shader resources</Message>
+    </PostBuildEvent>
+    <CustomBuildStep />
+    <CustomBuildStep />
+    <CustomBuildStep />
+    <PreBuildEvent />
+    <PreBuildEvent />
+    <ClCompile>
+      <LanguageStandardMode>NoLanguageStandardSet</LanguageStandardMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\base\vxarray.h" />
+    <ClInclude Include="..\..\inc\base\vxbase.h" />
+    <ClInclude Include="..\..\inc\base\vxbitmap.h" />
+    <ClInclude Include="..\..\inc\base\vxbox.h" />
+    <ClInclude Include="..\..\inc\base\vxcol.h" />
+    <ClInclude Include="..\..\inc\base\vxdict.h" />
+    <ClInclude Include="..\..\inc\base\vxevent.h" />
+    <ClInclude Include="..\..\inc\base\vxfile.h" />
+    <ClInclude Include="..\..\inc\base\vxgroup.h" />
+    <ClInclude Include="..\..\inc\base\vxload.h" />
+    <ClInclude Include="..\..\inc\base\vxmath.h" />
+    <ClInclude Include="..\..\inc\base\vxmatrix.h" />
+    <ClInclude Include="..\..\inc\base\vxmess.h" />
+    <ClInclude Include="..\..\inc\base\vxobj.h" />
+    <ClInclude Include="..\..\inc\base\vxsphere.h" />
+    <ClInclude Include="..\..\inc\base\vxsysevents.h" />
+    <ClInclude Include="..\..\inc\base\vxweakref.h" />
+    <ClInclude Include="..\..\inc\base\vxworld.h" />
+    <ClInclude Include="..\..\inc\ems\ems_array.h" />
+    <ClInclude Include="..\..\inc\ems\ems_base.h" />
+    <ClInclude Include="..\..\inc\ems\ems_math.h" />
+    <ClInclude Include="..\..\inc\ems\ems_obj.h" />
+    <ClInclude Include="..\..\inc\ems\ems_property.h" />
+    <ClInclude Include="..\..\inc\ems\ems_string.h" />
+    <ClInclude Include="..\..\inc\ems\ems_world.h" />
+    <ClInclude Include="..\..\inc\ems\vixen_ems.h" />
+    <ClInclude Include="..\..\inc\ems\vxemsworld.h" />
+    <ClInclude Include="..\..\inc\ems\vxload-ems.h" />
+    <ClInclude Include="..\..\inc\ogl\vbufgl.h" />
+    <ClInclude Include="..\..\inc\ogl\vixengl.h" />
+    <ClInclude Include="..\..\inc\ogl\vixen_egl.h" />
+    <ClInclude Include="..\..\inc\ogl\vxgdev.h" />
+    <ClInclude Include="..\..\inc\ogl\vxglfwworld.h" />
+    <ClInclude Include="..\..\inc\ogl\vxlightgl.h" />
+    <ClInclude Include="..\..\inc\ogl\vxrendergl.h" />
+    <ClInclude Include="..\..\inc\ogl\vxshadergl.h" />
+    <ClInclude Include="..\..\inc\render\vxappear.h" />
+    <ClInclude Include="..\..\inc\render\vxdevbuf.h" />
+    <ClInclude Include="..\..\inc\render\vxgeosort.h" />
+    <ClInclude Include="..\..\inc\render\vximage.h" />
+    <ClInclude Include="..\..\inc\render\vxmaterial.h" />
+    <ClInclude Include="..\..\inc\render\vxmesh.h" />
+    <ClInclude Include="..\..\inc\render\vxsampler.h" />
+    <ClInclude Include="..\..\inc\render\vxtextgeom.h" />
+    <ClInclude Include="..\..\inc\render\vxvtxaos.h" />
+    <ClInclude Include="..\..\inc\render\vxvtxcache.h" />
+    <ClInclude Include="..\..\inc\render\vxvtxpool.h" />
+    <ClInclude Include="..\..\inc\scene\vxcam.h" />
+    <ClInclude Include="..\..\inc\scene\vxlight.h" />
+    <ClInclude Include="..\..\inc\scene\vxmodel.h" />
+    <ClInclude Include="..\..\inc\scene\vxscene.h" />
+    <ClInclude Include="..\..\inc\scene\vxscenethread.h" />
+    <ClInclude Include="..\..\inc\scene\vxshape.h" />
+    <ClInclude Include="..\..\inc\scene\vxsimpleshape.h" />
+    <ClInclude Include="..\..\inc\scene\vxtypes.h" />
+    <ClInclude Include="..\..\inc\scene\vxworld3d.h" />
+    <ClInclude Include="..\..\inc\sim\vxanimator.h" />
+    <ClInclude Include="..\..\inc\sim\vxdeformer.h" />
+    <ClInclude Include="..\..\inc\sim\vxengine.h" />
+    <ClInclude Include="..\..\inc\sim\vxinterpolator.h" />
+    <ClInclude Include="..\..\inc\sim\vxkeyframe.h" />
+    <ClInclude Include="..\..\inc\sim\vxmeshanim.h" />
+    <ClInclude Include="..\..\inc\sim\vxmorph.h" />
+    <ClInclude Include="..\..\inc\sim\vxpose.h" />
+    <ClInclude Include="..\..\inc\sim\vxposemapper.h" />
+    <ClInclude Include="..\..\inc\sim\vxscriptor.h" />
+    <ClInclude Include="..\..\inc\sim\vxsequencer.h" />
+    <ClInclude Include="..\..\inc\sim\vxskeleton.h" />
+    <ClInclude Include="..\..\inc\sim\vxskin.h" />
+    <ClInclude Include="..\..\inc\sim\vxtransformer.h" />
+    <ClInclude Include="..\..\inc\sim\vxtrigger.h" />
+    <ClInclude Include="..\..\inc\util\vxflyer.h" />
+    <ClInclude Include="..\..\inc\util\vxframestats.h" />
+    <ClInclude Include="..\..\inc\util\vxnavigator.h" />
+    <ClInclude Include="..\..\inc\util\vxquadtree.h" />
+    <ClInclude Include="..\..\inc\util\vxraypicker.h" />
+    <ClInclude Include="..\..\inc\util\vxterrain.h" />
+    <ClInclude Include="..\..\inc\util\vxterrcoll.h" />
+    <ClInclude Include="..\..\inc\util\vxviewerapp.h" />
+    <ClInclude Include="..\..\inc\util\vxvtxcache.h" />
+    <ClInclude Include="..\..\inc\vcore\ems\emsport.h" />
+    <ClInclude Include="..\..\inc\vcore\ems\stream-ems.h" />
+    <ClInclude Include="..\..\inc\vcore\ems\vcore-ems.h" />
+    <ClInclude Include="..\..\inc\vcore\ems\vdebug.h" />
+    <ClInclude Include="..\..\inc\vcore\linux\vlock-x.h" />
+    <ClInclude Include="..\..\inc\vcore\valloc.h" />
+    <ClInclude Include="..\..\inc\vcore\valloc_oper.h" />
+    <ClInclude Include="..\..\inc\vcore\varray.h" />
+    <ClInclude Include="..\..\inc\vcore\vbufq.h" />
+    <ClInclude Include="..\..\inc\vcore\vcore.h" />
+    <ClInclude Include="..\..\inc\vcore\vdict.h" />
+    <ClInclude Include="..\..\inc\vcore\vfile.h" />
+    <ClInclude Include="..\..\inc\vcore\vobj.h" />
+    <ClInclude Include="..\..\inc\vcore\vobj_macros.h" />
+    <ClInclude Include="..\..\inc\vcore\vpool.h" />
+    <ClInclude Include="..\..\inc\vcore\vref.h" />
+    <ClInclude Include="..\..\inc\vcore\vrefptr.h" />
+    <ClInclude Include="..\..\inc\vcore\vstream.h" />
+    <ClInclude Include="..\..\inc\vcore\vstring.h" />
+    <ClInclude Include="..\..\inc\vcore\vstringpool.h" />
+    <ClInclude Include="..\..\inc\vcore\vtlsdata.h" />
+    <ClInclude Include="..\..\inc\vcore\vtree.h" />
+    <ClInclude Include="..\..\inc\vixen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\data\shaders\glsl2\ PixelPhongNotex.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\ambientlight.glsl">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\default_pixel_shader.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\default_vertex_shader.glsl">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\directlight.glsl">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\nolight_pixel_shader.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\pixelphongbump.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\pixelphongdiffuse.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\pixelphongnotex.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\pixelphongspecular.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\pointlight.glsl">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\spotlight.glsl" />
+    <None Include="..\..\data\shaders\glsl2\test_pixel_shader.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\vertexpos.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\vertexposnorm.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\vertexposnormtex.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\vertexposnormtextang.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\data\shaders\glsl2\vertexpostex.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\inc\base\vxarray.inl" />
+    <None Include="..\..\inc\base\vxbox.inl" />
+    <None Include="..\..\inc\base\vxcol.inl" />
+    <None Include="..\..\inc\base\vxdict.inl" />
+    <None Include="..\..\inc\base\vxevent.inl" />
+    <None Include="..\..\inc\base\vxmath.inl" />
+    <None Include="..\..\inc\base\vxmatrix.inl" />
+    <None Include="..\..\inc\base\vxmess.inl" />
+    <None Include="..\..\inc\base\vxobj.inl" />
+    <None Include="..\..\inc\base\vxsysevents.inl" />
+    <None Include="..\..\inc\base\vxweakref.inl" />
+    <None Include="..\..\inc\render\vxappear.inl" />
+    <None Include="..\..\inc\render\vximage.inl" />
+    <None Include="..\..\inc\render\vxmesh.inl" />
+    <None Include="..\..\inc\render\vxvtxpool.inl" />
+    <None Include="..\..\inc\scene\vxmodel.inl" />
+    <None Include="..\..\inc\scene\vxscene.inl" />
+    <None Include="..\..\inc\sim\vxengine.inl" />
+    <None Include="..\..\inc\util\vxviewerapp.inl" />
+    <None Include="..\..\inc\vcore\varray.inl" />
+    <None Include="..\..\inc\vcore\vdict.inl" />
+    <None Include="..\..\inc\vcore\vobj.inl" />
+    <None Include="..\..\inc\vcore\vpool.inl" />
+    <None Include="..\..\inc\vcore\vref.inl" />
+    <None Include="..\..\inc\vcore\vrefptr.inl" />
+    <None Include="..\..\inc\vcore\vtree.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\base\array.cpp" />
+    <ClCompile Include="..\..\src\base\bitmap.cpp" />
+    <ClCompile Include="..\..\src\base\box.cpp" />
+    <ClCompile Include="..\..\src\base\bufmess.cpp" />
+    <ClCompile Include="..\..\src\base\event.cpp" />
+    <ClCompile Include="..\..\src\base\fileio.cpp" />
+    <ClCompile Include="..\..\src\base\group.cpp" />
+    <ClCompile Include="..\..\src\base\loadq.cpp" />
+    <ClCompile Include="..\..\src\base\matrix.cpp" />
+    <ClCompile Include="..\..\src\base\messenger.cpp" />
+    <ClCompile Include="..\..\src\base\Obj.cpp" />
+    <ClCompile Include="..\..\src\base\quat.cpp" />
+    <ClCompile Include="..\..\src\base\sphere.cpp" />
+    <ClCompile Include="..\..\src\base\world.cpp" />
+    <ClCompile Include="..\..\src\ems\imagesdl.cpp" />
+    <ClCompile Include="..\..\src\ems\loadq-ems.cpp" />
+    <ClCompile Include="..\..\src\ems\world-ems.cpp" />
+    <ClCompile Include="..\..\src\ogl\appgl.cpp" />
+    <ClCompile Include="..\..\src\ogl\contextglfw.cpp" />
+    <ClCompile Include="..\..\src\ogl\imagegles2.cpp" />
+    <ClCompile Include="..\..\src\ogl\lightgl.cpp" />
+    <ClCompile Include="..\..\src\ogl\meshgl.cpp" />
+    <ClCompile Include="..\..\src\ogl\rendergl.cpp" />
+    <ClCompile Include="..\..\src\ogl\shadergl.cpp" />
+    <ClCompile Include="..\..\src\ogl\vbufgl.cpp" />
+    <ClCompile Include="..\..\src\ogl\world3d-glfw.cpp" />
+    <ClCompile Include="..\..\src\render\appearance.cpp" />
+    <ClCompile Include="..\..\src\render\devbuf.cpp" />
+    <ClCompile Include="..\..\src\render\geodraw.cpp" />
+    <ClCompile Include="..\..\src\render\geomesh.cpp" />
+    <ClCompile Include="..\..\src\render\geonorm.cpp" />
+    <ClCompile Include="..\..\src\render\geosort.cpp" />
+    <ClCompile Include="..\..\src\render\image.cpp" />
+    <ClCompile Include="..\..\src\render\loadfont.cpp" />
+    <ClCompile Include="..\..\src\render\material.cpp" />
+    <ClCompile Include="..\..\src\render\sampler.cpp" />
+    <ClCompile Include="..\..\src\render\shader.cpp" />
+    <ClCompile Include="..\..\src\render\textgeom.cpp" />
+    <ClCompile Include="..\..\src\render\trimesh.cpp" />
+    <ClCompile Include="..\..\src\render\vtxaos.cpp" />
+    <ClCompile Include="..\..\src\render\vtxcache.cpp" />
+    <ClCompile Include="..\..\src\render\vtxpool.cpp" />
+    <ClCompile Include="..\..\src\scene\cam.cpp" />
+    <ClCompile Include="..\..\src\scene\light.cpp" />
+    <ClCompile Include="..\..\src\scene\model.cpp" />
+    <ClCompile Include="..\..\src\scene\scene-stub.cpp" />
+    <ClCompile Include="..\..\src\scene\scene.cpp" />
+    <ClCompile Include="..\..\src\scene\scenethread.cpp" />
+    <ClCompile Include="..\..\src\scene\shape.cpp" />
+    <ClCompile Include="..\..\src\scene\simpleshape.cpp" />
+    <ClCompile Include="..\..\src\scene\sprite.cpp" />
+    <ClCompile Include="..\..\src\scene\world-stub.cpp" />
+    <ClCompile Include="..\..\src\scene\world3d.cpp" />
+    <ClCompile Include="..\..\src\sim\animator.cpp" />
+    <ClCompile Include="..\..\src\sim\boneanim.cpp" />
+    <ClCompile Include="..\..\src\sim\deformer.cpp" />
+    <ClCompile Include="..\..\src\sim\engine.cpp" />
+    <ClCompile Include="..\..\src\sim\interpolator.cpp" />
+    <ClCompile Include="..\..\src\sim\keyframe.cpp" />
+    <ClCompile Include="..\..\src\sim\meshanim.cpp" />
+    <ClCompile Include="..\..\src\sim\morph.cpp" />
+    <ClCompile Include="..\..\src\sim\parser.cpp" />
+    <ClCompile Include="..\..\src\sim\pose.cpp" />
+    <ClCompile Include="..\..\src\sim\posemapper.cpp" />
+    <ClCompile Include="..\..\src\sim\scriptor.cpp" />
+    <ClCompile Include="..\..\src\sim\sequencer.cpp" />
+    <ClCompile Include="..\..\src\sim\skeleton.cpp" />
+    <ClCompile Include="..\..\src\sim\skin.cpp" />
+    <ClCompile Include="..\..\src\sim\trigger.cpp" />
+    <ClCompile Include="..\..\src\sim\xformer.cpp" />
+    <ClCompile Include="..\..\src\util\flyer.cpp" />
+    <ClCompile Include="..\..\src\util\framestats.cpp" />
+    <ClCompile Include="..\..\src\util\navigator.cpp" />
+    <ClCompile Include="..\..\src\util\quadtree.cpp" />
+    <ClCompile Include="..\..\src\util\RayPicker.cpp" />
+    <ClCompile Include="..\..\src\util\terrain.cpp" />
+    <ClCompile Include="..\..\src\util\terrcoll.cpp" />
+    <ClCompile Include="..\..\src\vcore\ems\vcore-ems.cpp" />
+    <ClCompile Include="..\..\src\vcore\ems\vstream-ems.cpp" />
+    <ClCompile Include="..\..\src\vcore\linux\vstring-x.cpp" />
+    <ClCompile Include="..\..\src\vcore\valloc.cpp" />
+    <ClCompile Include="..\..\src\vcore\vbufq.cpp" />
+    <ClCompile Include="..\..\src\vcore\vfile.cpp" />
+    <ClCompile Include="..\..\src\vcore\vobj.cpp" />
+    <ClCompile Include="..\..\src\vcore\vstream.cpp" />
+    <ClCompile Include="..\..\src\vcore\vstring.cpp" />
+    <ClCompile Include="..\..\src\vcore\vstringpool.cpp" />
+    <ClCompile Include="..\..\src\vcore\vtree.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9EB49BEC-C7A0-4AEE-AF19-AACB057DE08B}</ProjectGuid>
+    <RootNamespace>vixenglems</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <PlatformToolset>emcc</PlatformToolset>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="vixenglems.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Emscripten'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="vixenglems.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'">
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

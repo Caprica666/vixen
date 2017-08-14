@@ -100,16 +100,19 @@ template <class ELEM, class BASE> bool BaseArray<ELEM, BASE>::Grow(intptr growto
 {
 	intptr		bytes = growto * sizeof(ELEM);
 	ELEM*		new_data;
+	ELEM*		old_data = m_Data;
 	Allocator*	elemalloc = GetElemAllocator();
 
 	if (growto < 0)						// no growth needed?
 		return true;
 	if (m_UserData)						// user managing data area?
 		VX_ERROR(("Array::Grow: user data area exhausted\n"), false);
-	if (m_Data == NULL)					// make new data area?
+	if (old_data == NULL)					// make new data area?
 	{
 		VX_ASSERT(m_Size == 0);
 		new_data = (ELEM*) elemalloc->Alloc(bytes);
+		if (new_data == NULL)				// could not allocate?
+			VX_ERROR(("Array::Grow: out of memory\n"), false);
 	}
 	else
 	{
@@ -118,10 +121,12 @@ template <class ELEM, class BASE> bool BaseArray<ELEM, BASE>::Grow(intptr growto
 			growto = 64;	// minimum growth
 			bytes = growto * sizeof(ELEM);
 		}
-		new_data = (ELEM*) elemalloc->Grow((void*) m_Data, bytes);
+		new_data = (ELEM*) elemalloc->Alloc(bytes);
+		if (new_data == NULL)				// could not allocate?
+			VX_ERROR(("Array::Grow: out of memory\n"), false);
+		memcpy((void*) new_data, (const void*) old_data, bytes);
+		elemalloc->Free((void*) old_data);
 	}
-	if (new_data == NULL)				// could not allocate?
-		VX_ERROR(("Array::Grow: out of memory\n"), false);
 	m_Data = new_data;					// save data area pointer
 	m_MaxSize = growto;					// remember new size
 	for (intptr i = m_Size; i <= growto - 1; ++i)

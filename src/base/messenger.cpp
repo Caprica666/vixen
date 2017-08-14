@@ -50,6 +50,7 @@ bool Messenger::Copy(const SharedObj* srcobj)
 
 Messenger::~Messenger()
 {
+	IgnoreAll();
 	m_Observers = (PtrArray*) NULL;
 	m_Objs = (ObjMap*) NULL;
 	m_Names = (NameTable*) NULL;
@@ -641,6 +642,19 @@ bool Messenger::Ignore(const SharedObj* target, int code, const SharedObj* sende
 		}
 	}
 	return rc >= 0;
+}
+
+void Messenger::IgnoreAll()
+{
+	for (int i = 0; i < (int) m_Observers->GetSize(); ++i)
+	{
+		Observer* obs;
+		if (obs = (Observer*) m_Observers->GetAt(i))
+		{
+			obs->RemoveAll();
+			m_Observers->SetAt(i, NULL);
+		}
+	}
 }
 
 /****
@@ -1239,13 +1253,31 @@ int Messenger::Observer::Remove(const SharedObj* target, const SharedObj* sender
 		}
 		else
 			rc = 1;
+		cur->Target = NULL;
+		cur->Sender = NULL;
 		delete cur;
 		return rc;
 	}
 	while ((obs == cur) && (cur = (Observer*) cur->Next));
 	return -1;
 }
-	
+
+void Messenger::Observer::RemoveAll()
+{
+	Observer*	obs = NULL;
+	Observer*	cur = this;
+
+	do
+	{
+		obs = cur;
+		cur->Target = NULL;
+		cur->Sender = NULL;
+		delete cur;
+	}
+	while (cur = (Observer*) obs->Next);
+	Next = NULL;
+}
+
 void Messenger::Observer::Dispatch(Event* e)		// dispatch event to proper observer
 {
 	Observer*	obs = this;

@@ -88,7 +88,8 @@ VertexArray::VertexArray(const VertexArray& src)
  */
 bool	VertexArray::SetMaxVtx(intptr n)
 {
-	if (!m_Data.SetMaxSize(n * GetVtxSize()))
+	intptr t = n * GetVtxSize();
+	if (!m_Data.SetMaxSize(t))
 		return false;
 	m_MaxVtx = n;
 	return true;

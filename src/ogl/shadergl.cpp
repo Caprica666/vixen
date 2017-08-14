@@ -69,7 +69,7 @@ intptr		GLRenderer::Compile(const Shader* shader)
 #ifdef VIXEN_EMSCRIPTEN
 #define SHADER_PATH "#data/shaders/glsl2/"
 #else
-#define SHADER_PATH "C:\\projects\\vixen\\data\\shaders\\glsl2\\"
+#define SHADER_PATH "D:\\Projects\\Vixen\\data\\shaders\\glsl2\\"
 #endif
 
 void GLRenderer::MakeDefaultShaders()

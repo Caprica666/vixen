@@ -132,6 +132,8 @@ bool Bitmap::ReadFile(const TCHAR* imagename, Core::Stream* stream, LoadEvent* e
  * @see Texture::Load World::LoadAsync FileLoader
  */
 #ifdef VX_NOTEXTURE				// no texturing
+bool Bitmap::Startup() { return false; }
+void Bitmap::Shutdown() { }
 bool Bitmap::Load(const TCHAR* filename, Core::Stream* stream)
 { return false; }
 

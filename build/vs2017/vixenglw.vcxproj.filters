@@ -744,6 +744,12 @@
     <ClInclude Include="..\..\inc\sim\vxmeshanim.h">
       <Filter>Sim Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\vstringpool.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\cast.h">
+      <Filter>vcore headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\inc\scene\vxdualscene.inl">

@@ -251,6 +251,7 @@ public:
 
 		void	Dispatch(Event*);
 		int		Remove(const SharedObj* target, const SharedObj* sender);
+		void	RemoveAll();
 		bool	operator==(const Observer&);
 
 		ObjRef	Target;				// object that is observing
@@ -305,6 +306,8 @@ public:
 	virtual	bool		Observe(const SharedObj* target, int code, const SharedObj* sender);
 //! Ignore events based on code and sender.
 	virtual	bool		Ignore(const SharedObj* target, int code, const SharedObj* sender);
+//! Ignore all events.
+	virtual	void		IgnoreAll();
 //! Set output stream for sending logged transactions to remote processors.
 	virtual void		SetInStream(Core::Stream*);				
 //! Set input stream for receiving transactions from remote processors.

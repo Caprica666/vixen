@@ -409,7 +409,9 @@ bool Texture::Load(const TCHAR* filename)
 	MakeLock();
 	GetMessenger()->Observe(this, Event::LOAD_IMAGE, NULL);
 	SetFileName(filename);
-#ifndef VX_NOTEXTURE
+#ifdef VX_NOTEXTURE
+	return true;
+#else
 	return World3D::Get()->LoadAsync(filename, this);
 #endif
 }

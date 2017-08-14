@@ -14,6 +14,7 @@ namespace Vixen {
 
 class FileLoader;
 
+
 /*!
  * @class World
  * @brief Base class for generic world controllers to load files
@@ -143,6 +144,7 @@ protected:
 	TCHAR*				m_Argv[50];				// argument values
 	void*				m_RunArg;
 	static World*		s_OnlyOne;				// the one world object
+	static Core::Allocator*	s_ObjectAllocator;	// allocator for Vixen objects
 };
 
 

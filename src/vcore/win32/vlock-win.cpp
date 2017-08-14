@@ -12,6 +12,12 @@ double GetTime()
 
 bool	CritSec::DoLock = false;
 
+#ifdef VX_NOREFCOUNT
+VX_IMPLEMENT_CLASS(LockObj, BaseObj);
+#else
+VX_IMPLEMENT_CLASS(LockObj, RefObj);
+#endif
+
 #ifndef VX_NOTHREAD
 
 VX_IMPLEMENT_CLASS(CritSec, BaseObj);

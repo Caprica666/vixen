@@ -114,4 +114,5 @@ void* ReadPNGFile(Bitmap* bmap, Core::Stream* stream)
 }
 
 }	// end Vixen
+
 #endif

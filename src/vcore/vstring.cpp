@@ -30,8 +30,17 @@ namespace Core {
 	StringData	_vInitThreadData[2] = { NULL, -1, 0, 0, 0, 0, 0, 0 };
 	StringData*	_vThreadData = &_vInitThreadData[0];
 	LPCTSTR		_vEmptyStr = _vThreadData->data();
-	StringPool*	_vStringPool;
 
+//    void String::CoreInit()
+//    {
+//        _vInitThreadData[0].pAlloc = new StringPool(GlobalAllocator::Get());
+//    }
+//
+//    void String::CoreFini()
+//    {
+//        delete StringPool::Get();
+//    }
+    
 	const String& EmptyString()	{ return *((String*) &_vEmptyStr); }
 
 	String operator+(const String& string1, const String& string2)
@@ -100,6 +109,7 @@ String::~String()
 {
 	if (GetLength())
 	{
+		vint32	count = RefCount();
 		VX_ASSERT (RefCount() != 0);
 		if (InterlockDec (&RefCount()) <= 0)
 			FreeData(GetData());
@@ -258,7 +268,7 @@ const String& String::operator=(const String& stringSrc)
 const String& String::operator=(LPCTSTR lpsz)
 {
 //	VX_ASSERT (lpsz == NULL || AfxIsValidString(lpsz));
-	AssignCopy(SafeStrlen(lpsz), lpsz, _vStringPool);
+	AssignCopy(SafeStrlen(lpsz), lpsz, StringPool::Get());
 	return *this;
 }
 
@@ -287,7 +297,6 @@ void String::ConcatCopy(size_t nSrc1Len, LPCTSTR lpszSrc1Data,
 		AllocBuffer(nNewLen);
 		memcpy(m_pchData, lpszSrc1Data, nSrc1Len*sizeof(TCHAR));
 		memcpy(m_pchData+nSrc1Len, lpszSrc2Data, nSrc2Len*sizeof(TCHAR));
-		VX_TRACE(StringPool::Debug, ("String::ConcatCopy '%.128s%.128s'\n", lpszSrc1Data, lpszSrc2Data));
 	}
 }
 
@@ -392,7 +401,7 @@ void String::ReleaseBuffer(size_t nNewLength)
 
 	if (nNewLength == -1)
 		nNewLength = STRLEN(m_pchData); // zero terminated
-	size_t oldLen = GetData()->nAllocLength;
+//	size_t oldLen = GetData()->nAllocLength;
 	VX_ASSERT (nNewLength <= GetData()->nAllocLength);
 	GetData()->nDataLength = nNewLength;
 	m_pchData[nNewLength] = '\0';
@@ -561,7 +570,7 @@ String::String(LPCTSTR lpch, size_t nLength)
 
 const String& String::operator=(TCHAR ch)
 {
-	AssignCopy(1, &ch, _vStringPool);
+	AssignCopy(1, &ch, StringPool::Get());
 	return *this;
 }
 

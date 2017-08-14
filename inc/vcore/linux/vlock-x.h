@@ -57,10 +57,14 @@ protected:
 
 #include <pthread.h>
 #include <semaphore.h>
-#include <glib/gmacros.h>
-#include <glib/gtypes.h>
-#include <glib/gatomic.h>
+    
+#define GLIB_COMPILATION
 
+//#include <glib/gmacros.h>
+//#include <glib/gtypes.h>
+#include <glib/gatomic.h>
+//#include <glib.h>
+   
 namespace Core {
 
 inline int32 InterlockGet(vint32* dest)
@@ -72,8 +76,13 @@ inline void* InterlockGet(void** dest)
 inline void InterlockSet(void* volatile * dest, void* newval)
 { return g_atomic_pointer_set(dest, newval); }
 
+// !!!!!!!!!!!!!!! hack.hack.hack
 inline void* InterlockExch(vptr* dest, void* newval)
-{ return (void*) _InterlockedExchange((intptr *) dest, (intptr) newval);}
+//{ return (void*) _InterlockedExchange((intptr *) dest, (intptr) newval);}
+{   intptr  oldVal;
+    g_atomic_pointer_compare_and_exchange(dest, &oldVal, newval);
+    return NULL;
+}
 
 inline void InterlockSet(vint32* dest, int32 newval)
 { g_atomic_int_set(dest, newval); }
@@ -88,23 +97,23 @@ inline bool InterlockTestSet(vptr* i, void* set, void* test)
 { return g_atomic_pointer_compare_and_exchange(i, test, set); }
 
 inline int32 InterlockInc(vint32* lpAddend)
-{ return g_atomic_int_exchange_and_add(lpAddend, 1); }
+{ return g_atomic_int_exchange_and_add(lpAddend, 1) + 1; }
 
-inline int32 InterlockInc(intptr volatile* lpAddend)
-{ return g_atomic_pointer_exchange_and_add(lpAddend, 1); }
+//inline int32 InterlockInc(intptr volatile* lpAddend)
+//{ return g_atomic_pointer_exchange_and_add(lpAddend, 1); }
 
 inline int32 InterlockDec(vint32* lpAddend)
-{ return g_atomic_int_exchange_and_add(lpAddend, -1); }
+{ return g_atomic_int_exchange_and_add(lpAddend, -1) - 1; }
 
-inline int32 InterlockDec(intptr volatile* lpAddend)
-{ return g_atomic_pointer_exchange_and_add(lpAddend, -1); }
+//inline int32 InterlockDec(intptr volatile* lpAddend)
+//{ return g_atomic_pointer_exchange_and_add(lpAddend, -1); }
 
 inline int32 InterlockAdd(vint32* Addend, int Value)
 { return g_atomic_int_exchange_and_add(Addend,Value); }
 
-inline size_t InterlockAdd(intptr volatile* Addend, int Value)
-{ return g_atomic_pointer_exchange_and_add(Addend,Value); }
-
+//inline size_t InterlockAdd(intptr volatile* Addend, int Value)
+//{ return g_atomic_pointer_exchange_and_add(Addend,Value); }
+    
 class CritSec : BaseObj
 {
 public:

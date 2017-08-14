@@ -7,6 +7,7 @@ namespace Core {
 
 bool	CritSec::DoLock = false;
 
+#if 0
 float GetTime()
 {
 	timeval tv;
@@ -15,7 +16,7 @@ float GetTime()
 	tv_ms = (tv.tv_sec * 1000) + tv.tv_usec;
 	return (float)tv_ms * 0.001f;
 }
-
+#endif
 
 #ifndef VX_NOTHREAD
 
@@ -37,7 +38,7 @@ void	CritSec::Enter()
 	if (DoLock)
 	{
 		int rc = pthread_mutex_trylock(&Handle);
-		ulong id = pthread_self();
+//		pthread_t id = pthread_self();
 		if (rc == 0)
 			return;
 		if ((rc == EDEADLK) || (rc == EBUSY))

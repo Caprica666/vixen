@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Emscripten">
+      <Configuration>Debug</Configuration>
+      <Platform>Emscripten</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Emscripten">
+      <Configuration>Release</Configuration>
+      <Platform>Emscripten</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetExt>html</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='Emscripten'">
+    <OutDir>$(VIXEN_DIR)\bin\$(Platform)$(DebugSuffix)\</OutDir>
+    <TargetName>GeoTest</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Emscripten'">
+    <IntDir>$(VIXEN_DIR)\obj\$(MSBuildProjectName)$(DebugSuffix)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'">
+    <IntDir>$(VIXEN_DIR)\obj\$(MSBuildProjectName)$(DebugSuffix)\</IntDir>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'">
+    <Link />
+    <Link>
+      <OutputFile>$(OutDir)$(MSBuildProjectName)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>$(VIXEN_DIR)\bin\$(Platform)d\vixenglems.bc</AdditionalDependencies>
+      <IgnoreDynamicLinking>false</IgnoreDynamicLinking>
+      <AdditionalOptions>-s ALLOW_MEMORY_GROWTH=1 --bind %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ClCompile>
+      <GenerateDependencyFile>true</GenerateDependencyFile>
+    </ClCompile>
+    <ClCompile>
+      <DependencyFileName>$(OutDir)$(ProjectName).d</DependencyFileName>
+    </ClCompile>
+    <ProjectReference />
+    <PreBuildEvent>
+      <Command>xcopy $(VIXEN_DIR)\data\shaders\glsl2 $(OutDir)\shaders</Command>
+      <Message>Copy shader resource files</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Emscripten'">
+    <Link>
+      <JsLibrary>
+      </JsLibrary>
+      <OutputFile>$(OutDir)$(MSBuildProjectName)$(TargetExt)</OutputFile>
+      <PreJsFile>$(VIXEN_DIR)\bin\$(Platform)\vixenglems.js</PreJsFile>
+    </Link>
+    <ProjectReference />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\geotest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="brick.jpg" />
+    <None Include="shell.html" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5342E113-43A8-468D-A590-BBBBB79C89B1}</ProjectGuid>
+    <RootNamespace>GeoTestEMS</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Emscripten'" Label="Configuration">
+    <ConfigurationType>HTMLPage</ConfigurationType>
+    <PlatformToolset>emcc</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>emcc</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Emscripten'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\build\vs2012\vixenglems.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\build\vs2012\vixenglems.props" />
+  </ImportGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -8,6 +8,7 @@ static const TCHAR* opnames[] =
 };
 
 const TCHAR** World::DoNames = opnames;
+Core::Allocator* World::s_ObjectAllocator = NULL;
 
 VX_IMPLEMENT_CLASSID(World, SharedObj, VX_World);
 
@@ -39,6 +40,9 @@ World::World() : DebugOutput(vixen_debug)
 	m_Argc = 0;
 	m_Argv[0] = NULL;
 	m_RunArg = 0;
+	m_MediaDir[0] = 0;
+	m_FileName[0] = 0;
+	m_LoadQueue = NULL;
 	StartTime = Core::GetTime();
 }
 

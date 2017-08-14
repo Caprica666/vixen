@@ -24,13 +24,6 @@
 #include <WinSock.h>
 #include "vcore/win32/pcport.h"
 
-#undef THREAD_LOCAL
-#ifdef VX_NOTHREAD
-#define	THREAD_LOCAL	static
-#else
-#define	THREAD_LOCAL	static __declspec(thread)
-#endif
-
 namespace Vixen {
 
 #ifndef VX_MaxString
@@ -79,3 +72,4 @@ extern DebugOut& vixen_debug;
 } // end Vixen
 
 #include "vcore/valloc_oper.h"
+#include "vcore/cast.h"

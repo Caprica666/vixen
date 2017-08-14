@@ -40,11 +40,15 @@ class BytePool : public FixedLenAllocator
 {
 	VX_DECLARE_CLASS(BytePool);
 public:
-	BytePool(size_t esize = 16, size_t bsize = 8192) : FixedLenAllocator(esize, bsize) { }
+	BytePool(size_t esize = 16, size_t bsize = 8192) : FixedLenAllocator(esize, bsize)
+	{ 
+		m_FreeLater = NULL;
+	}
+
 	~BytePool()	{ FreeAll(); }
 
 	void*		Alloc(size_t amount);
-	void*		Grow(void* p, size_t amount);
+//	void*		Grow(void* p, size_t amount);
 	void		ReallyFree();
 	void		FreeAll();
 	void		Free(void* ptr);
@@ -52,6 +56,8 @@ protected:
 	CritSec		m_Lock;	
 	void*		m_FreeLater;		// blocks from foreigners to be freed
 };
+
+/* NOLA: eliminate Grow
 
 inline void* BytePool::Grow(void* p, size_t nbytes)
 {
@@ -62,6 +68,7 @@ inline void* BytePool::Grow(void* p, size_t nbytes)
 	}
 	return FixedLenAllocator::Grow(p, nbytes);
 }
+*/
 
 inline void BytePool::FreeAll()
 {

@@ -97,8 +97,9 @@ intptr Renderer::AddLight(Light* light)
  *					removing all matrices and applying them to the geometry.
  */
 GeoSorter::GeoSorter(int options)
-  :	Renderer(options)
+  :	Renderer(options), m_FrameAlloc()
 {
+	m_FrameAlloc.SetBlockAllocator(ThreadAllocator::Get());
 	SetOptions(options);
 	m_States.SetMaxSize(256);
 }

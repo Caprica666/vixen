@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros" Condition="'$(Configuration)'=='Debug'">
+    <BuildTargetSuffix>emsd</BuildTargetSuffix>
+    <DebugSuffix>d</DebugSuffix>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(Configuration)'=='Release'">
+    <BuildTargetSuffix>ems</BuildTargetSuffix>
+    <DebugSuffix>
+    </DebugSuffix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <IntDir>$(VIXEN_DIR)\obj\$(ProjectName)$(DebugSuffix)\</IntDir>
+    <OutDir>$(VIXEN_DIR)\bin\$(Platform)$(DebugSuffix)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetPath>$(OutDir)$(TargetName)$(TargetExt)</TargetPath>
+    <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Emscripten'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(VIXEN_DIR)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;VIXEN_EMSCRIPTEN;VIXEN_GLES2;VIXEN_GLFW;VX_NOTHREAD;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableWarnings>parentheses;#pragma-messages;warn-absolute-paths;format</DisableWarnings>
+      <PreprocessorUndefinitions>_WIN32</PreprocessorUndefinitions>
+	  <AdditionalOptions>--bind %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Emscripten'">
+    <ClCompile>
+      <GenerateDebugInformation>LimitedDebugInfo</GenerateDebugInformation>
+      <OptimizationLevel>O0</OptimizationLevel>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <PreJsFile />
+      <LinkerOptimizationLevel>O0</LinkerOptimizationLevel>
+      <RunClosureCompiler>false</RunClosureCompiler>
+      <RunMinify>false</RunMinify>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="BuildTargetSuffix">
+      <Value>$(BuildTargetSuffix)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VIXEN_SDK">
+      <Value>$(VIXEN_SDK)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

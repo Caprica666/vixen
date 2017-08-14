@@ -84,7 +84,7 @@ bool GLRenderer::MakeGLContext()
 	Core::String extensions = Core::String((const char*) glGetString(GL_VERSION));
 	extensions += TEXT(" ");
 	extensions += Core::String((const char*) glGetString(GL_EXTENSIONS));
-//	extensions += Core::String((const char*) glGetExtensionsString(dinfo->DC));
+	extensions += Core::String((const char*) glGetExtensionsString(dinfo->DC));
 //	VX_PRINTF(("Scene::SetWindow GL %s", (const TCHAR*) Extensions));	// VX_PRINTF here crashes!!
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB, &NumTexUnits);
 	b_Transpose = glLoadTransposeMatrixf == 0;

@@ -27,7 +27,6 @@ public:															\
 	virtual Core::Class* GetClass() const;						\
 	static	Core::Class ClassInfo;								\
 	static const TCHAR** DoNames;								\
-	static int	Debug;											\
  	static	Core::BaseObj* CreateObject(Core::Allocator* = NULL)
 
 /*!
@@ -38,7 +37,6 @@ public:															\
  * of the class. Mutually exclusive with IMPLEMENT_CLASSID.
  */
 #define VX_IMPLEMENT_CLASS(localClass, baseClass)							\
-	int localClass::Debug = 0;												\
 	void* localClass::operator new(size_t n, void* p) { return p; }			\
 	void* localClass::operator new(size_t n, Core::Allocator* a)			\
 		{  if (a == NULL) a = ClassInfo.GetAllocator();						\
@@ -59,7 +57,6 @@ public:															\
  * of the class. Mutually exclusive with IMPLEMENT_CLASS.
  */
 #define VX_IMPLEMENT_CLASSID(localClass, baseClass, clsid)					\
-	int localClass::Debug = 0;												\
 	void* localClass::operator new(size_t n, void* p) { return p; }			\
 	void* localClass::operator new(size_t n, Core::Allocator* a)			\
 		{  if (a == NULL) a = ClassInfo.GetAllocator();						\
