@@ -59,6 +59,10 @@ void _cdecl operator delete( void *p, Vixen::Core::Allocator* pAlloc)
 	}
 }
 
+#if defined(_DEBUG) && !defined(__APPLE__)
+void* _cdecl operator new (size_t size) { return operator new (size, Vixen::Core::RogueAllocator::Get()); }
+void  _cdecl operator delete (void *p) { operator delete (p, Vixen::Core::RogueAllocator::Get()); }
+#endif
 
 namespace Vixen {
 namespace Core {
@@ -194,7 +198,7 @@ Allocator::Allocator()
 void Allocator::Alignment (int align)
 {
 #ifdef _DEBUG
-    for (int i = 1; i < sizeof (int)-1; i++)
+    for (int i = 1; i < 8*sizeof(int); i++)
         if ((1 << i) == align)
             goto AllOK;
     
@@ -205,8 +209,44 @@ void Allocator::Alignment (int align)
 AllOK:
     m_AlignmentMask = align - 1;
 }
+
+void* Allocator::Alloc(size_t amount)
+{
+	void* ptr;
+	if (m_Options & ALLOC_ZeroMem)
+		ptr = calloc(1, amount);
+	else
+		ptr = malloc(amount);
+
+	UpdateDebugStats((long)SizeOfPtr(ptr), ptr);
+	VX_TRACE2(Allocator::Debug, ("Allocator::Alloc(%d) %p\n", amount, ptr));
+
+	return ptr;
+}
+
+void Allocator::Free(void* ptr)
+{
+	UpdateDebugStats(-(long)SizeOfPtr(ptr), ptr);
+	VX_TRACE2(Allocator::Debug, ("Allocator::Free(%d) %p\n", amount, ptr));
+
+	free(ptr);
+}
+
+
+size_t Allocator::SizeOfPtr(void* ptr)
+{
+#ifdef _WIN32
+	size_t	amount = _msize(ptr);
+#elif defined(__APPLE__)
+	size_t  amount = malloc_size(ptr);
+#else
+	VX_ASSERT(false);
+	size_t	amount = 0;
+#endif
+	return	amount;
+}
     
-    
+
 #ifdef _DEBUG
 void Allocator::UpdateDebugStats(long amount, void* ptr /* = NULL */)
 {
@@ -269,42 +309,7 @@ GlobalAllocator::~GlobalAllocator()
     VX_PRINTF(("~GlobalAllocator      "));
 }
 	
- 
-void* GlobalAllocator::Alloc (size_t amount)
-{
-	void* ptr;
-	if (m_Options & ALLOC_ZeroMem)
-		ptr = calloc(1, amount);
-	else
-		ptr = malloc(amount);
 
-    UpdateDebugStats (SizeOfPtr(ptr), ptr);
-	VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator::Alloc(%d) %p\n", amount, ptr));
-	
-    return ptr;
-}
-
-void GlobalAllocator::Free (void* ptr)
-{
-	UpdateDebugStats(-SizeOfPtr(ptr), ptr);
-    VX_TRACE2(GlobalAllocator::Debug, ("GlobalAllocator::Free(%d) %p\n", amount, ptr));
-
-    free (ptr);
-}
-
-    
-size_t GlobalAllocator::SizeOfPtr(void* ptr)
-{
-#ifdef _WIN32
-	size_t	amount = _msize (ptr);
-#elif defined(__APPLE__)
-	size_t  amount = malloc_size (ptr);
-#else
-	VX_ASSERT (false);
-	size_t	amount = 0;
-#endif
-	return	amount;
-}
 
 //============================================================================
 // FastContext
@@ -427,7 +432,7 @@ void* FastAllocator::Alloc(size_t size)
 	// Get pointer to new chunk and update buffer variable
 	char*  mem = (char*) m_blocks->data() + m_bufUsed;
 	m_bufUsed += AlignMem (size);
-	UpdateDebugStats (size, mem);
+	UpdateDebugStats ((long)size, mem);
 
 	// Return pointer to memory chunk
 	return mem;
@@ -539,7 +544,7 @@ FixedLenAllocator::~FixedLenAllocator()
 	{
 #ifdef _DEBUG
 		m_blockFrees -= m_blocks->NumBlocks();
-		sprintf (m_lastWords, "   %ld*%ld", m_blockAllocs, m_elementSize * m_blockSize + sizeof(Chain));
+		sprintf (m_lastWords, "   %ld*%zd", m_blockAllocs, (long)m_elementSize * m_blockSize + sizeof(Chain));
 #endif
 		m_blocks->FreeDataChain();
 	}
@@ -549,6 +554,8 @@ FixedLenAllocator::~FixedLenAllocator()
 
 void* FixedLenAllocator::Alloc (size_t size)
 {
+	bool isLocking = IsLocking();
+	if (isLocking) m_Lock.Enter();
 	// Make sure the correct allocation size is requested
 	VX_ASSERT (AlignMem (size) <= m_elementSize);
 
@@ -586,19 +593,22 @@ void* FixedLenAllocator::Alloc (size_t size)
 	Chain* pVChain = m_freeList;
 	m_freeList = m_freeList->pNext;
 
-    UpdateDebugStats(size, pVChain);
+    UpdateDebugStats((long)size, pVChain);
 	VX_ASSERT ((m_freeList == NULL) || (m_freeList->nLength >= 0));
 //	pVChain->pNext = NULL;		// should be OK, since ALLOC_ZeroMem is being phased out
 
 	// Return pointer to memory block
+	if (isLocking) m_Lock.Leave();
 	return pVChain;
 }
 
 void FixedLenAllocator::Free(void* aPtr)
 {
+	bool isLocking = IsLocking();
+	if (isLocking) m_Lock.Enter();
 #ifdef _DEBUG
-    UpdateDebugStats(-m_elementSize, aPtr);
-        
+	UpdateDebugStats(-(long)m_elementSize, aPtr);
+
     // Make sure that we are freeing a pointer which actually beloings to this allocator.
     VX_ASSERT (m_blocks && m_blocks->ContainsPtr (aPtr));
 #endif
@@ -610,10 +620,14 @@ void FixedLenAllocator::Free(void* aPtr)
     Chain*	pVChain = (Chain*)aPtr;
     pVChain->pNext = m_freeList;
     m_freeList = pVChain;
+	if (isLocking) m_Lock.Leave();
 }
 
 void FixedLenAllocator::FreeAll()
 {
+	bool isLocking = IsLocking();
+	if (isLocking) m_Lock.Enter();
+
 	Chain* blockptr = m_blocks;
 
 	m_freeList = NULL;
@@ -630,6 +644,7 @@ void FixedLenAllocator::FreeAll()
 		}
 		blockptr = blockptr->pNext;
 	}
+	if (isLocking) m_Lock.Leave();
 	VX_TRACE(Allocator::Debug, ("FixedLenAllocator::FreeAll()\n"));
 }
 
@@ -676,14 +691,14 @@ PoolAllocator::PoolAllocator(Allocator* blockalloc, size_t smallest, size_t npoo
 {
     if (blockalloc == NULL)
         blockalloc = GlobalAllocator::Get();
-	SetOptions(options);
     m_BlockAlloc = blockalloc;
-    m_NumPools = npools;
+    m_NumPools = (int) npools;
 
-    for (int i = 0; i < m_NumPools && i < ALLOC_MaxPools; ++i)
+    for (size_t i = 0; i < m_NumPools && i < ALLOC_MaxPools; ++i)
     {
         m_MaxSize = smallest << i;
         m_MemPool[i] = new FixedLenAllocator (m_MaxSize, (8192 - sizeof(Chain)) / m_MaxSize);
+		m_MemPool[i]->SetOptions(options);
     }
 }
     
@@ -764,7 +779,7 @@ void* PoolAllocator::Alloc(size_t byte_size)
 	if (ptr == NULL)
 		VX_ERROR(("PoolAllocator::Alloc %ld ERROR out of memory\n", byte_size), NULL);
 	VX_TRACE2(Allocator::Debug, ("PoolAllocator::Alloc(%d) %p\n", byte_size, ptr));//
-    UpdateDebugStats(byte_size);			// do NOT pass pointer, should be handled
+    UpdateDebugStats((long)byte_size);			// do NOT pass pointer, should be handled
     
 	*((size_t*) ptr) = byte_size;			// save the true size
 	return ((size_t*) ptr) + 1;				// point past the size
@@ -801,7 +816,7 @@ void PoolAllocator::Free(void* ptr)
 		{
 			pool->Free(p);						// put it back in the pool it came from
 			VX_TRACE2(Allocator::Debug, ("PoolAllocator::Free(%d)\n", byte_size));
-            UpdateDebugStats (-byte_size);		// do NOT pass pointer, should be handled
+            UpdateDebugStats (-(long)byte_size);		// do NOT pass pointer, should be handled
 			return;
 		}
 	}

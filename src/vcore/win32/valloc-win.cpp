@@ -69,7 +69,7 @@ void ThreadAllocator::SetOptions (int opts)
 void* ThreadAllocator::Alloc (size_t amount)
 {
 #ifdef _DEBUG
-	UpdateDebugStats(amount);
+	UpdateDebugStats((long) amount);
 #endif
 	VX_TRACE2(ThreadAllocator::Debug || Allocator::Debug, ("ThreadAllocator::Alloc(%d) %d", amount, m_threadID));
 	return HeapAlloc(m_heap, m_heapOpts, amount);
@@ -80,7 +80,7 @@ void ThreadAllocator::Free (void* ptr)
 {
 #ifdef _DEBUG
 	intptr amount = HeapSize(m_heap, HEAP_NO_SERIALIZE, ptr);
-	UpdateDebugStats(-amount);
+	UpdateDebugStats(-((long) amount));
 	VX_TRACE2(ThreadAllocator::Debug || Allocator::Debug, ("ThreadAllocator::Free(%d) %d", amount, m_threadID));
 #endif
 	HeapFree(m_heap, HEAP_NO_SERIALIZE, ptr);

@@ -13,7 +13,7 @@ DebugOut& DebugOut::operator<<(const TCHAR* s)	{ Core::DebugPrint(s); return *th
 DebugOut& DebugOut::operator<<(TCHAR c)			{ Core::String s(c); Core::DebugPrint(s); return *this; }
 DebugOut& DebugOut::operator<<(int v)			{ Core::String s(v); Core::DebugPrint(s); return *this; }
 DebugOut& DebugOut::operator<<(float v)			{ Core::String s(v); Core::DebugPrint(s); return *this; }
-DebugOut& DebugOut::operator<<(void* p)			{ Core::String s((int) p); Core::DebugPrint(s); return *this; }
+DebugOut& DebugOut::operator<<(void* p)			{ Core::String s((unsigned long) p); Core::DebugPrint(s); return *this; }
 DebugOut& endl(DebugOut& out)					{ Core::DebugPrint(TEXT("\n"));  return out; }
 
 

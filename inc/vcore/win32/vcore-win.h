@@ -36,8 +36,8 @@ namespace Vixen {
 #include "vcore/vobj_macros.h"
 #include "vcore/vdebug.h" 		// base headers, in order of appearace
 #include "vcore/vobj.h"
-#include "vcore/valloc.h"
 #include "vcore/win32/vlock-win.h"
+#include "vcore/valloc.h"
 #include "vcore/vtlsdata.h"
 #include "vcore/vstringpool.h"
 #include "vcore/vrefptr.h"

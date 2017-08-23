@@ -41,7 +41,7 @@ namespace Vixen
 		bool			UpdateMaterial(const Material* mtl, const VertexArray* verts);
 		void			MakeDefaultShaders();
 		int				MakeLightDesc();
-		int				LoadLights();
+		size_t			LoadLights();
 		void			FreeResources();
 		void			FreeBuffers();
 		bool			CreateBuffers(int w, int h);
@@ -111,11 +111,11 @@ namespace Vixen
 		static	void					UpdateBuffer(LightList& lights, void* buffer);
 		static	Core::String			NullLight();
 		static	ID3D11ClassInstance*	GetNullInstance(const TCHAR* name);
-		static	int						LoadLights(LightList& lights, Core::String& source);
+		static	size_t					LoadLights(LightList& lights, Core::String& source);
 
-		int							VectorOffset;
+		size_t						VectorOffset;
 		DXRef<ID3D11ClassInstance>	LightClassInstance;
-		static	int					NumLights;
+		static	size_t				NumLights;
 	};
 
 	template <> inline bool Core::Dict<NameProp, DXShader, Vixen::BaseDict>::CompareKeys(const NameProp& knew, const NameProp& kdict)

@@ -166,7 +166,7 @@ D3DSHADERVIEW* DXImage::CreateView(D3DDEVICE* device, D3DCONTEXT* ctx, bool mipm
 
 	desc.Format = m_Format;
 	desc.Texture2D.MostDetailedMip = 0;
-	if (mipmap < 0)
+	if (mipmap)
 		desc.Texture2D.MipLevels = D3D11_RESOURCE_MISC_GENERATE_MIPS;
 	else
 		desc.Texture2D.MipLevels = 1;

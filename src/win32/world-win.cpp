@@ -46,13 +46,14 @@ void _cdecl World::Shutdown()
 
 bool World::Startup()
 {
-	if (!CoreInit())
+	if (s_ObjectAllocator)
 		return true;
+	CoreInit();
 	s_OnlyOne = NULL;
 	BufMessenger::s_OnlyOne = NULL;
 
 #ifdef VX_NOTHREAD
-	s_ObjectAllocator = new PoolAllocator(GlobalAllocator::Get(), 64, 6, ALLOC_Lock);
+	s_ObjectAllocator = new PoolAllocator(GlobalAllocator::Get(), 64, 6);
 
 #else
 	/*

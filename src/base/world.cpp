@@ -16,7 +16,7 @@ VX_IMPLEMENT_CLASSID(World, SharedObj, VX_World);
 VX_IMPLEMENT_CLASS(Core::BytePool, Core::FixedLenAllocator);
 #endif
 
-World*		World::s_OnlyOne;			// singleton
+World*		World::s_OnlyOne = NULL;			// singleton
 bool		World::DoAsyncLoad = true;	// enable async loading
 bool		World::MakeConsole = false;	// don't make console window on startup
 

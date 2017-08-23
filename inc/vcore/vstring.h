@@ -30,8 +30,8 @@ struct StringData
 {
 	Allocator*  pAlloc;
 	vint32      nRefs;
-	short       nDataLength;
-	short       nAllocLength;
+	size_t      nDataLength;
+	size_t      nAllocLength;
 
 	TCHAR* data() { return (TCHAR*)(this+1); }
 };

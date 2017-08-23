@@ -10,7 +10,7 @@ class DXBuffer : public DXRef<D3DBUFFER>
 public:
 	DXBuffer();
 
-	bool		Update(DXRenderer* render, const void* data, int nbytes);
+	bool		Update(DXRenderer* render, const void* data, size_t nbytes);
 	bool		HasBuffer() const	{ return *this != (D3DBUFFER*) NULL; }
 	D3DBUFFER*	MakeBuffer(DXRenderer* render, const void* data, int nbytes, D3D_BUFFERDESC& bufdesc); 
 	D3DBUFFER*	MakeBuffer(DXRenderer* render, const void* data, int nbytes, int type = D3D_CONSTANTBUFFER, int usage = D3D_DEFAULT);
@@ -90,7 +90,7 @@ public:
 	DXVertexBuf();
 
 	bool			Update(DXRenderer*, const VertexArray*, bool dynamic = false);
-	D3DSHADERVIEW*	GetView(D3DDEVICE* device, intptr nbytes);
+	D3DSHADERVIEW*	GetView(D3DDEVICE* device, UINT nbytes);
 };
 
 class DXLayout : public DXRef<D3DINPUTLAYOUT>

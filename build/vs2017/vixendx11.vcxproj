@@ -944,6 +944,7 @@
     <ClInclude Include="..\..\inc\vcore\vrefptr.h" />
     <ClInclude Include="..\..\inc\vcore\vtlsdata.h" />
     <ClInclude Include="..\..\inc\vcore\win32\thread-win.h" />
+    <ClInclude Include="..\..\inc\vcore\win32\vcore-win.h" />
     <ClInclude Include="..\..\inc\vcore\win32\vlock-win.h" />
     <ClInclude Include="..\..\inc\win32\ddglue.h" />
     <ClInclude Include="..\..\inc\win32\dds.h" />

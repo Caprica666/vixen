@@ -12,7 +12,7 @@ template <> inline uint32 Core::Dict<NameProp, Core::String, Vixen::BaseDict>::H
 	return HashStr((const TCHAR*) np);
 }
 
-int		DXLight::NumLights = 0;
+size_t		DXLight::NumLights = 0;
 
 intptr DXRenderer::AddLight(Light* light)
 { 
@@ -35,11 +35,11 @@ intptr DXRenderer::AddLight(Light* light)
 	return prop->DevIndex;
 }
 
-int DXRenderer::LoadLights()
+size_t DXRenderer::LoadLights()
 {
 	int				nlights = m_LightList.GetNumLights();
 	bool			listchanged = m_LightList.CheckListChanged();
-	int				nbytes = 0;
+	size_t			nbytes = 0;
 
 	/*
 	 * Generate the pixel shader source for each light
@@ -75,12 +75,12 @@ int DXRenderer::LoadLights()
  * Generate the pixel shader source for each light
  * and determine the total size of the light constant buffer
  */
-int	DXLight::LoadLights(LightList& lights, Core::String& source)
+size_t	DXLight::LoadLights(LightList& lights, Core::String& source)
 {
 	bool			enabled;
 	DXLight*		l;
 	int				nlights = 0;
-	int				nbytes = 0;
+	size_t			nbytes = 0;
 	Core::String	decls = TEXT("\ncbuffer ActiveLights : register(b2)\n{\n\t$SURFACESHADER surfaceshader;\n");
 	LightList::Iter	iter(lights);
 	NameDict<Core::String>	shader_sources;
@@ -144,7 +144,7 @@ void DXLight::UpdateBuffer(LightList& lights, void* buffer)
 	char*			p = (char*) buffer;
 	DXLight*		l;
 	bool			enabled;
-	int				vectorofs = NULL;
+	size_t			vectorofs = NULL;
 	LightList::Iter	iter(lights);
 
 	while (l = (DXLight*) iter.NextProp(enabled))

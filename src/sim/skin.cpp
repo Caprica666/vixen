@@ -203,7 +203,7 @@ void Skin::DeformLocsAndNormals(intptr start, intptr nvtx)
 	#pragma omp PARALLEL_FOR(nvtx)
 	cilk_for (intptr i = start; i < nvtx; ++i)
 	{
-		int				t = i * 3;
+		intptr			t = i * 3;
 		const Vec3*		srcptr = srciter.GetLoc(i);
 		const Vec3*		srcnml = (const Vec3*) srciter.GetNormal(i);
 		Vec3*			dstptr = (Vec3*) (activelocs + t);
@@ -266,7 +266,7 @@ void Skin::DeformNormals(intptr start, intptr nvtx)
 	#pragma omp PARALLEL_FOR(nvtx)
 	cilk_for (intptr i = start; i < nvtx; ++i)
 	{
-		int				t = i * 3;
+		intptr			t = i * 3;
 		const Vec3*		srcnml = (const Vec3*) (srcnmls + t);
 		Vec3*			dstnml = (Vec3*) (activenmls + t);
 		Vec3			tmp;

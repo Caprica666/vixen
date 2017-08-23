@@ -742,6 +742,9 @@
     <ClInclude Include="..\..\data\shaders\hlsl5\interfaces.h">
       <Filter>Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\inc\vcore\win32\vcore-win.h">
+      <Filter>vcore headers\win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\inc\scene\vxmodel.inl">

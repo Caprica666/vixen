@@ -92,7 +92,7 @@ D3DBUFFER* DXBuffer::MakeBuffer(DXRenderer* render, const void* data, int nbytes
  *
  * The DX11 buffer is assumed to have been created with D3D_DYNAMIC usage.
  */
-bool DXBuffer::Update(DXRenderer* render, const void* data, int nbytes)
+bool DXBuffer::Update(DXRenderer* render, const void* data, size_t nbytes)
 {
 	HRESULT			hr;
 	D3DCONTEXT* ctx = render->GetContext();
@@ -213,7 +213,7 @@ bool DXIndexBuf::Update(DXRenderer* render, const IndexArray* inds, bool dynamic
 bool DXVertexBuf::Update(DXRenderer* render, const VertexArray* verts, bool dynamic)
 {
 	ObjectLock	lock(verts);
-	int			buffsize = verts->GetVtxSize() * verts->GetNumVtx() * sizeof(float);
+	size_t		buffsize = verts->GetVtxSize() * verts->GetNumVtx() * sizeof(float);
 	const void*	data = verts->GetData();
 
 	if (buffsize == 0)
@@ -235,7 +235,7 @@ bool DXVertexBuf::Update(DXRenderer* render, const VertexArray* verts, bool dyna
 }
 
 
-D3DSHADERVIEW* DXVertexBuf::GetView(D3DDEVICE* device, intptr nbytes)
+D3DSHADERVIEW* DXVertexBuf::GetView(D3DDEVICE* device, UINT nbytes)
 {
 	D3D11_SHADER_RESOURCE_VIEW_DESC desc;
 	D3DSHADERVIEW* view;

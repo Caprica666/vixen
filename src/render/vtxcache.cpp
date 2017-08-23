@@ -44,7 +44,7 @@ void VertexCache::SetLocations(VertexArray* verts)
 	VertexArray::ConstIter iter(verts);
 	const Vec3* vptr;
 	int			vindex = 0;
-	int			nverts = verts->GetNumVtx();
+	intptr		nverts = verts->GetNumVtx();
 
 	if (m_VertexMap.IsNull())
 		m_VertexMap = new IntArray(nverts);
@@ -61,7 +61,7 @@ void VertexCache::SetLocations(FloatArray* locs)
 	if (locs == NULL)
 		return;
 	const float* vdata = locs->GetData();
-	int			nverts = locs->GetSize() / 3;
+	intptr		nverts = locs->GetSize() / 3;
 
 	if (m_VertexMap.IsNull())
 		m_VertexMap = new IntArray(nverts);

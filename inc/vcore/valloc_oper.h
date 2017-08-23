@@ -26,7 +26,7 @@ void  _cdecl operator delete( void *p, Vixen::Core::Allocator* pAlloc);
  * QUIRK: on mac, declaring this function as explicit inline avoids linker errors (hmmmmmmmm.....)
  */
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && defined(__APPLE__)
 inline void* _cdecl operator new (size_t size)		{ return operator new (size, Vixen::Core::RogueAllocator::Get()); }
 inline void  _cdecl operator delete (void *p)		{ operator delete (p, Vixen::Core::RogueAllocator::Get()); }
 #endif

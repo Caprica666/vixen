@@ -89,9 +89,9 @@ class Allocator : public BaseObj
 
 public:
 //! Allocate \b amount bytes of memory.
-	virtual	void*	Alloc(size_t amount)            { VX_ASSERT(false); return NULL; /* = 0 pure virtual */ }
+	virtual	void*	Alloc(size_t amount);
 //! Return memory used by input object to the heap.
-	virtual void	Free(void* ptr)                 { VX_ASSERT(false); /* = 0 pure virtual */ }
+	virtual void	Free(void* ptr);
 //! Returns the allocator used to grab heap blocks.
     Allocator*		GetBlockAllocator() const       { return m_BlockAlloc; }
 //! Sets the allocator used to grab heap blocks.
@@ -102,6 +102,8 @@ public:
 	virtual void	SetOptions(int o)               { m_Options = o; }
 //! Return \b true if locking is enabled for this allocator.
 	bool			IsLocking() const               { return (m_Options & ALLOC_Lock) != 0; }
+//! Return size of memory block
+	size_t			SizeOfPtr(void* ptr);
 
 #ifdef _DEBUG
 //! Print debugging statistic information
@@ -126,6 +128,7 @@ protected:
 // Debug-only metrics tracking
 #ifdef _DEBUG
 protected:
+	CritSec			m_Lock;
 	long            m_currentSize;
 	long            m_totalSize;
 	long            m_maxSize;
@@ -180,11 +183,6 @@ class GlobalAllocator : public Allocator
 public:
 	GlobalAllocator();
     ~GlobalAllocator();
-
-	// overrides
-	virtual	void*       Alloc(size_t amount);
-	virtual void        Free(void* ptr);
-	size_t				SizeOfPtr(void* ptr);
 	
 	static GlobalAllocator*	Get()	{ return s_ptheOneAndOnly; }
 
@@ -430,8 +428,8 @@ public:
 	~RogueAllocator();
 	
 	// overrides
-	virtual	void*       Alloc(size_t amount)	{ GlobalAllocator* og = GlobalAllocator::Get(); UpdateDebugStats(amount); return og->Alloc(amount); }
-	virtual void        Free(void* ptr)			{ GlobalAllocator* og = GlobalAllocator::Get(); int amount = og->SizeOfPtr(ptr); UpdateDebugStats(-amount); og->Free (ptr); }
+	virtual	void*       Alloc(size_t amount)	{ GlobalAllocator* og = GlobalAllocator::Get(); UpdateDebugStats((long) amount); return og->Alloc(amount); }
+	virtual void        Free(void* ptr)			{ GlobalAllocator* og = GlobalAllocator::Get(); size_t amount = og->SizeOfPtr(ptr); UpdateDebugStats(-((long) amount)); og->Free (ptr); }
 	
 	static RogueAllocator*	Get()				{ return s_ptheBeanCounter; }
 	

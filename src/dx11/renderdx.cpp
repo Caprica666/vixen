@@ -54,6 +54,15 @@ Renderer*	Renderer::CreateRenderer(int options)
 	return new DXRenderer();
 }
 
+class VertexAllocator : public Core::Allocator
+{
+public:
+	VertexAllocator() : Core::Allocator()
+	{
+		Alignment(128L);
+	}
+};
+
 /*
  * Create DXRenderer to encapsulate DX11 rendering functionality.
  * Creates Vixen data structures used during DX11 rendering.
@@ -61,7 +70,7 @@ Renderer*	Renderer::CreateRenderer(int options)
 DXRenderer::DXRenderer()
   :	GeoSorter()
 {
-	VertexArray::VertexAlloc = new Core::AlignedAllocator(128L);
+	VertexArray::VertexAlloc = new VertexAllocator();
 	BackWidth = 0;
 	BackHeight = 0;
 	m_ConstantBuffers[CBUF_PERFRAME] = new DeviceBuffer(TEXT("float16 ViewMatrix, float16 ProjMatrix. float3 CameraPos"), sizeof(PerFrameConstants));
@@ -158,10 +167,10 @@ void	DXRenderer::SetViewport(float l, float t, float r, float b)
 	if (resize)
 	{
 		FreeBuffers();
-		hr = m_SwapChain->ResizeBuffers(1, d3dViewport.Width, d3dViewport.Height, m_ColorFormat, 0);
+		hr = m_SwapChain->ResizeBuffers(1, (UINT) d3dViewport.Width, (UINT) d3dViewport.Height, m_ColorFormat, 0);
 		if (FAILED(hr))
 			{ VX_ERROR_RETURN(("Scene::SetViewport cannot resize DX buffers\n")); }
-		CreateBuffers(d3dViewport.Width, d3dViewport.Height);
+		CreateBuffers((int) d3dViewport.Width, (int) d3dViewport.Height);
 	}
 }
 
@@ -337,8 +346,8 @@ void DXRenderer::Begin(int changed, int frame)
 	GeoSorter::Begin(changed, frame);
 	m_Context->ClearRenderTargetView(cview, (const FLOAT*) &backcolor);
 	m_Context->ClearDepthStencilView(dview, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
-	cdata->ImageSize.x = BackWidth;
-	cdata->ImageSize.y = BackHeight;
+	cdata->ImageSize.x = (float) BackWidth;
+	cdata->ImageSize.y = (float) BackHeight;
 	memcpy(cdata->ProjMatrix, proj.GetMatrix(), 16 * sizeof(float));
 	memcpy(cdata->ViewMatrix, view.GetMatrix(), 16 * sizeof(float));
 	cdata->CameraPos = cam->GetCenter();
@@ -409,7 +418,7 @@ void	DXRenderer::RenderMesh(const Geometry* geo, const Appearance* app, const Ma
 	bool			app_changed = app->HasChanged();
 	UINT			stride = verts->GetVtxSize() * sizeof(float);
 	UINT			offset = 0;
-	D3DBUFFER*	dxbuf;
+	D3DBUFFER*		dxbuf;
 
 	/*
 	 * Select vertex shader and input layout, supply vertex shader constant buffers

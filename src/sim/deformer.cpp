@@ -18,7 +18,7 @@ Deformer::Deformer() : Engine()
 bool Deformer::Reset()
 {
 	VertexArray::ConstIter	srciter(m_RestLocs);
-	int				n = m_RestLocs->GetNumVtx();
+	intptr			n = m_RestLocs->GetNumVtx();
 	const Vec3*		srcloc;
 	float*			dst;
 
@@ -76,7 +76,7 @@ bool Deformer::GetBound(Box3& b) const
 int Deformer::InitRestNormals()
 {
 	VertexArray::ConstIter	iter(m_TargetVerts);
-	int		n = m_TargetVerts->GetNumVtx();
+	intptr	n = m_TargetVerts->GetNumVtx();
 	int		i = 0;
 	float*	dstdata;
 
@@ -260,7 +260,7 @@ IntArray* Deformer::ComputeVertexMap(const VertexArray* srclocs, const VertexArr
 	ObjectLock				srclock(srclocs);
 	ObjectLock				dstlock(dstverts);
 	VertexPool::ConstIter	dst_iter(dstverts);
-	int						ndstverts = dstverts->GetNumVtx();
+	intptr					ndstverts = dstverts->GetNumVtx();
 	IntArray*				vertexmap = new IntArray(nsrcverts);;
 
 	VX_ASSERT(ndstverts >= nsrcverts);
